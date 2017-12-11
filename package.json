@@ -18,8 +18,9 @@
     "laravel-elixir": "^6.0.0-17",
     "laravel-elixir-vue-2": "^0.3.0",
     "laravel-elixir-webpack-official": "^1.0.10",
-    "laravel-mix": "^1.0",
+    "laravel-mix": "^1.7.2",
     "lodash": "^4.17.4",
-    "vue": "^2.5.7"
+    "vue": "^2.5.7",
+    "vue-router": "^3.0.1"
   }
 }
