@@ -15,7 +15,7 @@
 
       <div id="app">
 
-        <router-link to="/" exact>FEED</router-link>
+        <desktop-nav></desktop-nav>
 
         <!-- every components belonging to a route, will be shown here on the page. -->
         <router-view></router-view>
