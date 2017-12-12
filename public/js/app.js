@@ -15816,6 +15816,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -15831,17 +15849,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "nav",
-    [
-      _c("router-link", { attrs: { to: "/", exact: "" } }, [_vm._v("FEED")]),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: "/" } }, [_vm._v("PROFILE")])
-    ],
-    1
-  )
+  return _c("nav", { staticClass: "anaxi-nav" }, [
+    _c(
+      "div",
+      { staticClass: "anaxi-nav-content" },
+      [
+        _c("router-link", { attrs: { to: "/", exact: "" } }, [
+          _c("div", { staticClass: "logo" }, [
+            _c("p", [_vm._v("\n                    Anaxi\n                ")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "anaxi-nav-content-btns" },
+          [
+            _vm._m(0, false, false),
+            _vm._v(" "),
+            _c("i", { staticClass: "ion-android-globe" }),
+            _vm._v(" "),
+            _c("router-link", { attrs: { to: "/" } }, [
+              _c("div", { staticClass: "profile-btn-content" }, [
+                _c("p", { staticClass: "profile-name" }, [_vm._v("Anders")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "profile-avatar" })
+              ])
+            ])
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "anaxi-primary-btn", attrs: { id: "postBtn" } },
+      [_c("p", [_vm._v("Post")])]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

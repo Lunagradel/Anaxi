@@ -1,7 +1,30 @@
-.button{
-  border-radius: 100%;
-  background-color: blue;
+.anaxi-primary-btn {
+    @include top-right-gradient($orange, $pink);
+    border-radius: 15px;
+    // text-align: center;
+    color: $white;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(center);
+    cursor: pointer;
 }
-.hello_world{
-  font-size: 22px;
+
+#postBtn {
+    width: 90px;
+    height: 30px;
+}
+
+.profile-btn-content {
+    width: 80px;
+    @include flexbox();
+    @include justify-content(space-between);
+    @include align-items(center);
+    color: $pink;
+
+    .profile-avatar {
+        width: 25px;
+        height: 25px;
+        background-color: $orange;
+        border-radius: 50%;
+    }
 }
