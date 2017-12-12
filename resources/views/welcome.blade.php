@@ -9,17 +9,20 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/styles.css') }}">
+        <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Lobster|Montserrat:600" rel="stylesheet">
 
     </head>
     <body>
 
       <div id="app">
-          <sign-up></sign-up>
+
 
         <desktop-nav></desktop-nav>
 
         <!-- every components belonging to a route, will be shown here on the page. -->
         <router-view></router-view>
+        <sign-up></sign-up>
 
       </div>
 
