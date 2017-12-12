@@ -14,6 +14,7 @@ import router from './routes';
  */
 
 Vue.component('desktop-nav', require('./components/DesktopNav.vue'));
+Vue.component('sign-up', require('./components/SignUp.vue'));
 
 new Vue({
     el: '#app',

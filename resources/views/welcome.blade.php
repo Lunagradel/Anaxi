@@ -14,6 +14,7 @@
     <body>
 
       <div id="app">
+          <sign-up></sign-up>
 
         <desktop-nav></desktop-nav>
 
