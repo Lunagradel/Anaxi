@@ -17,3 +17,5 @@ Route::get('/', function () {
 });
 
 Route::get('/mongo', 'Controller@GetUsers');
+
+Route::post('/createuser', 'Controller@CreateUser');

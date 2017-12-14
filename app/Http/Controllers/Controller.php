@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 use DatabaseConnection;
-use AnaxiUser;
+use AnaxiUser\User as User;
 use MongoDB\Client as MongoClient;
 use MongoDB\Collection as Collection;
 
@@ -21,9 +23,17 @@ class Controller extends BaseController
 	    return $Collection->find()->toArray();
     }
 
-    public function CreateUser( $request ) {
-	    $user = new AnaxiUser\User();
-	    $user->CreateUser($request);
+    public function CreateUser( Request $request ) {
+	    $FirstName = $request->input('firstName');
+	    $LastName = $request->input('lastName');
+	    $Email = $request->input('email');
+	    $Password = $request->input('password');
+
+	    $user = new User();
+	    $response = $user->CreateUser($FirstName, $LastName, $Email, $Password);;
+//	    $response = json_encode($array);
+//	    $response = json_encode($request->all());
+	    return $response;
     }
 
 }
