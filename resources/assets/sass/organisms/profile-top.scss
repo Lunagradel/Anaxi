@@ -1,0 +1,88 @@
+.anaxi-profile-passport{
+    @include flexbox();
+
+    @include mobile {
+        @include flex-direction(column);
+        width: 100%;
+    };
+
+}
+
+.anaxi-profile-passport-graphic {
+
+    width: 200px;
+    height: 300px;
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(center);
+    @include justify-content(center);
+
+    .graphic-title{
+        font-size: 14px;
+        width: 120px;
+        text-align: center;
+        margin-bottom: 12px;
+        letter-spacing: 1px;
+    }
+
+    .graphic-image{
+        width: 120px;
+        height: 150px;
+        background-color: $blue;
+    }
+
+    @include mobile{
+        width: 100%;
+        height: 250px;
+    };
+
+}
+
+.anaxi-profile-passport-information {
+    width: 600px;
+    max-height: 220px;
+    @include flexbox();
+    margin-top: 80px;
+    @include justify-content(space-around);
+
+    .information-left, .information-right {
+        width: 250px;
+
+        @include mobile {
+            width: 220px;
+        };
+    }
+
+    .information-right {
+        @include mobile {
+            @include flexbox();
+            @include flex-direction(column);
+        };
+    }
+
+    .information-mobile {
+        @include mobile {
+            // width: 220px;
+            @include flexbox();
+            @include justify-content(space-between);
+        };
+    }
+
+    .information-item {
+        margin-bottom: 10px;
+
+        p:first-of-type {
+            font-size: 14px;
+        }
+        p:nth-of-type(2){
+            color: $dark-red;
+        }
+    }
+
+    @include mobile{
+        width: 100%;
+        @include flex-direction(column);
+        @include align-items(center);
+        margin-top: 20px;
+    };
+}

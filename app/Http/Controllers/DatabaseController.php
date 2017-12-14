@@ -20,12 +20,6 @@ class DatabaseController extends Controller
 //		$db = $client->createCollection("users");
 //		$db->createCollection("users");
 
-		$collection->insertOne([
-			'firstName' => 'Johannes',
-			'lastName' => 'Sved',
-			'age' => 100
-		]);
-
 		return $collection->find()->toArray();
 
 	}

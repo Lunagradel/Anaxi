@@ -11,10 +11,13 @@
           <div class="anaxi-nav-content-btns">
               <div class="anaxi-primary-btn" id="postBtn"><p>Post</p></div>
               <i class="ion-android-globe"></i>
-              <router-link to="/" >
+              <router-link to="/profile" >
                   <div class="profile-btn-content">
                       <p class="profile-name">Anders</p>
                       <div class="profile-avatar">
+                      </div>
+                      <div class="profile-arrow">
+
                       </div>
                   </div>
               </router-link>

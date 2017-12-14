@@ -14,8 +14,19 @@
     height: 30px;
 }
 
+#profileBtn {
+    width: 100px;
+    height: 30px;
+    margin-top: 26px;
+
+    @include mobile {
+        margin-top: 0px;
+        @include align-self(center);
+    };
+}
+
 .profile-btn-content {
-    width: 80px;
+    width: 90px;
     @include flexbox();
     @include justify-content(space-between);
     @include align-items(center);
@@ -26,5 +37,16 @@
         height: 25px;
         background-color: $orange;
         border-radius: 50%;
+    }
+
+    .profile-arrow {
+        // width: 10px;
+        border: solid $pink;
+        border-width: 0px 1px 1px 0px;
+        display: inline-block;
+        padding: 2px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+
     }
 }

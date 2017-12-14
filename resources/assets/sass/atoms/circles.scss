@@ -1,0 +1,30 @@
+.circle {
+    border-radius: 50%;
+    border: solid 1px #FED4C0;
+    @include flexbox();
+    @include justify-content(center);
+    @include align-items(center);
+}
+
+#circle {
+    width: 25px;
+    height: 25px;
+}
+
+@for $i from 1 through 15 {
+
+    $plus: 50 * $i;
+
+    .circle-#{$i} {
+        width: 25px + $plus;
+        height: 25px + $plus;
+    }
+
+}
+
+// @for $i from 1 through 3 {
+//   .circle-#{$i} {
+//     width: $i * 10px;
+//     height: $i * 10px;
+//   }
+// }
