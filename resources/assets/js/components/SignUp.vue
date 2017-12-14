@@ -16,16 +16,23 @@ export default {
 
     data: function(){
         return{
-            email: '',
-            firstName: '',
-            lastName: '',
-            password: ''
+          email: '',
+          firstName: '',
+          lastName: '',
+          password: ''
         }
     },
     methods: {
         onSubmit: function(){
             //data from inputs -- this.email, this.firstName, this.lastName and this.password
             console.log(this.firstName + " " +  this.lastName);
+            axios.post('/createuser', this.$data)
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error.response.data);
+              });
         }
     }
 
