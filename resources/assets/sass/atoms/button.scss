@@ -50,3 +50,25 @@
 
     }
 }
+
+.next-back-btns {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.answer-btn {
+    font-size: 40px;
+    cursor: pointer;
+
+    @include mobile {
+        font-size: 35px;
+    };
+}
+
+#recommendYes {
+    color: $green;
+}
+
+#recommendNo {
+    color: $red;
+}
