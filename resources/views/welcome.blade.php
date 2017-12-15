@@ -16,6 +16,7 @@
     </head>
     <body>
 
+
       <div id="app">
           <desktop-nav></desktop-nav>
           @if ($loggedIn)
@@ -34,9 +35,9 @@
 
 
       </div>
+      <script src="/js/app.js"></script>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMF-q0qyWsEhxaZQAQLMuPcJbjVXn0Exg&libraries=places"></script>
 
-      <script src="/js/app.js">
 
-      </script>
     </body>
 </html>

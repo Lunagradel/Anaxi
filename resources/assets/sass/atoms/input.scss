@@ -1,5 +1,4 @@
 .anaxi-search {
-    -webkit-appearance:none;
     border-radius: 5px;
     font-family: $body-font;
 }
@@ -17,6 +16,24 @@ textarea:focus, input:focus{
     border: solid 2px $pink;
     background-color: #f6f4ef;
 
+}
+
+.pac-container {
+    z-index: 9999 !important;
+    background-color: #f6f4ef;
+    border: solid $pink 2px;
+}
+
+.pac-icon {
+    display: none;
+}
+
+.pac-item {
+    color: $pink;
+}
+
+.pac-item-query {
+    color: $red
 }
 
 .location-content-search {

@@ -8,7 +8,7 @@
         <createRecommend
         v-if="showRecommend"
         @closeRecommend="showRecommend = false"
-        @showLocation="showCreate = true" 
+        @showLocation="showCreate = true"
         ></createRecommend>
         <nav class="anaxi-nav">
             <div class="anaxi-nav-content">
@@ -46,7 +46,7 @@ export default {
     data: function(){
         return{
             showCreate: false,
-            showRecommend: true
+            showRecommend: false
         }
     },
 

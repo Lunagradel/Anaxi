@@ -15,7 +15,7 @@
                   <p>your location.</p>
               </div>
               <div class="location-content-search">
-                  <input class="anaxi-search" id="locationSearch" type="search" name="" placeholder="Search">
+                  <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder="Search">
               </div>
           </div>
           <div class="anaxi-create-bottom">
@@ -28,14 +28,53 @@
 </template>
 
 <script>
+
 export default {
 
+    data: function(){
+        return{
+            latitude: '',
+            longitude: '',
+            locationName: ''
+        }
+    },
 
     methods: {
         showNextModal: function(){
             this.$emit('showRecommend');
             this.$emit('closeLocation');
         }
+    },
+
+    mounted: function(){
+
+        let self = this;
+        let input = this.$refs.locationSearch;
+
+        let bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(-90,-180),
+            new google.maps.LatLng(90,180)
+        )
+
+        const options = {
+            bounds: bounds,
+            types: ['geocode', 'establishment']
+        }
+
+        let autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        autocomplete.addListener('place_changed', function(){
+            let place = autocomplete.getPlace();
+            let lat = place.geometry.location.lat();
+            let lng = place.geometry.location.lng();
+            let name = place.name;
+
+            self.latitude = lat;
+            self.longitude = lng;
+            self.locationName = name;
+
+        })
+
     }
 
 }
