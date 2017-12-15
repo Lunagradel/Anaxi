@@ -1,0 +1,45 @@
+.create-header {
+    font-family: $header-font;
+    font-size: 45px;
+    margin-bottom: 60px;
+
+    @include mobile{
+        font-size: 30px;
+        margin-bottom: 40px;
+    };
+}
+
+.recommend-content-header {
+    @include flexbox();
+    @include justify-content(center);
+    margin-bottom: 90px;
+
+    @include mobile{
+        margin-bottom: 70px;
+    };
+}
+
+.anaxi-create-bottom {
+    height: 100%;
+    @include flexbox;
+    @include align-items(flex-end);
+    @include justify-content(center);
+}
+
+.anaxi-create-recommend-bottom {
+    p {
+        font-size: 20px;
+        margin: 0px 5px 0px 5px;
+    }
+}
+
+.recommend-content-answer {
+    @include flexbox();
+    @include justify-content(center);
+    align-items: center;
+
+    p {
+        font-size: 50px;
+        margin: 0px 15px 0px 15px;
+    }
+}
