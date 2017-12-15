@@ -31,9 +31,6 @@ class Controller extends BaseController
 
 	    $user = new User();
 	    $response = $user->CreateUser($FirstName, $LastName, $Email, $Password);;
-//	    $response = json_encode($array);
-//	    $response = json_encode($request->all());
 	    return $response;
     }
-
 }

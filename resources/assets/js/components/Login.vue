@@ -23,6 +23,13 @@ export default {
         onSubmit: function(){
             //data from inputs -- this.email and this.password
             console.log(this.email + " " +  this.password);
+           axios.post('/login', this.$data)
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error.response.data);
+            });
         }
     }
 }

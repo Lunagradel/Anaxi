@@ -25,12 +25,15 @@ class User {
 
 	public function CreateUser($FirstName, $LastName, $Email, $Password) {
 		// Below regexes are from stackoverflow and checked on https://regexr.com/
+		$Email = strtolower($Email);
+
 		if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
 			return "Bad email format";
 		}
-		$this->EmailAddressLookup = $this->CheckEmailAvailability($Email);
-		if (!$this->EmailAddressLookup ){
-			return "This email has already been taken ".$this->EmailAddressLookup;
+		$this->EmailAddressLookup = $this->GetEmailHash($Email);
+
+		if ( !empty($this->FindUserByEmail($Email)) ){
+			return "This email has already been taken";
 		}
 		if(!preg_match("/^[a-zA-Z-]+$/",$FirstName)) {
 			return "Bad first name";
@@ -58,35 +61,23 @@ class User {
 		return $InsertResult->getInsertedId();
 	}
 
-	private function CheckEmailAvailability($Email){
+	private function FindUserByEmail($Email){
+		$Email = strtolower($Email);
 		$EmailAddressLookup = $this->GetEmailHash($Email);
-		// Find with limit is faster than findOne
+		// find() with limit is faster than findOne()
 		$LookupResult = $this->Collection->find(
 			['emailLookup' => $EmailAddressLookup],
 			[
 				'limit' => 1
 			]
-		);
+		)->toArray();
 
-		if (!empty($LookupResult->toArray())) {
+//		dd($LookupResult, $Email);
+
+		if (empty($LookupResult)){
 			return false;
 		}
-		return $EmailAddressLookup;
-	}
-	public function LoginUser($Email, $Password){
-
-		$HashedPassword = password_hash($Password, PASSWORD_DEFAULT);;
-
-		$LookupResult = $this->Collection->find(
-			['emailLookup' => $this->GetEmailHash($Email)],
-			[
-				'limit' => 1
-			],
-			[
-				'password' => 1
-			]
-		);
-
+		return $LookupResult;
 	}
 
 	private function GetEmailHash($Email){
@@ -94,5 +85,20 @@ class User {
 		//$EmailAddressLookupKey = self::$config["keys"]["email_address_lookup_key"];
 		$EmailAddressLookupKey = "EmailKey";
 		return $EmailAddressLookup = hash_hmac("sha256", $Email, $EmailAddressLookupKey);
+	}
+
+	public function LoginUser($Email, $Password){
+
+		$UserFromCollection = $this->FindUserByEmail($Email);
+		if (!$UserFromCollection){
+			return false;
+		}
+		$UsersHashedPassword = $UserFromCollection[0]->password;
+		if (!password_verify($Password, $UsersHashedPassword)){
+			return false;
+		}
+		// On success,
+		return $UserFromCollection[0];
+
 	}
 }

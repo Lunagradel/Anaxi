@@ -20,6 +20,8 @@ Route::get('/mongo', 'Controller@GetUsers');
 
 Route::post('/createuser', 'Controller@CreateUser');
 
+Route::post('/login', 'LoginController@LoginUser');
+
 Route::get('/{vue_capture?}', function () {
 	return view('welcome');
 })->where('vue_capture', '[\/\w\.-]*');

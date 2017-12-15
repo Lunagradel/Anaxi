@@ -17,13 +17,12 @@
     <body>
 
       <div id="app">
-
-
-        <desktop-nav></desktop-nav>
+          <desktop-nav></desktop-nav>
+          <login></login>
 
         <!-- every components belonging to a route, will be shown here on the page. -->
-        <router-view></router-view>
-        <sign-up></sign-up>
+          <router-view></router-view>
+          <sign-up></sign-up>
 
       </div>
 
