@@ -60,7 +60,9 @@ class LoginController extends controller{
 			$this->response['loggedIn'] = true;
 			$this->response['response'] = "You are already logged out";
 		}
-		return $this->response;
+		$loggedIn = false;
+//		return $this->response;
+		return view('welcome', compact('loggedIn'));
 	}
 
 	public static function validateLoginState() {

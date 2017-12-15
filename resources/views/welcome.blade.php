@@ -18,11 +18,20 @@
 
       <div id="app">
           <desktop-nav></desktop-nav>
-          <login></login>
+          @if ($loggedIn)
+              <router-view></router-view>
+          @else
+              <h2> PLEASE LOGIN </h2>
+              <login></login>
+              <h2> OR SIGN UP</h2>
+              <sign-up></sign-up>
+          @endif
+
+
 
         <!-- every components belonging to a route, will be shown here on the page. -->
-          <router-view></router-view>
-          <sign-up></sign-up>
+
+
 
       </div>
 
