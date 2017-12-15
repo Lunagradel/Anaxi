@@ -11,16 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-
-    return view('welcome');
-});
+Route::get('/', 'Controller@GetFrontpage');
 
 Route::get('/mongo', 'Controller@GetUsers');
 
 Route::post('/createuser', 'Controller@CreateUser');
 
 Route::post('/login', 'LoginController@LoginUser');
+Route::get('/logout', 'LoginController@LogoutUser');
 
 Route::get('/{vue_capture?}', function () {
 	return view('welcome');

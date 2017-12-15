@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use DatabaseConnection;
 use AnaxiUser\User as User;
-use App\Http\Controllers\LoginController;
 use MongoDB\Client as MongoClient;
 use MongoDB\Collection as Collection;
 
@@ -34,10 +33,4 @@ class Controller extends BaseController
 	    $response = $user->CreateUser($FirstName, $LastName, $Email, $Password);;
 	    return $response;
     }
-
-    public function GetFrontpage( ) {
-	    $loggedIn = LoginController::validateLoginState();;
-	    return view('welcome', compact('loggedIn'));
-    }
-
 }
