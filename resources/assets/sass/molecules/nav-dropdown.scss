@@ -1,0 +1,36 @@
+.profile-dropdown{
+  position: absolute;
+  transform: translateY(45px);
+  right: 0px;
+  display: none;
+  background-color: $white;
+  padding: 10px;
+  border-left: $shadow-color 1px solid;
+  border-bottom: $shadow-color 1px solid;
+  z-index: 5;
+  color: $pink;
+  span{
+    padding: 5px 15px;
+    border-radius: 15px;
+    @include prevent-marking();
+  }
+  span:hover{
+    background-color: $orange;
+    color: $white;
+    cursor: pointer;
+  }
+  &.active{
+    display: block;
+  }
+}
+.profile-arrow {
+  // width: 10px;
+  border: solid $pink;
+  border-width: 0px 1px 1px 0px;
+  display: inline-block;
+  padding: 2px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-left: 10px;
+  cursor: pointer;
+}
