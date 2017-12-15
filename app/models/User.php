@@ -28,9 +28,9 @@ class User {
 		if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
 			return "Bad email format";
 		}
-		$this->EmailAddressLookup = $this->CheckEmailAvailability($Email);
-		if (!$this->EmailAddressLookup ){
-			return "This email has already been taken ".$this->EmailAddressLookup;
+		$this->EmailAddressLookup = $this->FindUserByEmail($Email);
+		if ( !empty($this->EmailAddressLookup) ){
+			return "This email has already been taken";
 		}
 		if(!preg_match("/^[a-zA-Z-]+$/",$FirstName)) {
 			return "Bad first name";
@@ -58,35 +58,16 @@ class User {
 		return $InsertResult->getInsertedId();
 	}
 
-	private function CheckEmailAvailability($Email){
+	private function FindUserByEmail($Email){
 		$EmailAddressLookup = $this->GetEmailHash($Email);
-		// Find with limit is faster than findOne
+		// find() with limit is faster than findOne()
 		$LookupResult = $this->Collection->find(
 			['emailLookup' => $EmailAddressLookup],
 			[
 				'limit' => 1
 			]
 		);
-
-		if (!empty($LookupResult->toArray())) {
-			return false;
-		}
-		return $EmailAddressLookup;
-	}
-	public function LoginUser($Email, $Password){
-
-		$HashedPassword = password_hash($Password, PASSWORD_DEFAULT);;
-
-		$LookupResult = $this->Collection->find(
-			['emailLookup' => $this->GetEmailHash($Email)],
-			[
-				'limit' => 1
-			],
-			[
-				'password' => 1
-			]
-		);
-
+		return $LookupResult->toArray();
 	}
 
 	private function GetEmailHash($Email){
@@ -94,5 +75,18 @@ class User {
 		//$EmailAddressLookupKey = self::$config["keys"]["email_address_lookup_key"];
 		$EmailAddressLookupKey = "EmailKey";
 		return $EmailAddressLookup = hash_hmac("sha256", $Email, $EmailAddressLookupKey);
+	}
+
+	public function LoginUser($Email, $Password){
+
+		$UserFromCollection = $this->FindUserByEmail($Email);
+		$UsersHashedPassword = $UserFromCollection[0]->password;
+		if (!password_verify($Password, $UsersHashedPassword)){
+			return 'Password does not match';
+		}
+
+		// Here we should be doing session authentication.
+		return "It was matched";
+
 	}
 }

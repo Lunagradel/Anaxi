@@ -31,8 +31,15 @@ class Controller extends BaseController
 
 	    $user = new User();
 	    $response = $user->CreateUser($FirstName, $LastName, $Email, $Password);;
-//	    $response = json_encode($array);
-//	    $response = json_encode($request->all());
+	    return $response;
+    }
+
+    public function LoginUser( Request $request ) {
+	    $Email = $request->input('email');
+	    $Password = $request->input('password');
+
+	    $user = new User();
+	    $response = $user->LoginUser($Email, $Password);;
 	    return $response;
     }
 
