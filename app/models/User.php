@@ -25,11 +25,14 @@ class User {
 
 	public function CreateUser($FirstName, $LastName, $Email, $Password) {
 		// Below regexes are from stackoverflow and checked on https://regexr.com/
+		$Email = strtolower($Email);
+
 		if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
 			return "Bad email format";
 		}
-		$this->EmailAddressLookup = $this->FindUserByEmail($Email);
-		if ( !empty($this->EmailAddressLookup) ){
+		$this->EmailAddressLookup = $this->GetEmailHash($Email);
+
+		if ( !empty($this->FindUserByEmail($Email)) ){
 			return "This email has already been taken";
 		}
 		if(!preg_match("/^[a-zA-Z-]+$/",$FirstName)) {
@@ -59,6 +62,7 @@ class User {
 	}
 
 	private function FindUserByEmail($Email){
+		$Email = strtolower($Email);
 		$EmailAddressLookup = $this->GetEmailHash($Email);
 		// find() with limit is faster than findOne()
 		$LookupResult = $this->Collection->find(
@@ -66,8 +70,14 @@ class User {
 			[
 				'limit' => 1
 			]
-		);
-		return $LookupResult->toArray();
+		)->toArray();
+
+//		dd($LookupResult, $Email);
+
+		if (empty($LookupResult)){
+			return false;
+		}
+		return $LookupResult;
 	}
 
 	private function GetEmailHash($Email){
@@ -80,13 +90,15 @@ class User {
 	public function LoginUser($Email, $Password){
 
 		$UserFromCollection = $this->FindUserByEmail($Email);
+		if (!$UserFromCollection){
+			return false;
+		}
 		$UsersHashedPassword = $UserFromCollection[0]->password;
 		if (!password_verify($Password, $UsersHashedPassword)){
-			return 'Password does not match';
+			return false;
 		}
-
-		// Here we should be doing session authentication.
-		return "It was matched";
+		// On success,
+		return $UserFromCollection[0];
 
 	}
 }

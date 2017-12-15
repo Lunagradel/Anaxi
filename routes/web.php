@@ -20,7 +20,7 @@ Route::get('/mongo', 'Controller@GetUsers');
 
 Route::post('/createuser', 'Controller@CreateUser');
 
-Route::post('/login', 'Controller@LoginUser');
+Route::post('/login', 'LoginController@LoginUser');
 
 Route::get('/{vue_capture?}', function () {
 	return view('welcome');

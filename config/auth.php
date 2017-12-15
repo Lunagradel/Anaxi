@@ -66,15 +66,10 @@ return [
 
     'providers' => [
 
-		    'users' => [
-			    'driver' => 'custom',
-			    'model' => AnaxiUser\User::class
-		    ],
-
-//        'users' => [
-//            'driver' => 'eloquent',
-//            'model' => App\User::class,
-//        ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
