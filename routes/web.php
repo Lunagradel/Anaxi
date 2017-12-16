@@ -13,13 +13,14 @@
 
 Route::get('/', 'Controller@GetFrontpage');
 
-Route::get('/mongo', 'Controller@GetUsers');
+Route::get('/mongo', 'UserController@GetUsers');
 
-Route::post('/createuser', 'Controller@CreateUser');
+Route::post('/createuser', 'UserController@CreateUser');
 
 Route::post('/login', 'LoginController@LoginUser');
-Route::get('/logout', 'LoginController@LogoutUser');
 
-Route::get('/{vue_capture?}', function () {
-	return view('welcome');
-})->where('vue_capture', '[\/\w\.-]*');
+Route::post('/logout', 'LoginController@LogoutUser');
+
+Route::post('/createexperience', 'ExperienceController@CreateExperience');
+
+Route::get('/{vue_capture?}', 'Controller@GetFrontpage')->where('vue_capture', '[\/\w\.-]*');

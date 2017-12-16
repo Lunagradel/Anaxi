@@ -26,9 +26,12 @@
                         <div class="profile-btn-content">
                             <p class="profile-name">Anders</p>
                             <div class="profile-avatar"></div>
-                            <div class="profile-arrow"></div>
                         </div>
                     </router-link>
+                    <div class="profile-arrow" v-on:click="toggleDropdown"></div>
+                    <div v-bind:class="{ active: isActive }" class="profile-dropdown">
+                        <span v-on:click="logoutUser">Logout</span>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -46,9 +49,26 @@ export default {
     data: function(){
         return{
             showCreate: false,
-            showRecommend: false
+            showRecommend: false,
+            isActive: false
         }
     },
+    methods: {
+      toggleDropdown: function () {
+        this.isActive = !this.isActive;
+        },
+      logoutUser: function () {
+        axios.post('/logout')
+          .then(function (response) {
+            console.log(response);
+            location.reload();
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+          })
+      }
+    },
+
 
     components: {
         createLocation,

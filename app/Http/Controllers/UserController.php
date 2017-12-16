@@ -13,7 +13,7 @@ use AnaxiUser\User as User;
 use MongoDB\Client as MongoClient;
 use MongoDB\Collection as Collection;
 
-class Controller extends BaseController
+class UserController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 

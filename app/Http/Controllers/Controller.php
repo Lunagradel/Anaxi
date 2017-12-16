@@ -18,23 +18,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function GetUsers(){
-	    $Database = new DatabaseConnection\DatabaseConnection();
-	    $Collection = $Database->GetMongoInstance();
-	    return $Collection->find()->toArray();
-    }
-
-    public function CreateUser( Request $request ) {
-	    $FirstName = $request->input('firstName');
-	    $LastName = $request->input('lastName');
-	    $Email = $request->input('email');
-	    $Password = $request->input('password');
-
-	    $user = new User();
-	    $response = $user->CreateUser($FirstName, $LastName, $Email, $Password);;
-	    return $response;
-    }
-
     public function GetFrontpage( ) {
 	    $loggedIn = LoginController::validateLoginState();;
 	    return view('welcome', compact('loggedIn'));
