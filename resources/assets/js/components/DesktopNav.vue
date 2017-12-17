@@ -9,7 +9,18 @@
         v-if="showRecommend"
         @closeRecommend="showRecommend = false"
         @showLocation="showCreate = true"
+        @showExtra="showExtra = true"
         ></createRecommend>
+        <createExtra
+        v-if="showExtra"
+        @showRecommend="showRecommend = true"
+        @showTrip="showTrip = true"
+        @closeExtra="showExtra = false"
+        ></createExtra>
+        <createTrip
+        v-if="showTrip"
+        @closeTrip="showTrip = false"
+        ></createTrip>
         <nav class="anaxi-nav">
             <div class="anaxi-nav-content">
                 <router-link to="/" exact>
@@ -42,7 +53,9 @@
 <script>
 
 import createLocation from './CreateLocation.vue';
-import createRecommend from './createRecommend.vue';
+import createRecommend from './CreateRecommend.vue';
+import createExtra from './CreateExtra.vue';
+import createTrip from './CreateTrip.vue';
 
 export default {
 
@@ -50,6 +63,8 @@ export default {
         return{
             showCreate: false,
             showRecommend: false,
+            showExtra: false,
+            showTrip: false,
             isActive: false
         }
     },
@@ -72,7 +87,9 @@ export default {
 
     components: {
         createLocation,
-        createRecommend
+        createRecommend,
+        createExtra,
+        createTrip
     },
 
 
