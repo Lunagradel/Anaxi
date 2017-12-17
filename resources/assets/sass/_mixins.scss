@@ -7,6 +7,15 @@
     background-image: linear-gradient(to top right, $leftcolor 0%, $rightcolor 90%);
 }
 
+@mixin radial-circle-gradient($innercolor, $outercolor){
+    background-image: -ms-radial-gradient(center, ellipse farthest-side, $innercolor 80%, $outercolor 100%);
+    background-image: -moz-radial-gradient(center, ellipse farthest-side, $innercolor 80%, $outercolor 100%);
+    background-image: -o-radial-gradient(center, ellipse farthest-side, $innercolor 80%, $outercolor 100%);
+    background-image: -webkit-gradient(radial, center center, 0, center center, 258, color-stop(80, $innercolor), color-stop(100, $outercolor));
+    background-image: -webkit-radial-gradient(center, ellipse farthest-side, $innercolor 80%, $outercolor 100%);
+    background-image: radial-gradient(ellipse farthest-side at center, $innercolor 80%, $outercolor 100%);
+}
+
 @mixin mobile {
   @media (min-width: 320px) and (max-width: 736px) {
     @content;

@@ -22,9 +22,30 @@
 
 }
 
-// @for $i from 1 through 3 {
-//   .circle-#{$i} {
-//     width: $i * 10px;
-//     height: $i * 10px;
-//   }
-// }
+.location-circle {
+    border-radius: 50%;
+    @include radial-circle-gradient($orange, $pink);
+    @include flexbox();
+    @include justify-content(center);
+    @include align-items(center);
+}
+
+.location-circle-1 {
+    width: 800px;
+    height: 800px;
+}
+
+.location-circle-2 {
+    width: 600px;
+    height: 600px;
+}
+
+.location-circle-3 {
+    width: 400px;
+    height: 400px;
+}
+
+.location-circle-4 {
+    width: 200px;
+    height: 200px;
+}

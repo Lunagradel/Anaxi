@@ -1,30 +1,45 @@
 <template>
-  <div class="anaxi-create anaxi-create-location">
-          <div class="anaxi-create-top">
-              <div class="top-progress">
-                  1/3
-              </div>
-              <div class="top-close" v-on:click="$emit('closeLocation')">
-                  &#10005
-              </div>
-          </div>
-    <div class="anaxi-create-main">
-          <div class="anaxi-create-location-content">
-              <div class="create-header location-content-header">
-                  <p>Share </p>
-                  <p>your location.</p>
-              </div>
-              <div class="location-content-search">
-                  <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder="Search">
-              </div>
-          </div>
-          <div class="anaxi-create-bottom">
-              <div class="location-bottom-btn next-back-btns" v-on:click="showNextModal">
-                  Next
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="anaxi-create anaxi-create-location">
+        <div class="anaxi-create-location-background anaxi-inner">
+            <div class="location-circle location-circle-1">
+                <div class="location-circle location-circle-2">
+                    <div class="location-circle location-circle-3">
+                        <div class="location-circle location-circle-4">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="anaxi-create-content anaxi-inner">
+
+                <div class="anaxi-create-top">
+                    <div class="top-progress">
+                        1/3
+                    </div>
+                    <div class="top-close" v-on:click="$emit('closeLocation')">
+                        &#10005
+                    </div>
+                </div>
+          <div class="anaxi-create-main">
+                <div class="anaxi-create-location-content">
+                    <div class="create-header location-content-header">
+                        <p>Share </p>
+                        <p>your location.</p>
+                    </div>
+                    <div class="location-content-search">
+                        <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder="Search">
+                    </div>
+                </div>
+                <div class="anaxi-create-bottom">
+                    <div class="location-bottom-btn next-back-btns" v-on:click="showNextModal">
+                        Next
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 <script>
