@@ -29,7 +29,7 @@
                     <p>Back</p>
                 </div>
                 <p>/</p>
-                <div class="recommend-back-btn next-back-btns">
+                <div class="recommend-back-btn next-back-btns" v-on:click="showExtraModal">
                     <p>Next</p>
                 </div>
             </div>
@@ -45,6 +45,10 @@ export default {
         showLocationModal: function(){
             this.$emit('closeRecommend');
             this.$emit('showLocation');
+        },
+        showExtraModal: function(){
+            this.$emit('closeRecommend');
+            this.$emit('showExtra');
         }
     }
 

@@ -25,6 +25,17 @@
     };
 }
 
+#createPostBtn {
+    width: 85px;
+    height: 25px;
+}
+
+#tripDoneBtn {
+    width: 100px;
+    height: 35px;
+    border-radius: 18px;
+}
+
 .profile-btn-content {
     width: 80px;
     @include flexbox();
@@ -60,4 +71,8 @@
 
 #recommendNo {
     color: $red;
+}
+
+.extra-back-btn {
+    color: $orange;
 }

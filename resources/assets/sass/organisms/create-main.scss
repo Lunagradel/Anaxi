@@ -43,3 +43,82 @@
         margin: 0px 15px 0px 15px;
     }
 }
+
+.anaxi-create-extra-content {
+    @include mobile{
+        padding: 10px;
+    };
+}
+
+.content-character-limit {
+    font-size: 12px;
+}
+
+.content-add-image {
+    width: 130px;
+    color: $blue;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(space-between);
+    cursor: pointer;
+    margin-top: 60px;
+
+    p:nth-of-type(1){
+        font-size: 30px;
+    }
+}
+
+.anaxi-create-extra-bottom {
+    width: 100%;
+    height: 50px;
+    background-color: $blue;
+}
+
+.extra-bottom-content {
+    width: 400px;
+    height: 100%;
+    padding: 0px 20px 0px 20px;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(space-between);
+}
+
+.trip-content-header {
+    font-size: 30px;
+    color: $white;
+}
+
+.trip-content-existing {
+    p {
+        color: $white;
+        font-size: 20px;
+    }
+}
+
+.existing-trips {
+    @include flexbox();
+    margin-top: 10px;
+}
+
+.existing-trip {
+    height: 20px;
+    width: 90px;
+    border-radius: 10px;
+    color: #000000;
+    font-size: 14px;
+    background-color: $orange;
+    @include flexbox();
+    @include justify-content(center);
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.trip-content-search {
+    margin-top: 60px;
+
+    p {
+        color: $white;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
