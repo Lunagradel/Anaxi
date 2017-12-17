@@ -1,6 +1,7 @@
 <template>
 
     <div class="anaxi-create anaxi-create-trip">
+        <div class="anaxi-create-content anaxi-inner">
             <div class="anaxi-create-top anaxi-create-trip-top">
                 <div class="top-close" v-on:click="$emit('closeTrip')">
                     &#10005
@@ -30,6 +31,8 @@
                 </div>
             </div>
         </div>
+        </div>
+
     </div>
 
 </template>

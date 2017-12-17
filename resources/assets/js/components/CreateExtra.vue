@@ -1,6 +1,7 @@
 <template>
 
     <div class="anaxi-create anaxi-create-extra">
+        <div class="anaxi-create-content anaxi-inner">
             <div class="anaxi-create-top">
                 <div class="top-progress">
                     3/3
@@ -41,6 +42,8 @@
             </div>
 
         </div>
+        </div>
+
     </div>
 
 </template>
