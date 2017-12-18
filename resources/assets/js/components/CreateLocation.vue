@@ -29,6 +29,7 @@
                     </div>
                     <div class="location-content-search">
                         <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder="Search">
+                        <span class="form-message"> {{message}} </span>
                     </div>
                 </div>
                 <div class="anaxi-create-bottom">
@@ -50,14 +51,23 @@ export default {
         return{
             latitude: '',
             longitude: '',
-            locationName: ''
+            locationName: '',
+            message: '',
         }
     },
 
     methods: {
         showNextModal: function(){
+          if ( !this.latitude ){
+            this.message = "You need to fill in this form buddy"
+          }else {
+            let store = this.$root.store.experienceToStore
+            store.locationName = this.locationName
+            store.latitude = this.latitude
+            store.longitude = this.longitude
             this.$emit('showRecommend');
             this.$emit('closeLocation');
+          }
         }
     },
 
@@ -88,7 +98,7 @@ export default {
             self.longitude = lng;
             self.locationName = name;
 
-        })
+        });
 
     }
 

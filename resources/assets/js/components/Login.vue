@@ -21,8 +21,8 @@ export default {
     },
     methods: {
         onSubmit: function(){
-            //data from inputs -- this.email and this.password
-            console.log(this.email + " " +  this.password);
+
+          //data from inputs -- this.email and this.password
            axios.post('/login', this.$data)
             .then(function (response) {
               console.log(response);

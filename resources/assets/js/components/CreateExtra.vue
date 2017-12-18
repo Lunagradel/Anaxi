@@ -70,6 +70,7 @@ export default {
             this.$emit("showRecommend");
         },
         makePost: function(){
+            this.$root.store.experienceToStore.description = this.description
             this.$emit('closeExtra');
             this.$emit('showTrip');
         }
