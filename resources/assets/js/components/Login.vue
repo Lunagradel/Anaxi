@@ -26,7 +26,9 @@ export default {
            axios.post('/login', this.$data)
             .then(function (response) {
               console.log(response);
-              location.reload();
+              if (response.data.loggedIn){
+                location.reload();
+              }
             })
             .catch(function (error) {
               console.log(error.response.data);
