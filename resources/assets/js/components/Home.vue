@@ -1,7 +1,7 @@
 <template>
     <div class="flexthis">
         <trip></trip>
-      <experience></experience>
+      <!--<experience></experience>-->
     </div>
 </template>
 
