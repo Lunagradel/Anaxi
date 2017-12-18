@@ -1,6 +1,6 @@
 <template>
     <div class="flexthis">
-      <experience></experience>
+      <!--<experience></experience>-->
     </div>
 </template>
 
@@ -10,7 +10,7 @@
 
     export default {
         components: {
-            Experience
+          Experience
         }
     }
 </script>

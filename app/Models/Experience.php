@@ -29,9 +29,15 @@ class Experience {
 		// Assign variables to class
 		$this->Rating = $Rating;
 		$this->Geolocation = $Geolocation;
+		$this->Description = $Description;
 		if (!empty($Description)){
-			$this->Description = $Description;
+			// Do something here..
+
 		}
+		// Date stuff
+//		$dt = new DateTime(date('Y-m-d'), new DateTimeZone('UTC'));
+//		$ts = $dt->getTimestamp();
+
 		// Get User inserting
 		// Validate Session
 		// Insert experience
@@ -40,23 +46,33 @@ class Experience {
 			'_id' => new MongoDB\BSON\ObjectID($UserId)
 		],[
 			'$push' => [
-				'Experiences' => [
-					'geolocation' => [
-						'lat' => 123,
-						'lng' => 123,
-						'location' => "A place",
-					],
-					'description' => 'I wuz here!',
+				'experiences' => [
+					'_id' => new MongoDB\BSON\ObjectID(),
+					'geolocation' => $Geolocation,
+					'description' => $Description,
 					'imageId' => 2,
-					'recommended' => true,
+					'recommended' => $Rating,
+
 				]
 			]
 		]);
-		dd($InsertResult);
-
 		return $InsertResult;
+		//					"created" => new MongoDB\BSON\UTCDateTime()
 	}
 
+	public function GetExperiencesByUser($UserId){
+		$Query = [
+			'_id' => new MongoDB\BSON\ObjectID($UserId)
+		];
+		$Projection = [
+			'experiences' => ['item' => 1]
+		];
+		$Experiences = $this->Collection->find($Query, $Projection);
+
+		return $Experiences->toArray();
+	}
+	public function GetExperiencesById($ExperienceId){}
+	public function GetExperiencesByMultipleUsers(Array $UserIds){}
 
 	// Get experiences based on One user
 	// Get Experiences based on several users

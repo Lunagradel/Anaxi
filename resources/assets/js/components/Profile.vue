@@ -1,5 +1,5 @@
 <template>
-
+    <div>
     <div class="anaxi-profile-page">
         <div class="anaxi-profile">
             <div class="anaxi-profile-background anaxi-profile-inner">
@@ -89,11 +89,35 @@
         </div>
     </div>
 
+        <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience"></Experience>
+    </div>
+
 
 </template>
 
 <script>
+  import Experience from './Experience.vue';
 export default {
+  components: {
+    Experience
+  },
+  data: function(){
+    return{
+      experiences: [],
+    }
+  },
+  mounted(){
+    const self = this;
+    axios.post('/getuserexperiences', this.$data)
+      .then(function (response) {
+        console.log(response.data[0].experiences);
+        self.experiences = response.data[0].experiences;
+//        this.$set('experiences', JSON.parse(response.data[0].experiences));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
 }
 </script>

@@ -22,7 +22,9 @@ class ExperienceController extends BaseController
 
     public function CreateExperience( Request $request )
     {
-	    session_start();
+	    if (session_status() == PHP_SESSION_NONE) {
+		    session_start();
+	    }
 	    $Rating = $request->input('recommended');
 	    $Geolocation = $request->input('geolocation');
 	    $Description = $request->input('description');
@@ -35,7 +37,15 @@ class ExperienceController extends BaseController
 	    return $Response;
 
     }
-    public function GetExperiences( Request $request ) {}
+    public function GetExperiencesByUser( Request $request ) {
+	    if (session_status() == PHP_SESSION_NONE) {
+		    session_start();
+	    }
+	    $UserId = $_SESSION["user_id"];
+	    $Experience = new Experience();
+	    $Response = $Experience->GetExperiencesByUser($UserId);
+	    return $Response;
+    }
     public function UpdateExperience( Request $request ) {}
     public function DeleteExperience( Request $request ) {}
 }
