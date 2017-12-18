@@ -16,13 +16,11 @@
                     <p>Recommend?</p>
                 </div>
                 <div class="recommend-content-answer">
-                    <div class="answer-btn" id="recommendYes">
-                        Yes
-                    </div>
+                    <input type="radio" class="answer-btn" v-model="recommended" :value=true id="recommendYes">
+                    <label for="recommendYes">Yes</label>
                     <p>/</p>
-                    <div class="answer-btn" id="recommendNo">
-                        No
-                    </div>
+                    <input type="radio" class="answer-btn" v-model="recommended" :value=false id="recommendNo">
+                    <label for="recommendNo">No</label>
                 </div>
             </div>
             <div class="anaxi-create-bottom anaxi-create-recommend-bottom">
@@ -43,13 +41,18 @@
 
 <script>
 export default {
-
+  data: function(){
+    return{
+      recommended: true,
+    }
+  },
     methods: {
         showLocationModal: function(){
             this.$emit('closeRecommend');
             this.$emit('showLocation');
         },
         showExtraModal: function(){
+            this.$root.store.experienceToStore.recommended = this.recommended
             this.$emit('closeRecommend');
             this.$emit('showExtra');
         }

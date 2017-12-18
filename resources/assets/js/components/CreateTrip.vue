@@ -1,4 +1,4 @@
-<template>
+ <template>
 
     <div class="anaxi-create anaxi-create-trip">
         <div class="anaxi-create-content anaxi-inner">
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="anaxi-create-bottom">
-                <div class="anaxi-primary-btn" id="tripDoneBtn">
+                <div class="anaxi-primary-btn" v-on:click="submitPost" id="tripDoneBtn">
                     Done
                 </div>
             </div>
@@ -78,6 +78,26 @@ export default {
 
         })
 
+    },
+  methods: {
+    submitPost: function(){
+      let experience = this.$root.store.experienceToStore
+      axios.post('/createexperience', {
+        recommended: experience.recommended,
+        geolocation: {
+          lat: experience.latitude,
+          lng: experience.longitude,
+          locationName: experience.locationName
+        },
+        description: experience.description
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
     }
+  }
 }
 </script>

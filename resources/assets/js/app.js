@@ -19,6 +19,21 @@ Vue.component('login', require('./components/Login.vue'));
 
 new Vue({
     el: '#app',
+    data:{
+      store: {
+        user: {
+          name: "",
+          id: "",
+        },
+        experienceToStore: {
+          latitude: "",
+          longitude: "",
+          locationName: "",
+          description: "",
+          recommended: false
+        },
+      },
+    },
 
     router
 });

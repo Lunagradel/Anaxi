@@ -14,6 +14,7 @@ Use App\Http\Controllers\UserController as UserController;
 use AnaxiUser\User as User;
 use MongoDB\Client as MongoClient;
 use MongoDB\Collection as Collection;
+use Experience\Experience as Experience;
 
 class ExperienceController extends BaseController
 {
@@ -21,11 +22,17 @@ class ExperienceController extends BaseController
 
     public function CreateExperience( Request $request )
     {
+	    session_start();
+	    $Rating = $request->input('recommended');
+	    $Geolocation = $request->input('geolocation');
+	    $Description = $request->input('description');
+//	    $Image = $request->input('password');
+	    $UserId = $_SESSION["user_id"];
 
-	    $Rating = $request->input('firstName');
-	    $Geolocation = $request->input('lastName');
-	    $Description = $request->input('email');
-	    $Image = $request->input('password');
+	    $Experience = new Experience();
+	    $Response = $Experience->createExperience($UserId, $Rating, $Geolocation, $Description);
+
+	    return $Response;
 
     }
     public function GetExperiences( Request $request ) {}
