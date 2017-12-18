@@ -69,3 +69,67 @@
     }
 
 }
+
+.anaxi-card-content-destination {
+
+    height: 80px;
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(center);
+
+    p:nth-of-type(1) {
+        font-size: 20px;
+    }
+
+    .destination-place {
+        font-size: 32px;
+        color: $red;
+    }
+}
+
+.anaxi-card-content-experiences {
+    margin-top: 15px;
+}
+
+.accordion-experience-btn {
+    @include flexbox();
+    @include align-items(center);
+    cursor: pointer;
+}
+
+.accordion-btn-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: $pink;
+    margin-right: 5px;
+}
+
+.accordion-btn-title {
+    color: $red;
+}
+
+.accordion-experience-content {
+    border-left: solid 2px $orange;
+    min-height: 20px;
+    margin-left: 7.5px;
+}
+
+.accordion-last-experience {
+    min-height: 0px;
+}
+
+.experience-container {
+    padding: 10px;
+}
+
+.experience-container-content {
+    border: solid $card-line-color 1px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.trip-map {
+    width: 100%;
+    height: 200px;
+}

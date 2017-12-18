@@ -15,11 +15,12 @@
 
     </head>
     <body>
-
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMF-q0qyWsEhxaZQAQLMuPcJbjVXn0Exg&libraries=places"></script>
 
       <div id="app">
-          <desktop-nav></desktop-nav>
+
           @if ($loggedIn)
+            <desktop-nav></desktop-nav>
               <router-view></router-view>
           @else
               <h2> PLEASE LOGIN </h2>
@@ -36,7 +37,7 @@
 
       </div>
       <script src="/js/app.js"></script>
-      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMF-q0qyWsEhxaZQAQLMuPcJbjVXn0Exg&libraries=places"></script>
+
 
 
     </body>

@@ -1,5 +1,6 @@
 <template>
     <div class="flexthis">
+        <trip></trip>
       <experience></experience>
     </div>
 </template>
@@ -7,10 +8,12 @@
 <script>
 
     import Experience from './Experience.vue';
+    import Trip from './Trip.vue';
 
     export default {
         components: {
-            Experience
+            Experience,
+            Trip
         }
     }
 </script>
@@ -19,7 +22,8 @@
 
     .flexthis {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         margin-top: 20px;
     }
 </style>
