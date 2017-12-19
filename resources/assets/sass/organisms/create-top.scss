@@ -5,14 +5,16 @@
     @include flexbox();
     @include justify-content(space-between);
 
-    .top-close {
-        font-size: 25px;
-        cursor: pointer;
-    }
+
 
     .top-progress {
         font-size: 20px;
     }
+}
+
+.top-close {
+    font-size: 25px;
+    cursor: pointer;
 }
 
 .anaxi-create-trip-top {

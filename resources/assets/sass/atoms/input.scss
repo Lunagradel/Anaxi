@@ -95,7 +95,7 @@ textarea {
     background-color: #adccdc;
 }
 
-.trip-content-search {
+.trip-content-search, .anaxi-edit-profile-content {
     ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
       color: $dark-red;
     }
@@ -108,4 +108,23 @@ textarea {
     :-moz-placeholder { /* Firefox 18- */
       color: $dark-red;
     }
+}
+
+.anaxi-edit-input {
+    width: 80%;
+    height: 40px;
+    font-size: 18px;
+    color: $dark-red;
+    padding-left: 5px;
+    border: solid 2px $dark-red;
+    background-color: $light-orange;
+}
+
+.anaxi-edit-textarea {
+    width: 80%;
+    font-size: 18px;
+    color: $dark-red;
+    padding: 5px;
+    border: solid 2px $dark-red;
+    background-color: $light-orange;
 }

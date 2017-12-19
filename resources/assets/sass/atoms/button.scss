@@ -36,6 +36,11 @@
     border-radius: 18px;
 }
 
+#EditBtn {
+    width: 90px;
+    height: 30px;
+}
+
 .profile-btn-content {
     width: 80px;
     @include flexbox();

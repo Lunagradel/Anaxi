@@ -78,7 +78,7 @@
                                 <p>{{following}}</p>
                             </div>
                         </div>
-                        <div class="anaxi-primary-btn" id="profileBtn">
+                        <div class="anaxi-primary-btn" id="profileBtn" v-on:click="showEdit = true">
                             Edit
                         </div>
                     </div>
@@ -92,6 +92,13 @@
         <div class="anaxi-profile-feed">
             <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>
         </div>
+        <EditProfile
+        v-if="showEdit"
+        @closeEdit="showEdit = false"
+        v-bind:userFirstName="firstName"
+        v-bind:userLastName="lastName"
+        v-bind:userDescription="description"
+        ></EditProfile>
     </div>
 
 
@@ -99,18 +106,21 @@
 
 <script>
   import Experience from './Experience.vue';
+  import EditProfile from './EditProfile.vue';
 export default {
   components: {
-    Experience
+    Experience,
+    EditProfile
   },
   data: function(){
     return {
-        lastName: '',
-        firstName: '',
-        description: 'heyo this is a description that is very long. maybe even two lines.',
         followers: 100,
         following: 100,
         experiences: [],
+        lastName: '',
+        firstName: '',
+        description: '',
+        showEdit: false
     }
   },
 
@@ -121,7 +131,6 @@ export default {
           const bounds = new google.maps.LatLngBounds();
           let mapName = this.$refs.profileMap;
           const mapCenter = this.experiences[0].geolocation;
-          console.log(mapCenter);
           let marker;
 
           const options = {
@@ -214,7 +223,6 @@ export default {
     let userId = self.$route.params.id;
     axios.post('/getuserexperiences', {'userId':userId})
       .then(function (response) {
-        console.log(response.data);
         self.experiences = response.data[0].experiences;
         self.firstName = response.data[0].firstName;
         self.lastName = response.data[0].lastName;
@@ -227,6 +235,17 @@ export default {
       });
 
 
+  },
+
+  watch: {
+      showEdit: function(newValue){
+          let className = "modal-open";
+          if (newValue) {
+              document.body.classList.add(className);
+          } else {
+              document.body.classList.remove(className);
+          }
+      }
   }
 
 
