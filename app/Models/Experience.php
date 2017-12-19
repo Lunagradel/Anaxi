@@ -41,7 +41,6 @@ class Experience {
 		// Get User inserting
 		// Validate Session
 		// Insert experience
-		//db.users.update({ _id: ObjectId("5a34f1b9eefa847b3f3b1f12")},{$push:{Experiences:{"gelocation":"theworld", "description":"Yolo", "imageId":123, "recommends":false}}})
 		$InsertResult = $this->Collection->findOneAndUpdate([
 			'_id' => new MongoDB\BSON\ObjectID($UserId)
 		],[
@@ -65,7 +64,7 @@ class Experience {
 			'_id' => new MongoDB\BSON\ObjectID($UserId)
 		];
 		$Projection = [
-			'experiences' => ['item' => 1]
+			'projection' => ['password' => 0]
 		];
 		$Experiences = $this->Collection->find($Query, $Projection);
 

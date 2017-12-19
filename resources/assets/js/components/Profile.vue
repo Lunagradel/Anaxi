@@ -110,7 +110,7 @@ export default {
     const self = this;
     axios.post('/getuserexperiences', this.$data)
       .then(function (response) {
-        console.log(response.data[0].experiences);
+        console.log(response.data);
         self.experiences = response.data[0].experiences;
 //        this.$set('experiences', JSON.parse(response.data[0].experiences));
       })
