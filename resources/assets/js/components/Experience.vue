@@ -20,10 +20,10 @@
                     <p class="recommendations-place">{{experience.geolocation.locationName}}</p>
                 </div>
                 <div class="anaxi-card-content-extra">
-                    <div class="extra-text">
+                    <div class="extra-text" v-if="experience.description">
                         {{experience.description}}
                     </div>
-                    <div class="extra-image">
+                    <div class="extra-image" v-if="image">
 
                     </div>
                 </div>
@@ -47,8 +47,12 @@ export default {
             userName: "Bob Ole",
             Recommends: true,
             place: "Pyramid of Khufu",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Need moore nfm."
+            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Need moore nfm.",
+            image: ''
         }
+    },
+    mounted: function() {
+        console.log(this.experience.description);
     }
 
 }
