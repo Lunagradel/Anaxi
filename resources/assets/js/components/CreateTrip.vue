@@ -23,11 +23,18 @@
                 <div class="trip-content-search">
                     <p>Make New</p>
                     <input class="anaxi-search" ref="createTripSearch" id="createTripSearch" type="text" name="search" placeholder="Search">
+                    <div class="anaxi-primary-btn" v-on:click="clearTripLocal" id="tripAddBtn">
+                        Clear
+                    </div>
                 </div>
             </div>
+            <span class="form-message"> {{message}} </span>
             <div class="anaxi-create-bottom">
-                <div class="anaxi-primary-btn" v-on:click="submitPost" id="tripDoneBtn">
-                    Done
+                <div class="anaxi-primary-btn" v-on:click="submitTrip" id="tripDoneBtn" v-if="latitude">
+                    Add to trip
+                </div>
+                <div class="anaxi-primary-btn" v-on:click="submitPost" id="experienceDoneBtn" v-else>
+                    Add experience
                 </div>
             </div>
         </div>
@@ -44,7 +51,8 @@ export default {
         return {
             latitude: '',
             longitude: '',
-            tripName: ''
+            tripName: '',
+            message: ''
         }
     },
 
@@ -97,7 +105,42 @@ export default {
         .catch(function (error) {
           console.log(error.response.data);
         });
-    }
+    },
+    submitTrip: function () {
+      console.log("Submitting a trip");
+      let self = this;
+      let experience = self.$root.store.experienceToStore
+      axios.post('/createtrip', {
+        experience: {
+            recommended: experience.recommended,
+            geolocation: {
+              lat: experience.latitude,
+              lng: experience.longitude,
+              locationName: experience.locationName
+            },
+            description: experience.description
+        },
+        trip: {
+          lat: self.latitude,
+          lng: self.longitude,
+          name: self.tripName
+        }
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
+    },
+    clearTripLocal: function () {
+      let self = this;
+      let input = self.$refs.createTripSearch;
+      input.value = '';
+      self.latitude = '';
+      self.longitude = '';
+      self.tripName = '';
+    },
   }
 }
 </script>
