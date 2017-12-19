@@ -33,4 +33,11 @@ class UserController extends BaseController
 	    $response = $user->CreateUser($FirstName, $LastName, $Email, $Password);;
 	    return $response;
     }
+    public function GetUserById(Request $request){
+	    $UserId = $request->input('userID');
+
+	    $User = new User();
+	    $result = $User->GetUserById($UserId);
+	    return $result;
+    }
 }

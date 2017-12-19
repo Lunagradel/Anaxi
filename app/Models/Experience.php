@@ -8,7 +8,6 @@
 
 namespace Experience;
 use DatabaseConnection;
-//use MongoId;
 use MongoDB;
 class Experience {
 
@@ -38,9 +37,6 @@ class Experience {
 //		$dt = new DateTime(date('Y-m-d'), new DateTimeZone('UTC'));
 //		$ts = $dt->getTimestamp();
 
-		// Get User inserting
-		// Validate Session
-		// Insert experience
 		$InsertResult = $this->Collection->findOneAndUpdate([
 			'_id' => new MongoDB\BSON\ObjectID($UserId)
 		],[
@@ -51,7 +47,6 @@ class Experience {
 					'description' => $Description,
 					'imageId' => 2,
 					'recommended' => $Rating,
-
 				]
 			]
 		]);

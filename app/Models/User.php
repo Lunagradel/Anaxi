@@ -1,6 +1,7 @@
 <?php
 namespace AnaxiUser;
 use DatabaseConnection;
+use MongoDB;
 class User {
 	public $ID;
 	public $FirstName;
@@ -19,8 +20,18 @@ class User {
 		$this->Collection = $Database->GetMongoInstance();
 	}
 
-	public function GetUsers($ID){
+	public function GetUserById($ID){
+		$this->ID = $ID;
 
+		$Query = [
+			'_id' => new MongoDB\BSON\ObjectID($this->ID)
+		];
+		$Options =  [
+			'limit' => 1,
+			'projection' => ['firstName' => 1]
+		];
+		$result = $this->Collection->find($Query,$Options)->toArray();
+		return $result;
 	}
 
 	public function CreateUser($FirstName, $LastName, $Email, $Password) {
