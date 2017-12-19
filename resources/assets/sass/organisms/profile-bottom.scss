@@ -1,0 +1,6 @@
+.anaxi-profile-feed {
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(center);
+    margin-top: 5px;
+}

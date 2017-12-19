@@ -1,17 +1,38 @@
 .anaxi-profile-page {
     width: 100%;
     @include flexbox();
-    @include justify-content(center);
+    @include flex-direction(column);
+    @include align-items(center);
+}
+
+.anaxi-profile, .anaxi-profile-background, .anaxi-profile-map, .anaxi-profile-feed {
+    width: 800px;
+
+    @include mobile{
+        width: 100%;
+
+    }
+}
+
+.anaxi-profile {
+    -webkit-box-shadow: 0px 9px 5px -2px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 9px 5px -2px rgba(0,0,0,0.1);
+    box-shadow: 0px 9px 5px -2px rgba(0,0,0,0.1);
 }
 
 .anaxi-profile, .anaxi-profile-background {
-    width: 800px;
     height: 300px;
+
     @include mobile{
-        width: 100%;
         height: 480px;
     }
 }
+
+.anaxi-profile-map {
+    height: 250px;
+    margin-top: 10px;
+}
+
 
 .anaxi-profile {
     background-color: $light-orange;
