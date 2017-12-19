@@ -24,6 +24,7 @@ class Controller extends BaseController
 
     public function GetFrontpage( ) {
 	    $loggedIn = LoginController::validateLoginState();;
+
 	    return view('welcome', compact('loggedIn'));
     }
 

@@ -9,22 +9,26 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-use DatabaseConnection;
-Use App\Http\Controllers\UserController as UserController;
-use AnaxiUser\User as User;
-use MongoDB\Client as MongoClient;
-use MongoDB\Collection as Collection;
+use App\Http\Controllers\LoginController as LoginController;
 use Experience\Experience as Experience;
 
 class ExperienceController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function CreateExperience( Request $request )
+    public $LoginController;
+
+    public function __construct() {
+    	$this->LoginController = new LoginController();
+    }
+
+		public function CreateExperience( Request $request )
     {
-	    if (session_status() == PHP_SESSION_NONE) {
-		    session_start();
+	    $UserIsLoggedIn = $this->LoginController->validateLoginState();
+	    if (!$UserIsLoggedIn){
+		    return false;
 	    }
+
 	    $Rating = $request->input('recommended');
 	    $Geolocation = $request->input('geolocation');
 	    $Description = $request->input('description');
@@ -38,10 +42,12 @@ class ExperienceController extends BaseController
 
     }
     public function GetExperiencesByUser( Request $request ) {
-	    if (session_status() == PHP_SESSION_NONE) {
-		    session_start();
+	    $UserIsLoggedIn = $this->LoginController->validateLoginState();
+
+	    if (!$UserIsLoggedIn){
+	    	return false;
 	    }
-	    $UserId = $_SESSION["user_id"];
+	    $UserId = $request->input('userId');
 	    $Experience = new Experience();
 	    $Response = $Experience->GetExperiencesByUser($UserId);
 	    return $Response;

@@ -70,7 +70,15 @@ class Experience {
 
 		return $Experiences->toArray();
 	}
-	public function GetExperiencesById($ExperienceId){}
+	public function GetExperiencesById($ExperienceId){
+		$Query = [
+			'experiences' => [
+				'_id' => new MongoDB\BSON\ObjectID($ExperienceId)
+			]
+		];
+		$Experience = $this->Collection->findOne($Query);
+		return $Experience->toArray();
+	}
 	public function GetExperiencesByMultipleUsers(Array $UserIds){}
 
 	// Get experiences based on One user

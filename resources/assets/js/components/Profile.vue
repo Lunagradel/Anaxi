@@ -108,7 +108,8 @@ export default {
   },
   mounted(){
     const self = this;
-    axios.post('/getuserexperiences', this.$data)
+    let userId = self.$route.params.id;
+    axios.post('/getuserexperiences', {'userId':userId})
       .then(function (response) {
         console.log(response.data);
         self.experiences = response.data[0].experiences;
