@@ -33,9 +33,9 @@
                 <div class="anaxi-nav-content-btns">
                     <div class="anaxi-primary-btn" id="postBtn" v-on:click="showCreate = true"><p>Post</p></div>
                     <i class="ion-android-globe"></i>
-                    <router-link to="/profile" >
+                    <router-link :to="{ name: 'profile', params: { id: userid }}">
                         <div class="profile-btn-content">
-                            <p class="profile-name">Anders</p>
+                            <p class="profile-name">{{userName}}</p>
                             <div class="profile-avatar"></div>
                         </div>
                     </router-link>
@@ -59,13 +59,15 @@ import createTrip from './CreateTrip.vue';
 
 export default {
 
-    data: function(){
+  props: ['userid'],
+  data: function(){
         return{
             showCreate: false,
             showRecommend: false,
             showExtra: false,
             showTrip: false,
-            isActive: false
+            isActive: false,
+            userName: '',
         }
     },
     methods: {
@@ -94,7 +96,17 @@ export default {
 
 
     mounted() {
-      console.log('Desktop Nav mounted.')
+      let self = this;
+      console.log('Desktop Nav mounted.');
+      axios.post('/getuserbyid', {'userID':self.userid})
+        .then(function (response) {
+          console.log(response);
+          console.log(response.data[0].firstName);
+          self.userName = response.data[0].firstName;
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
   }
 }
 </script>

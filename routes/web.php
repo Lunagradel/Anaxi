@@ -22,6 +22,9 @@ Route::post('/login', 'LoginController@LoginUser');
 Route::post('/logout', 'LoginController@LogoutUser');
 
 Route::post('/createexperience', 'ExperienceController@CreateExperience');
+
 Route::post('/getuserexperiences', 'ExperienceController@GetExperiencesByUser');
+
+Route::post('/getuserbyid', 'UserController@GetUserById');
 
 Route::get('/{vue_capture?}', 'Controller@GetFrontpage')->where('vue_capture', '[\/\w\.-]*');

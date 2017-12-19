@@ -9,7 +9,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/styles.css') }}">
-        <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Lobster|Montserrat:600" rel="stylesheet">
 
     </head>
@@ -19,7 +19,7 @@
       <div id="app">
 
           @if ($loggedIn)
-            <desktop-nav></desktop-nav>
+            <desktop-nav userid="{{$_SESSION["user_id"]}}"></desktop-nav>
             <router-view></router-view>
           @else
               <h2> PLEASE LOGIN </h2>

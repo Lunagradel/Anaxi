@@ -43,7 +43,6 @@ class ExperienceController extends BaseController
     }
     public function GetExperiencesByUser( Request $request ) {
 	    $UserIsLoggedIn = $this->LoginController->validateLoginState();
-
 	    if (!$UserIsLoggedIn){
 	    	return false;
 	    }
