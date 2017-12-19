@@ -6,7 +6,7 @@
                 <div class="top-progress">
                     2/3
                 </div>
-                <div class="top-close" v-on:click="$emit('closeRecommend')">
+                <div class="top-close" v-on:click="$emit('closeModal')">
                     &#10005
                 </div>
             </div>

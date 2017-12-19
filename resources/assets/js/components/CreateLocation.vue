@@ -5,7 +5,7 @@
                 <div class="location-circle location-circle-2">
                     <div class="location-circle location-circle-3">
                         <div class="location-circle location-circle-4">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                     <div class="top-progress">
                         1/3
                     </div>
-                    <div class="top-close" v-on:click="$emit('closeLocation')">
+                    <div class="top-close" v-on:click="$emit('closeModal')">
                         &#10005
                     </div>
                 </div>

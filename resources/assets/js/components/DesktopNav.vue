@@ -4,22 +4,25 @@
         v-if="showCreate"
         @showRecommend="showRecommend = true"
         @closeLocation="showCreate = false"
+        @closeModal="showCreate = false, modalOpen = false"
         ></createLocation>
         <createRecommend
         v-if="showRecommend"
         @closeRecommend="showRecommend = false"
         @showLocation="showCreate = true"
         @showExtra="showExtra = true"
+        @closeModal="showCreate = false, modalOpen = false"
         ></createRecommend>
         <createExtra
         v-if="showExtra"
         @showRecommend="showRecommend = true"
         @showTrip="showTrip = true"
         @closeExtra="showExtra = false"
+        @closeModal="showCreate = false, modalOpen = false"
         ></createExtra>
         <createTrip
         v-if="showTrip"
-        @closeTrip="showTrip = false"
+        @closeTrip="showTrip = false, modalOpen = false"
         ></createTrip>
         <nav class="anaxi-nav">
             <div class="anaxi-nav-content">
@@ -31,7 +34,7 @@
                     </div>
                 </router-link>
                 <div class="anaxi-nav-content-btns">
-                    <div class="anaxi-primary-btn" id="postBtn" v-on:click="showCreate = true"><p>Post</p></div>
+                    <div class="anaxi-primary-btn" id="postBtn" v-on:click="showCreate = true, modalOpen = true"><p>Post</p></div>
                     <i class="ion-android-globe"></i>
                     <router-link :to="{ name: 'profile', params: { id: userid }}">
                         <div class="profile-btn-content">
@@ -68,6 +71,7 @@ export default {
             showTrip: false,
             isActive: false,
             userName: '',
+            modalOpen: false,
         }
     },
     methods: {
@@ -107,6 +111,16 @@ export default {
         .catch(function (error) {
           console.log(error);
         })
+  },
+  watch: {
+      modalOpen: function(newValue){
+          let className = "modal-open";
+          if (newValue) {
+              document.body.classList.add(className);
+          } else {
+              document.body.classList.remove(className);
+          }
+      }
   }
 }
 </script>
