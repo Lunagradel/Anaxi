@@ -90,7 +90,7 @@
 
         </div>
         <div class="anaxi-profile-feed">
-            <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience"></Experience>
+            <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>
         </div>
     </div>
 
@@ -198,7 +198,8 @@ export default {
 
               //when marker is pressed it calls toggleExperiences and shows the experience belonging to the marker.
               google.maps.event.addListener(marker, 'click', function(){
-                  console.log("you clicked a marker with index: ", index );
+                  var experienceElement = document.getElementById(index);
+                  experienceElement.scrollIntoView({behavior: 'smooth'});
               });
 
               //makes the zoom so that every marker is visible
