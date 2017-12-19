@@ -6,7 +6,7 @@ let routes = [
         component: require('./components/Home')
     },
     {
-        path: '/profile',
+        path: '/profile/:id',
         component: require('./components/Profile')
     }
 

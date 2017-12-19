@@ -5,7 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <title>Anaxi</title>
 
         <!-- Fonts -->
@@ -21,7 +20,7 @@
 
           @if ($loggedIn)
             <desktop-nav></desktop-nav>
-              <router-view></router-view>
+            <router-view></router-view>
           @else
               <h2> PLEASE LOGIN </h2>
               <login></login>
@@ -37,8 +36,5 @@
 
       </div>
       <script src="/js/app.js"></script>
-
-
-
     </body>
 </html>
