@@ -56,7 +56,21 @@ class Trip {
 		return $QueryResult->toArray();
 	}
 
-	public function AddExperienceToTrip(){
+	public function AddExperienceToTrip($TripId, $ExperienceId){
+
+		$Query = [
+			'trips._id' => new MongoDB\BSON\ObjectID($TripId)
+		];
+		$Update = [
+			'$push' => [
+			'trips.$.experiences' => [
+				'_id' => new MongoDB\BSON\ObjectID($ExperienceId)
+			]
+			]
+		];
+
+		$InsertResult = $this->Collection->findOneAndUpdate($Query,$Update);
+		return $InsertResult;
 
 	}
 

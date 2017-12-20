@@ -23,7 +23,7 @@
                 </div>
                 <div class="trip-content-search">
                     <p>Make New</p>
-                    <input class="anaxi-search" ref="createTripSearch" id="createTripSearch" type="text" name="search" placeholder="Search">
+                    <input class="anaxi-search" ref="createTripSearch" id="createTripSearch" type="text" name="search" placeholder="Search"  v-bind:class="{ hidden: existingTripChosen }">
                     <div class="anaxi-primary-btn" v-on:click="clearTripLocal" id="tripAddBtn">
                         Clear
                     </div>
@@ -32,6 +32,9 @@
             <span class="form-message"> {{message}} </span>
             <div class="anaxi-create-bottom">
                 <div class="anaxi-primary-btn" v-on:click="submitTrip" id="tripDoneBtn" v-if="latitude">
+                    Add new trip
+                </div>
+                <div class="anaxi-primary-btn" v-on:click="submitToExistingTrip" id="existingExperienceDoneBtn" v-else-if="existingTripChosen">
                     Add to trip
                 </div>
                 <div class="anaxi-primary-btn" v-on:click="submitPost" id="experienceDoneBtn" v-else>
@@ -60,37 +63,12 @@ export default {
     },
     mounted: function(){
         this.getUserTrips();
-
-        let self = this;
-        let input = this.$refs.createTripSearch;
-
-        let bounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(-90,-180),
-            new google.maps.LatLng(90,180)
-        )
-
-        const options = {
-            bounds: bounds,
-            types: ['(regions)']
-        }
-
-        let autocomplete = new google.maps.places.Autocomplete(input, options);
-
-        autocomplete.addListener('place_changed', function(){
-            let place = autocomplete.getPlace();
-            let lat = place.geometry.location.lat();
-            let lng = place.geometry.location.lng();
-            let name = place.name;
-
-            self.latitude = lat;
-            self.longitude = lng;
-            self.tripName = name;
-        })
-
+        this.initGoogleMapAutocompleter();
     },
   methods: {
     submitPost: function(){
-      let experience = this.$root.store.experienceToStore
+      let self = this;
+      let experience = self.$root.store.experienceToStore
       axios.post('/createexperience', {
         recommended: experience.recommended,
         geolocation: {
@@ -101,10 +79,11 @@ export default {
         description: experience.description
       })
         .then(function (response) {
+          self.$emit('closeTrip');
           console.log(response);
         })
         .catch(function (error) {
-          console.log(error.response.data);
+          console.log(error);
         });
     },
     submitTrip: function () {
@@ -129,6 +108,7 @@ export default {
       })
         .then(function (response) {
           console.log(response);
+          self.$emit('closeTrip');
         })
         .catch(function (error) {
           console.log(error.response.data);
@@ -137,10 +117,12 @@ export default {
     clearTripLocal: function () {
       let self = this;
       let input = self.$refs.createTripSearch;
-      input.value = '';
+      if (input) { input.value = ''; }
       self.latitude = '';
       self.longitude = '';
       self.tripName = '';
+      self.existingTripChosen = false;
+      this.initGoogleMapAutocompleter();
     },
     getUserTrips: function () {
       let self = this;
@@ -155,8 +137,63 @@ export default {
         });
     },
     addToExistingTrip: function (event) {
-      let clickedTripId = event.target.getAttribute("data-trip-id");
-      console.log(clickedTripId);
+      let self = this;
+      self.existingTripChosen = event.target.getAttribute("data-trip-id");
+    },
+    submitToExistingTrip: function () {
+      let self = this;
+      let experience = self.$root.store.experienceToStore;
+      let tripId = self.existingTripChosen;
+      axios.post('/addexperiencetotrip', {
+        experience: {
+          recommended: experience.recommended,
+          geolocation: {
+            lat: experience.latitude,
+            lng: experience.longitude,
+            locationName: experience.locationName
+          },
+          description: experience.description
+        },
+        trip: {
+          id: tripId
+        }
+      })
+        .then(function (response) {
+          self.$emit('closeTrip');
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
+    },
+    initGoogleMapAutocompleter: function () {
+      let self = this;
+      let input = this.$refs.createTripSearch;
+
+      let bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(-90,-180),
+        new google.maps.LatLng(90,180)
+      )
+
+      const options = {
+        bounds: bounds,
+        types: ['(regions)']
+      }
+
+      let autocomplete = new google.maps.places.Autocomplete(input, options);
+
+      autocomplete.addListener('place_changed', function(){
+        let place = autocomplete.getPlace();
+        let lat = place.geometry.location.lat();
+        let lng = place.geometry.location.lng();
+        let name = place.name;
+
+        self.latitude = lat;
+        self.longitude = lng;
+        self.tripName = name;
+      })
+
+
     }
   }
 }

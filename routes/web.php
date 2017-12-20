@@ -35,6 +35,8 @@ Route::post('/getuserexperiences', 'ExperienceController@GetExperiencesByUser');
 
 Route::post('/createtrip', 'TripController@CreateTrip');
 
+Route::post('/addexperiencetotrip', 'TripController@AddToExistingTrip');
+
 Route::post('/getUserTrips', 'TripController@GetUserTrips');
 
 // Vue route catcher

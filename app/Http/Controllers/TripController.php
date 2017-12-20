@@ -54,6 +54,18 @@ class TripController {
 		return $Response;
 	}
 	public function AddToExistingTrip(Request $request){
+		$UserIsLoggedIn = $this->LoginController->validateLoginState();
+		if (!$UserIsLoggedIn){
+			return false;
+		}
 
+		$ExperienceController = new ExperienceController();
+		$NewExperienceId = $ExperienceController->CreateExperience($request);
+
+		$TripId = $request->input('trip.id');
+		$Trip = new Trip();
+
+		$Response = $Trip->AddExperienceToTrip($TripId, $NewExperienceId);
+		return $Response;
 	}
 }
