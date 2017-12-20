@@ -70,7 +70,7 @@ class LoginController extends controller{
 			session_start();
 		}
 		if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
-			session_regenerate_id(true);
+//			session_regenerate_id(true);
 			// User is logged in
 			return true;
 		} else {

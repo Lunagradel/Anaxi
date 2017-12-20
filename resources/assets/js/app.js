@@ -34,6 +34,9 @@ new Vue({
         },
       },
     },
-
+    mounted(){
+      let userId = document.head.querySelector("[name=user]").content;
+      this.store.user.id = userId;
+    },
     router
 });

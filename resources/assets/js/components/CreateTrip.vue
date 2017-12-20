@@ -16,8 +16,9 @@
                 <div class="trip-content-existing">
                     <p>Choose existing</p>
                     <div class="existing-trips">
-                        <div class="existing-trip">France</div>
-                        <div class="existing-trip">Egypt</div>
+                        <div class="existing-trip" v-on:click="addToExistingTrip" v-for="trip in existingTrips" :data-trip-id="trip._id.$oid">
+                            {{trip.geolocation.name}}
+                        </div>
                     </div>
                 </div>
                 <div class="trip-content-search">
@@ -52,12 +53,13 @@ export default {
             latitude: '',
             longitude: '',
             tripName: '',
-            message: ''
+            message: '',
+            existingTrips: [],
+            existingTripChosen: false,
         }
     },
-
-
     mounted: function(){
+        this.getUserTrips();
 
         let self = this;
         let input = this.$refs.createTripSearch;
@@ -83,7 +85,6 @@ export default {
             self.latitude = lat;
             self.longitude = lng;
             self.tripName = name;
-
         })
 
     },
@@ -141,6 +142,22 @@ export default {
       self.longitude = '';
       self.tripName = '';
     },
+    getUserTrips: function () {
+      let self = this;
+      let sessionId = document.head.querySelector("[name=user]").content;
+      axios.post('/getUserTrips', {'userId':sessionId})
+        .then(function (response) {
+          console.log(response.data);
+          self.existingTrips = response.data[0].trips;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    addToExistingTrip: function (event) {
+      let clickedTripId = event.target.getAttribute("data-trip-id");
+      console.log(clickedTripId);
+    }
   }
 }
 </script>

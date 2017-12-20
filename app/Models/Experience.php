@@ -37,20 +37,26 @@ class Experience {
 //		$dt = new DateTime(date('Y-m-d'), new DateTimeZone('UTC'));
 //		$ts = $dt->getTimestamp();
 
+		$experienceID = new MongoDB\BSON\ObjectID();
+
 		$InsertResult = $this->Collection->findOneAndUpdate([
 			'_id' => new MongoDB\BSON\ObjectID($UserId)
 		],[
 			'$push' => [
 				'experiences' => [
-					'_id' => new MongoDB\BSON\ObjectID(),
+					'_id' => $experienceID,
 					'geolocation' => $Geolocation,
 					'description' => $Description,
 					'imageId' => 2,
 					'recommended' => $Rating,
 				]
 			]
-		]);
-		return $InsertResult;
+		],[
+			'returnNewDocument' => true
+			]
+			);
+
+		return $experienceID;
 		//					"created" => new MongoDB\BSON\UTCDateTime()
 	}
 

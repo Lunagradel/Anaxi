@@ -9,7 +9,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\LoginController as LoginController;
+use App\Http\Controllers\ExperienceController as ExperienceController;
 use Illuminate\Http\Request;
+use Trip\Trip as Trip;
 
 class TripController {
 
@@ -25,7 +27,33 @@ class TripController {
 			return false;
 		}
 
-		
-		dd($request);
+		$ExperienceController = new ExperienceController();
+		$NewExperienceId = $ExperienceController->CreateExperience($request);
+		// Create experience returns the whole update document from MongoDB.
+		// Below variable takes the last item in the experiences array and returns the ID
+
+//		$NewExperienceId = end($Experience->experiences)->_id;
+
+		$UserId = $_SESSION["user_id"];
+		$Geolocation = $request->input('trip');
+
+		$Trip = new Trip();
+		$Response = $Trip->CreateTrip($UserId, $Geolocation, $NewExperienceId );
+		return $Response;
+	}
+	public function GetUserTrips(Request $request){
+		$UserIsLoggedIn = $this->LoginController->validateLoginState();
+		if (!$UserIsLoggedIn){
+			return false;
+		}
+		$UserId = $request->input('userId');
+
+		$Trip = new Trip();
+
+		$Response = $Trip->GetTripsByUserId($UserId);
+		return $Response;
+	}
+	public function AddToExistingTrip(Request $request){
+
 	}
 }
