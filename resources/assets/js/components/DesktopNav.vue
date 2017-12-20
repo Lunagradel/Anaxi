@@ -11,14 +11,14 @@
         @closeRecommend="showRecommend = false"
         @showLocation="showCreate = true"
         @showExtra="showExtra = true"
-        @closeModal="showCreate = false, modalOpen = false"
+        @closeModal="showRecommend = false, modalOpen = false"
         ></createRecommend>
         <createExtra
         v-if="showExtra"
         @showRecommend="showRecommend = true"
         @showTrip="showTrip = true"
         @closeExtra="showExtra = false"
-        @closeModal="showCreate = false, modalOpen = false"
+        @closeModal="showExtra = false, modalOpen = false"
         ></createExtra>
         <createTrip
         v-if="showTrip"
