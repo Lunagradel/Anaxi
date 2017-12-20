@@ -107,6 +107,7 @@ export default {
           console.log(response);
           console.log(response.data[0].firstName);
           self.userName = response.data[0].firstName;
+          self.$root.store.user.fullName = response.data[0].firstName + " " + response.data[0].lastName;
         })
         .catch(function (error) {
           console.log(error);
