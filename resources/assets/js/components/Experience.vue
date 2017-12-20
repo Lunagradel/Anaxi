@@ -31,7 +31,7 @@
         </div>
 
         <div class="anaxi-card-bottom">
-            Comments should be here. need to find out if it should be a component.
+            <comments v-bind:experience="experience"></comments>
         </div>
 
     </div>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+
+import Comments from './Comments.vue';
 
 export default {
     props: ['experience'],
@@ -53,6 +55,9 @@ export default {
     },
     mounted: function() {
         console.log(this.experience.description);
+    },
+    components: {
+        Comments
     }
 
 }

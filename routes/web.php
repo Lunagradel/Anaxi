@@ -27,4 +27,6 @@ Route::post('/getuserexperiences', 'ExperienceController@GetExperiencesByUser');
 
 Route::post('/getuserbyid', 'UserController@GetUserById');
 
+Route::post('/addcomment', 'CommentsController@AddComment');
+
 Route::get('/{vue_capture?}', 'Controller@GetFrontpage')->where('vue_capture', '[\/\w\.-]*');
