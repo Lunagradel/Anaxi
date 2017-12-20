@@ -78,8 +78,11 @@
                                 <p>{{following}}</p>
                             </div>
                         </div>
-                        <div class="anaxi-primary-btn" id="profileBtn" v-on:click="showEdit = true">
+                        <div class="anaxi-primary-btn" id="profileBtn" v-if="isOwnProfile" v-on:click="showEdit = true">
                             Edit
+                        </div>
+                        <div class="anaxi-primary-btn" id="profileFollowBtn" v-else>
+                            Follow
                         </div>
                     </div>
                 </div>
@@ -120,7 +123,8 @@ export default {
         lastName: '',
         firstName: '',
         description: '',
-        showEdit: false
+        showEdit: false,
+        isOwnProfile: false,
     }
   },
 
@@ -219,14 +223,15 @@ export default {
       }
   },
   mounted(){
+    // Set variables
     const self = this;
     let userId = self.$route.params.id;
+    // Get user data
     axios.post('/getuserexperiences', {'userId':userId})
       .then(function (response) {
         self.experiences = response.data[0].experiences;
         self.firstName = response.data[0].firstName;
         self.lastName = response.data[0].lastName;
-
         self.mapInit();
 //        this.$set('experiences', JSON.parse(response.data[0].experiences));
       })
@@ -234,6 +239,15 @@ export default {
         console.log(error);
       });
 
+  },
+  created: function () {
+    const self = this;
+    let userId = self.$route.params.id;
+    let sessionId = document.head.querySelector("[name=user]").content;
+    // Check if own or other persons profile page
+    if (userId === sessionId){
+      this.isOwnProfile = true;
+    }
 
   },
 

@@ -47,6 +47,8 @@ class CommentsController extends BaseController
         $Comment = new Comment();
         $Response = $Comment->getComments($PostId);
 
+        dd($Response );
+
         return $Response;
     }
 }

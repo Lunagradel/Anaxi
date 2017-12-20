@@ -29,9 +29,18 @@ class ExperienceController extends BaseController
 		    return false;
 	    }
 
-	    $Rating = $request->input('recommended');
-	    $Geolocation = $request->input('geolocation');
-	    $Description = $request->input('description');
+	    // If the request comes from the TripController, adjust to different structure
+	    $hasTripParameter = $request->input('trip');
+	    if (isset($hasTripParameter)){
+		    $Rating = $request->input('experience.recommended');
+		    $Geolocation = $request->input('experience.geolocation');
+		    $Description = $request->input('experience.description');
+	    }else{
+		    $Rating = $request->input('recommended');
+		    $Geolocation = $request->input('geolocation');
+		    $Description = $request->input('description');
+	    }
+
 //	    $Image = $request->input('password');
 	    $UserId = $_SESSION["user_id"];
 
