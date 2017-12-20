@@ -14,20 +14,19 @@ class Comment {
 		$this->Collection = $Database->GetMongoInstance();
 	}
 
-    public function addComment( $UserId, $CommentText, $PostId ) {
+    public function addComment( $UserId, $CommentText, $PostId, $UserName ) {
 
         $this->CommentText = $CommentText;
 
         $InsertResult = $this->Collection->findOneAndUpdate([
-			'experiences' => [
-                '_id' => new MongoDB\BSON\ObjectID($PostId)
-                ]
+			'experiences._id' => new MongoDB\BSON\ObjectID($PostId)
 		],[
 			'$push' => [
-				'comments' => [
+				'experiences.$.comments' => [
 					'_id' => new MongoDB\BSON\ObjectID(),
 					'comment' => $CommentText,
-                    'user' => $UserId
+                    'user' => $UserId,
+                    'userName' => $UserName
 				]
 			]
 		]);
@@ -35,5 +34,7 @@ class Comment {
         return $InsertResult;
 
     }
+
+
 
 }
