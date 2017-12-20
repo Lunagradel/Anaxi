@@ -5,6 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        @if ($loggedIn)
+        <meta name="user" content="{{ $_SESSION["user_id"] }}">
+        @endif
         <title>Anaxi</title>
 
         <!-- Fonts -->
@@ -28,12 +31,7 @@
               <sign-up></sign-up>
           @endif
 
-
-
         <!-- every components belonging to a route, will be shown here on the page. -->
-
-
-
       </div>
       <script src="/js/app.js"></script>
     </body>

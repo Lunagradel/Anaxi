@@ -16,18 +16,26 @@
                 <div class="trip-content-existing">
                     <p>Choose existing</p>
                     <div class="existing-trips">
-                        <div class="existing-trip">France</div>
-                        <div class="existing-trip">Egypt</div>
+                        <div class="existing-trip" v-on:click="addToExistingTrip" v-for="trip in existingTrips" :data-trip-id="trip._id.$oid">
+                            {{trip.geolocation.name}}
+                        </div>
                     </div>
                 </div>
                 <div class="trip-content-search">
                     <p>Make New</p>
                     <input class="anaxi-search" ref="createTripSearch" id="createTripSearch" type="text" name="search" placeholder="Search">
+                    <div class="anaxi-primary-btn" v-on:click="clearTripLocal" id="tripAddBtn">
+                        Clear
+                    </div>
                 </div>
             </div>
+            <span class="form-message"> {{message}} </span>
             <div class="anaxi-create-bottom">
-                <div class="anaxi-primary-btn" v-on:click="submitPost" id="tripDoneBtn">
-                    Done
+                <div class="anaxi-primary-btn" v-on:click="submitTrip" id="tripDoneBtn" v-if="latitude">
+                    Add to trip
+                </div>
+                <div class="anaxi-primary-btn" v-on:click="submitPost" id="experienceDoneBtn" v-else>
+                    Add experience
                 </div>
             </div>
         </div>
@@ -44,12 +52,14 @@ export default {
         return {
             latitude: '',
             longitude: '',
-            tripName: ''
+            tripName: '',
+            message: '',
+            existingTrips: [],
+            existingTripChosen: false,
         }
     },
-
-
     mounted: function(){
+        this.getUserTrips();
 
         let self = this;
         let input = this.$refs.createTripSearch;
@@ -75,7 +85,6 @@ export default {
             self.latitude = lat;
             self.longitude = lng;
             self.tripName = name;
-
         })
 
     },
@@ -97,6 +106,57 @@ export default {
         .catch(function (error) {
           console.log(error.response.data);
         });
+    },
+    submitTrip: function () {
+      console.log("Submitting a trip");
+      let self = this;
+      let experience = self.$root.store.experienceToStore
+      axios.post('/createtrip', {
+        experience: {
+            recommended: experience.recommended,
+            geolocation: {
+              lat: experience.latitude,
+              lng: experience.longitude,
+              locationName: experience.locationName
+            },
+            description: experience.description
+        },
+        trip: {
+          lat: self.latitude,
+          lng: self.longitude,
+          name: self.tripName
+        }
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
+    },
+    clearTripLocal: function () {
+      let self = this;
+      let input = self.$refs.createTripSearch;
+      input.value = '';
+      self.latitude = '';
+      self.longitude = '';
+      self.tripName = '';
+    },
+    getUserTrips: function () {
+      let self = this;
+      let sessionId = document.head.querySelector("[name=user]").content;
+      axios.post('/getUserTrips', {'userId':sessionId})
+        .then(function (response) {
+          console.log(response.data);
+          self.existingTrips = response.data[0].trips;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    addToExistingTrip: function (event) {
+      let clickedTripId = event.target.getAttribute("data-trip-id");
+      console.log(clickedTripId);
     }
   }
 }

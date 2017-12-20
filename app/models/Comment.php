@@ -17,20 +17,22 @@ class Comment {
     public function addComment( $UserId, $CommentText, $PostId ) {
 
         $this->CommentText = $CommentText;
+        $Query = [
+	        'experiences' => [
+		        '_id' => new MongoDB\BSON\ObjectID($PostId)
+	        ]
+        ];
+        $Comment = [
+	        '$push' => [
+		        'comments' => [
+			        '_id' => new MongoDB\BSON\ObjectID(),
+			        'comment' => $CommentText,
+			        'user' => $UserId
+		        ]
+	        ]
+        ];
 
-        $InsertResult = $this->Collection->findOneAndUpdate([
-			'experiences' => [
-                '_id' => new MongoDB\BSON\ObjectID($PostId)
-                ]
-		],[
-			'$push' => [
-				'comments' => [
-					'_id' => new MongoDB\BSON\ObjectID(),
-					'comment' => $CommentText,
-                    'user' => $UserId
-				]
-			]
-		]);
+        $InsertResult = $this->Collection->findOneAndUpdate($Query,$Comment);
 
         return $InsertResult;
 
