@@ -101,11 +101,8 @@ export default {
 
     mounted() {
       let self = this;
-      console.log('Desktop Nav mounted.');
       axios.post('/getuserbyid', {'userID':self.userid})
         .then(function (response) {
-          console.log(response);
-          console.log(response.data[0].firstName);
           self.userName = response.data[0].firstName;
           self.$root.store.user.fullName = response.data[0].firstName + " " + response.data[0].lastName;
         })

@@ -50,20 +50,18 @@ class UserController extends BaseController
 
     public function EditUser( Request $request )
     {
-        $UserIsLoggedIn = $this->LoginController->validateLoginState();
-	    if (!$UserIsLoggedIn){
-		    return false;
-	    }
+    	$UserIsLoggedIn = $this->LoginController->validateLoginState();
+    	if (!$UserIsLoggedIn){
+    		return false;
+    	}
+    	$UserId = $_SESSION["user_id"];
+      $FirstName = $request->input('firstName');
+      $LastName = $request->input('lastName');
+      $Description = $request->input('description');
 
-        $UserId = $_SESSION["user_id"];
-        $FirstName = $request->input('firstName');
-        $LastName = $request->input('lastName');
-        $Description = $request->input('description');
+      $User = new User();
+      $Response = $User->editUser($UserId, $FirstName, $LastName, $Description);
 
-        $User = new User();
-        $Response = $User->editUser($UserId, $FirstName, $LastName, $Description);
-
-        return $Response;
-
+      return $Response;
     }
 }

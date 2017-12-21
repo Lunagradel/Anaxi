@@ -26,15 +26,17 @@ class ProfileController {
 	public function GetProfileFeed(Request $request){
 		$Feed = [];
 		$UserId = $request->input('userId');
-		$UserId = '5a3b6f16dde68439667e4a39';
 		// Validate login
 		$UserIsLoggedIn = $this->LoginController->validateLoginState();
 		if (!$UserIsLoggedIn){
-			return false;
+			return response()->json(['responseMessage'=>'You\'re not logged in'], 400);
 		}
 		// Get user experience
 		$ExperienceModel = new Experience();
 		$User = $ExperienceModel->GetExperiencesByUser($UserId);
+		if (empty($User[0]->experiences)){
+			return response()->json(['responseMessage' => 'This user has not created any experiences yet.'], 400);
+		}
 		$UserExperiences = $User[0]->experiences;
 		// Get users trip
 		$TripModel = new Trip();
@@ -44,7 +46,7 @@ class ProfileController {
 		$this->UserExperiences = iterator_to_array($UserExperiences);
 
 		// For each trip,
-		foreach ($UserTrips[0]->trips as $trip){
+		foreach ($UserTrips[0]->trips as $trip) {
 			// Extract experience Ids and turn BSON into array.
 			$tripExperiences = iterator_to_array($trip->experiences);
 			// Pass the experiences
@@ -55,7 +57,8 @@ class ProfileController {
 		$Feed [] = ['trips' => $this->UserTrips ];
 		$Feed [] = ['experiences' => $this->UserExperiences];
 
-		Return $Feed;
+		return response()->json(['responseMessage' => 'This user has not created any experiences yet.', 'data' => $Feed], 200);
+//		Return $Feed;
     }
 
 	public function SwapExperience($tripExperience){

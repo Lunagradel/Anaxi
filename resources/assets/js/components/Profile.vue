@@ -96,6 +96,7 @@
 
         </div>
         <div class="anaxi-profile-feed">
+            <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
             <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>
             <Trip v-for="(trip, index) in trips" :key="index" v-bind:trip="trip" v-bind:id="index"></Trip>
         </div>
@@ -132,7 +133,8 @@ export default {
         description: '',
         showEdit: false,
         isOwnProfile: false,
-        isFollowing: false
+        isFollowing: false,
+        error: ''
     }
   },
 
@@ -323,7 +325,7 @@ export default {
         console.log(error);
       });
 
-    axios.post('/getprofilefeeed', {'userId':userId})
+    axios.post('/getprofilefeed', {'userId':userId})
       .then(function (response) {
         self.experiences = response.data[1].experiences;
         self.trips = response.data[0].trips;
@@ -331,7 +333,8 @@ export default {
         console.log(response.data);
       })
       .catch(function (error) {
-        console.log(error);
+        self.error = error.response.data.responseMessage;
+        console.log(error.response.data.responseMessage);
       });
 
   },

@@ -13,12 +13,6 @@ use AnaxiUser;
 
 class LoginController extends controller{
 
-	public $response =
-		[
-			'loggedIn' => false,
-			'response' => ''
-		];
-
 	public function LoginUser( Request $request ) {
 
 		$Email = $request->input('email');
@@ -29,9 +23,7 @@ class LoginController extends controller{
 		}
 
 		if (self::validateLoginState()){
-			$this->response['loggedIn'] = true;
-			$this->response['response'] = "You're already logged in";
-			return $this->response;
+			return response()->json(['responseMessage'=>'You\'re already logged in'], 200);
 		}
 
 		$user = new AnaxiUser\User();
@@ -39,13 +31,10 @@ class LoginController extends controller{
 		if ($LoginSuccessful){
 			$_SESSION["logged_in"] = true;
 			$_SESSION["user_id"] = $LoginSuccessful->_id;
-			$this->response['loggedIn'] = true;
-			$this->response['response'] = "Logged in";
+			return response()->json(['responseMessage'=>'Logged in'], 200);
 		}else{
-			$this->response['loggedIn'] = false;
-			$this->response['response'] = "No luck";
+			return response()->json(['responseMessage'=>'Password and email does not match'], 400);
 		}
-		return $this->response;
 	}
 
 	public function LogoutUser(){
@@ -54,14 +43,8 @@ class LoginController extends controller{
 		}
 		if (self::validateLoginState()){
 			session_destroy();
-			$this->response['loggedIn'] = false;
-			$this->response['response'] = "You've been logged out";
-		}else{
-			$this->response['loggedIn'] = true;
-			$this->response['response'] = "You are already logged out";
 		}
 		$loggedIn = false;
-//		return $this->response;
 		return view('welcome', compact('loggedIn'));
 	}
 
@@ -71,10 +54,8 @@ class LoginController extends controller{
 		}
 		if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
 //			session_regenerate_id(true);
-			// User is logged in
 			return true;
 		} else {
-			// User is not logged in
 			return false;
 		}
 	}

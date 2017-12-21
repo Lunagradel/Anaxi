@@ -51,6 +51,6 @@ Route::post('unfollowuser', 'FollowController@UnfollowUser');
 
 Route::post('/addcomment', 'CommentsController@AddComment');
 
-Route::post('/getprofilefeeed', 'ProfileController@GetProfileFeed');
+Route::post('/getprofilefeed', 'ProfileController@GetProfileFeed');
 
 Route::get('/{vue_capture?}', 'Controller@GetFrontpage')->where('vue_capture', '[\/\w\.-]*');

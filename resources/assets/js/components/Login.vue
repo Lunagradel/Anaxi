@@ -6,6 +6,7 @@
             <input v-model="password" placeholder="Password" type="password" />
             <input type="submit" name="submit" value="Log in">
         </form>
+        <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
     </div>
 
 </template>
@@ -15,21 +16,24 @@ export default {
     data: function(){
         return{
             email: '',
-            password: ''
+            password: '',
+            error: ''
         }
     },
     methods: {
         onSubmit: function(){
+          self = this;
           //data from inputs -- this.email and this.password
            axios.post('/login', this.$data)
             .then(function (response) {
               console.log(response);
-              if (response.data.loggedIn){
-                location.reload();
+              location.reload();
+              if (response.data.status < 400){
+
               }
             })
             .catch(function (error) {
-              console.log(error.response.data);
+              self.error = error.response.data.responseMessage
             });
         }
     }

@@ -20,3 +20,51 @@ body.modal-open {
 .hidden {
 	display: none;
 }
+
+.error-msg{
+	display: none;
+	font-size: bold;
+	color: $red;
+	border-radius: 4px;
+	&.active{
+		display: block;
+		background-color: transparent;
+		animation-name: error-msg;
+		animation-duration: 1s;
+	}
+}
+@keyframes error-msg {
+	from {background-color: $red;}
+	to {background-color: transparent;}
+}
+
+.fadeout, .fadein{
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+.fadeout{
+	animation-name: fade-out;
+}
+.fadein{
+	animation-name: fade-in;
+}
+@keyframes fade-out {
+	99%{
+		visibility: hidden;
+	}
+	100%{
+		visibility: hidden;
+		height: 0;
+	}
+}
+
+@keyframes fade-in {
+	0%{
+		visibility: hidden;
+		height: 0;
+	}
+	100%{
+		visibility: visible;
+		height: auto;
+	}
+}
