@@ -1,8 +1,11 @@
 .logo {
-    p {
+    p, h2 {
         font-family: $logo-font;
         font-size: 35px;
         color: $pink;
     }
-
+    h2{
+        font-size: 65px;
+        text-align: center;
+    }
 }

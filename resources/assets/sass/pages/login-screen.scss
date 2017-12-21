@@ -1,0 +1,36 @@
+.login-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  .login-intro{
+    padding-bottom: 25px;
+  }
+  h3{
+    margin: 25px 0;
+    line-height: 0.3;
+    span{
+      display: inline-block;
+      position: relative;
+    }
+    span:after,
+    span:before{
+      content: "";
+      position: absolute;
+      height: 5px;
+      border-bottom: 1px solid $dark-red;
+      border-top: 1px solid $dark-red;
+      top: 0;
+      width: 600px;
+    }
+    span:after{
+      right: 100%;
+      margin-right: 15px;
+    }
+    span:before{
+      left: 100%;
+      margin-left: 15px;
+    }
+  }
+}
