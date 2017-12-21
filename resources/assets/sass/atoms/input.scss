@@ -128,3 +128,28 @@ textarea {
     border: solid 2px $dark-red;
     background-color: $light-orange;
 }
+
+.comment-input {
+    width: 85%;
+    height: 35px;
+    background-color: $light-orange;
+    color: $white;
+    font-size: 14px;
+    border: none;
+    font-weight: 300;
+}
+
+.anaxi-comments-input {
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: $white;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: $white;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: $white;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+      color: $white;
+    }
+}

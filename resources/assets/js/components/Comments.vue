@@ -3,16 +3,19 @@
     <div class="anaxi-comments">
         <div class="anaxi-comments-items">
             <div class="anaxi-comments-item" v-for="comment in comments">
-                <div class="comments-item-user">
-                    <p>{{comment.user}}</p>
-                </div>
-                <div class="comments-item-comment">
-                    <p>{{comment.text}}</p>
+                <div class="comments-item">
+                    <p>
+                        <router-link :to="{ name: 'profile', params: { id: comment.userId }}">
+                            <span class="comments-item-user">{{comment.user}}</span>
+                        </router-link>
+                        {{comment.text}}
+                    </p>
                 </div>
             </div>
         </div>
+        <div class="anaxi-comments-line"></div>
         <div class="anaxi-comments-input">
-            <input type="text" name="comment" v-model="comment" placeholder="Add comment..">
+            <input class="comment-input" type="text" name="comment" v-model="comment" placeholder="Add comment..">
             <div class="anaxi-comments-btn" v-on:click="addComment">
                 Send
             </div>
@@ -36,7 +39,6 @@ export default {
             comments: [
 
             ]
-
         }
     },
 
@@ -46,6 +48,7 @@ export default {
             let self = this;
             let commentText = this.comment;
             let userName = this.$root.store.user.fullName;
+            let userId = this.$root.store.user.id;
 
             if (!this.comment) {
                 //can't post a empty comment!
@@ -57,7 +60,7 @@ export default {
                 })
                   .then(function (response) {
                     console.log(response);
-                    self.addNewComment(commentText, userName);
+                    self.addNewComment(commentText, userName, userId);
                     self.comment = '';
                   })
                   .catch(function (error) {
@@ -71,24 +74,22 @@ export default {
             let commentsArr = this.comments;
 
             let commentsFromDB = this.experience.comments;
+            // console.log(commentsFromDB);
 
             if (!commentsFromDB){
                 console.log("no comments");
             } else {
                 commentsFromDB.forEach(function(item){
 
-                    let comment = {text: item.comment, user: item.userName};
+                    let comment = {text: item.comment, user: item.userName, userId: item.user.$oid};
                     commentsArr.push(comment);
                 });
             }
-
-
-
         },
 
-        addNewComment(comment, user){
+        addNewComment(comment, user, userId){
             let commentsArr = this.comments;
-            let newComment = {text: comment, user: user};
+            let newComment = {text: comment, user: user, userId: userId};
             commentsArr.push(newComment);
         }
     },
@@ -96,6 +97,7 @@ export default {
     mounted: function(){
 
         this.getComments();
+        console.log(this.comments);
 
 
     }
