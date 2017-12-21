@@ -43,4 +43,6 @@ Route::post('/getUserTrips', 'TripController@GetUserTrips');
 
 Route::post('/addcomment', 'CommentsController@AddComment');
 
+Route::get('/funkytown', 'ProfileController@GetProfileFeed');
+
 Route::get('/{vue_capture?}', 'Controller@GetFrontpage')->where('vue_capture', '[\/\w\.-]*');

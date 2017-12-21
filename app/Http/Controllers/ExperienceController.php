@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -60,6 +59,5 @@ class ExperienceController extends BaseController
 	    $Response = $Experience->GetExperiencesByUser($UserId);
 	    return $Response;
     }
-    public function UpdateExperience( Request $request ) {}
-    public function DeleteExperience( Request $request ) {}
+
 }

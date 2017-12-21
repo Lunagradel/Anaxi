@@ -10,8 +10,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use DatabaseConnection;
 use AnaxiUser\User as User;
-use MongoDB\Client as MongoClient;
-use MongoDB\Collection as Collection;
 
 class UserController extends BaseController
 {
