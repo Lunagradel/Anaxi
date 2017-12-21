@@ -45,6 +45,8 @@ Route::post('/getUserTrips', 'TripController@GetUserTrips');
 
 Route::post('followuser', 'FollowController@FollowUser');
 
+Route::post('unfollowuser', 'FollowController@UnfollowUser');
+
 // Vue route catcher
 
 Route::post('/addcomment', 'CommentsController@AddComment');

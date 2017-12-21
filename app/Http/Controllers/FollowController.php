@@ -37,4 +37,22 @@ class FollowController extends BaseController
         return $Response;
 
     }
+
+    public function UnfollowUser( Request $request)
+    {
+
+        $UserIsLoggedIn = $this->LoginController->validateLoginState();
+	    if (!$UserIsLoggedIn){
+		    return false;
+	    }
+
+        $UserId = $_SESSION["user_id"];
+        $UserToUnfollow = $request->input('unFollowId');
+
+        $Follow = new Follow();
+        $Response = $Follow->UnfollowUser($UserId, $UserToUnfollow);
+
+        return $Response;
+
+    }
 }

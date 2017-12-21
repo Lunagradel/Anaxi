@@ -71,7 +71,7 @@
                         <div class="information-mobile">
                             <div class="information-item">
                                 <p>4. Followers</p>
-                                <p>{{followers.length}}</p>
+                                <p>{{followersAmount}}</p>
                             </div>
                             <div class="information-item">
                                 <p>5. Following</p>
@@ -123,6 +123,7 @@ export default {
     return {
         followers: [],
         following: [],
+        followersAmount: '',
         experiences: [],
         lastName: '',
         firstName: '',
@@ -254,10 +255,15 @@ export default {
 
       followUser: function(){
           let followId = this.$route.params.id;
+          let self = this;
 
           axios.post('/followuser', {'followId':followId})
             .then(function (response) {
-                console.log(response);
+                console.log(response.data);
+                if (response.data){
+                    self.isFollowing = true;
+                    self.followersAmount++;
+                }
             })
             .catch(function (error) {
               console.log(error);
@@ -265,16 +271,22 @@ export default {
       },
 
       unFollowUser: function(){
-          console.log("x");
-          // let followId = this.$route.params.id;
-          //
-          // axios.post('/followuser', {'followId':followId})
-          //   .then(function (response) {
-          //       console.log(response);
-          //   })
-          //   .catch(function (error) {
-          //     console.log(error);
-          //   });
+
+          let followId = this.$route.params.id;
+          let self = this;
+
+          axios.post('/unfollowuser', {'unFollowId':followId})
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data){
+                    self.isFollowing = false;
+                    self.followersAmount--;
+                }
+
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
       },
 
   },
@@ -294,6 +306,7 @@ export default {
             //do nothing
         } else {
             self.followers = response.data[0].followers;
+            self.followersAmount = response.data[0].followers.length;
         }
         if (!response.data[0].following){
             //do nothing
