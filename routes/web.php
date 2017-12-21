@@ -49,6 +49,6 @@ Route::post('followuser', 'FollowController@FollowUser');
 
 Route::post('/addcomment', 'CommentsController@AddComment');
 
-Route::get('/funkytown', 'ProfileController@GetProfileFeed');
+Route::post('/getprofilefeeed', 'ProfileController@GetProfileFeed');
 
 Route::get('/{vue_capture?}', 'Controller@GetFrontpage')->where('vue_capture', '[\/\w\.-]*');

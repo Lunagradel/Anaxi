@@ -13,7 +13,7 @@
                 </div>
                 <div class="anaxi-card-content-destination">
                     <p>went to</p>
-                    <p class="destination-place">Egypt</p>
+                    <p class="destination-place">{{trip.geolocation.name}}</p>
                 </div>
                 <div class="anaxi-card-content-map">
                     <div class="trip-map" ref="tripMap">
@@ -21,30 +21,7 @@
                     </div>
                 </div>
                 <div class="anaxi-card-content-experiences">
-                    <div class="accordion-experience">
-                        <div class="accordion-experience-btn" v-on:click.prevent="toggleExperiences(0)">
-                            <div class="accordion-btn-circle"></div>
-                            <p class="accordion-btn-title">{{experiences[0].title}}</p>
-                        </div>
-                        <div class="accordion-experience-content">
-                            <div v-show="experiences[0].show" class="experience-container">
-                                <div class="experience-container-content">
-                                    <div class="anaxi-card-content-recommendations">
-                                        <p class="recommendations-answer" id="true">Recommends</p>
-                                        <p class="recommendations-place">{{experiences[0].title}}</p>
-                                    </div>
-                                    <div class="anaxi-card-content-extra">
-                                        <div class="extra-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Need moore nfm.
-                                        </div>
-                                        <div class="extra-image">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <trip-experience v-for="(experience, index) in this.trip.experiences" :key="index" v-bind:index="index" v-bind:experience="experience"></trip-experience>
 
                     <div class="accordion-experience">
                         <div class="accordion-experience-btn" v-on:click.prevent="toggleExperiences(1)">
@@ -79,8 +56,12 @@
 </template>
 
 <script>
+  import TripExperience from './TripExperience.vue';
 export default {
-
+    props: ['trip'],
+    components: {
+      TripExperience
+    },
     data: function(){
         return {
             experiences: [
@@ -97,20 +78,6 @@ export default {
                     longitude: 32.201058
                 }
             ]
-        }
-    },
-
-    methods: {
-        toggleExperiences: function(index){
-            for (var i = 0; i < this.experiences.length; i++){
-
-                if (index === i){
-                    this.experiences[index].show = !this.experiences[index].show;
-                } else {
-                    this.experiences[i].show = false;
-                }
-            }
-
         }
     },
 

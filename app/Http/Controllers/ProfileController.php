@@ -54,7 +54,6 @@ class ProfileController {
 		}
 		$Feed [] = ['trips' => $this->UserTrips ];
 		$Feed [] = ['experiences' => $this->UserExperiences];
-//		dd($Feed);
 
 		Return $Feed;
     }

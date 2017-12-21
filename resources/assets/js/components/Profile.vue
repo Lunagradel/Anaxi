@@ -97,6 +97,7 @@
         </div>
         <div class="anaxi-profile-feed">
             <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>
+            <Trip v-for="(trip, index) in trips" :key="index" v-bind:trip="trip" v-bind:id="index"></Trip>
         </div>
         <EditProfile
         v-if="showEdit"
@@ -107,23 +108,24 @@
         v-bind:userDescription="description"
         ></EditProfile>
     </div>
-
-
 </template>
 
 <script>
   import Experience from './Experience.vue';
+  import Trip from './Trip.vue';
   import EditProfile from './EditProfile.vue';
 export default {
   components: {
     Experience,
-    EditProfile
+    EditProfile,
+    Trip
   },
   data: function(){
     return {
         followers: [],
         following: [],
         experiences: [],
+        trips: [],
         lastName: '',
         firstName: '',
         description: '',
@@ -285,11 +287,9 @@ export default {
     // Get user data
     axios.post('/getuserexperiences', {'userId':userId})
       .then(function (response) {
-        self.experiences = response.data[0].experiences;
         self.firstName = response.data[0].firstName;
         self.lastName = response.data[0].lastName;
         self.description = response.data[0].description;
-        self.mapInit();
         if (!response.data[0].followers){
             //do nothing
         } else {
@@ -305,6 +305,17 @@ export default {
             self.checkIfFollowing()
         }
 //        this.$set('experiences', JSON.parse(response.data[0].experiences));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    axios.post('/getprofilefeeed', {'userId':userId})
+      .then(function (response) {
+        self.experiences = response.data[1].experiences;
+        self.trips = response.data[0].trips;
+        self.mapInit();
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
