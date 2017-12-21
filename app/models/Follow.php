@@ -6,6 +6,7 @@ use MongoDB;
 class Follow {
 
 	public $UserToFollow;
+    public $UserToUnfollow;
 	public $LoggedInUser;
 	// DB
 	public $Collection;
@@ -40,6 +41,32 @@ class Follow {
 
         return "true";
 
+    }
+
+    public function UnfollowUser($LoggedInUser, $UserToUnfollow)
+    {
+        $this->$UserToUnfollow = $UserToUnfollow;
+        $this->$LoggedInUser = $LoggedInUser;
+
+        $this->Collection->findOneAndUpdate([
+			'_id' => new MongoDB\BSON\ObjectID($LoggedInUser)
+		],[
+			'$pull' => [
+				'following' => new MongoDB\BSON\ObjectID($UserToUnfollow)
+			]
+		]
+		);
+
+        $this->Collection->findOneAndUpdate([
+			'_id' => new MongoDB\BSON\ObjectID($UserToUnfollow)
+		],[
+			'$pull' => [
+				'followers' => new MongoDB\BSON\ObjectID($LoggedInUser)
+			]
+		]
+		);
+
+        return "true";
     }
 
 
