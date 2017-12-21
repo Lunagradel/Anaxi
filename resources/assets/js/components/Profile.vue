@@ -71,7 +71,7 @@
                         <div class="information-mobile">
                             <div class="information-item">
                                 <p>4. Followers</p>
-                                <p>{{followersAmount}}</p>
+                                <p v-on:click="showFollowers = true">{{followersAmount}}</p>
                             </div>
                             <div class="information-item">
                                 <p>5. Following</p>
@@ -106,6 +106,10 @@
         v-bind:userLastName="lastName"
         v-bind:userDescription="description"
         ></EditProfile>
+        <ShowFollowers
+        v-if="showFollowers"
+        v-bind:followers="followers"
+        ></ShowFollowers>
     </div>
 
 
@@ -114,10 +118,13 @@
 <script>
   import Experience from './Experience.vue';
   import EditProfile from './EditProfile.vue';
+  import ShowFollowers from './ShowFollowers.vue';
+
 export default {
   components: {
     Experience,
-    EditProfile
+    EditProfile,
+    ShowFollowers
   },
   data: function(){
     return {
@@ -125,12 +132,14 @@ export default {
         following: [],
         followersAmount: '',
         experiences: [],
+        fullName: '',
         lastName: '',
         firstName: '',
         description: '',
         showEdit: false,
         isOwnProfile: false,
-        isFollowing: false
+        isFollowing: false,
+        showFollowers: false
     }
   },
 
@@ -255,6 +264,7 @@ export default {
 
       followUser: function(){
           let followId = this.$route.params.id;
+          let fullName = this.fullName;
           let self = this;
 
           axios.post('/followuser', {'followId':followId})
@@ -300,6 +310,7 @@ export default {
         self.experiences = response.data[0].experiences;
         self.firstName = response.data[0].firstName;
         self.lastName = response.data[0].lastName;
+        self.fullName = self.firstName + " " + self.lastName;
         self.description = response.data[0].description;
         self.mapInit();
         if (!response.data[0].followers){
