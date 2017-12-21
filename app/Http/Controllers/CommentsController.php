@@ -31,13 +31,24 @@ class CommentsController extends BaseController
         $UserId = $_SESSION["user_id"];
         $CommentInput = $request->input('comment');
         $PostId = $request->input('postId');
+        $UserName = $request->input('userName');
 
         $Comment = new Comment();
-        $Response = $Comment->addComment($UserId, $CommentInput, $PostId);
+        $Response = $Comment->addComment($UserId, $CommentInput, $PostId, $UserName);
+
+        return $Response;
+
+    }
+
+    public function getComments( Request $request )
+    {
+        $PostId = $request->input('postId');
+
+        $Comment = new Comment();
+        $Response = $Comment->getComments($PostId);
 
         dd($Response );
 
         return $Response;
-        
     }
 }

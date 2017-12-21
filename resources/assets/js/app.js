@@ -22,7 +22,7 @@ new Vue({
     data:{
       store: {
         user: {
-          name: "",
+          fullName: "",
           id: "",
         },
         experienceToStore: {
