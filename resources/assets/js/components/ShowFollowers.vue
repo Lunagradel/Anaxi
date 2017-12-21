@@ -2,11 +2,15 @@
 
     <div class="anaxi-follow-contaioner">
         <div class="anaxi-follow-content">
-            <div class="anaxi-follow-header">
-                Followers
+            <div class="follow-close" v-on:click="$emit('closeFollow')">
+                &#10005
             </div>
-            <div class="anaxi-follow-user">
-                <p>name here</p>
+            <div class="anaxi-follow-header" v-if="this.following">Following</div>
+            <div class="anaxi-follow-header" v-else>Followers</div>
+            <div class="anaxi-follow-users">
+                <div class="anaxi-follow-user" v-for="(item, index) in this.followers" :key="index">
+                    <p>{{item.name}}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -15,10 +19,10 @@
 
 <script>
 export default {
-    props: ['followers'],
+    props: ['followers', 'following'],
 
     mounted: function(){
-        console.log("followeres",this.followers);
+        console.log("following:",this.following);
     }
 
 

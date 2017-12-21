@@ -20,19 +20,37 @@
     .anaxi-follow-header {
         font-size: 22px;
         width: 100%;
-        height: 45px;
         @include flexbox();
         @include justify-content(center);
-        @include align-items(center);
         border-bottom: solid $red 2px;
+        background-color: $red;
+        padding-bottom: 5px;
     }
 
-    .anaxi-follow-user {
+    .anaxi-follow-users {
         width: 100%;
-        padding-left: 10px;
-        height: 40px;
+        height: 141px;
+        overflow: auto;
+
+        .anaxi-follow-user {
+            width: 100%;
+            padding-left: 10px;
+            height: 40px;
+            @include flexbox();
+            @include align-items(center);
+            border-bottom: solid $red 1px;
+        }
+
+    }
+
+
+
+    .follow-close {
         @include flexbox();
-        @include align-items(center);
-        border-bottom: solid $red 1px;
+        @include justify-content(flex-end);
+        padding: 2px 5px 0px 0px;
+        cursor: pointer;
+        background-color: $red;
+        border-radius: 4px 4px 0px 0px;
     }
 }

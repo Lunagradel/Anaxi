@@ -86,3 +86,10 @@
         margin-top: 20px;
     };
 }
+
+.clickable {
+    cursor: pointer;
+}
+.clickable:hover {
+    text-decoration: underline;
+}
