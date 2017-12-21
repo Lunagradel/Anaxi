@@ -25,6 +25,8 @@ Route::post('/logout', 'LoginController@LogoutUser');
 
 Route::post('/getuserbyid', 'UserController@GetUserById');
 
+Route::post('/edituser', 'UserController@EditUser');
+
 // Experiences endpoints
 
 Route::post('/createexperience', 'ExperienceController@CreateExperience');

@@ -38,7 +38,22 @@ export default {
 
     methods: {
         updateUser: function(){
-            console.log(this.description);
+
+            let self = this;
+
+            axios.post('/edituser', {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                description: this.description
+            })
+              .then(function (response) {
+                console.log(response);
+                self.$emit('updateProfileInfo', self.description, self.lastName, self.firstName);
+                // let newDescription = response.data[0].description;
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
         }
     },
 

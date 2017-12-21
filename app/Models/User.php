@@ -6,6 +6,7 @@ class User {
 	public $ID;
 	public $FirstName;
 	public $LastName;
+	public $Description;
 	public $Email;
 	public $EmailAddressLookup;
 	public $Password;
@@ -110,6 +111,30 @@ class User {
 		}
 		// On success,
 		return $UserFromCollection[0];
+
+	}
+
+	public function editUser($UserId, $FirstName, $LastName, $Description)
+	{
+
+		$this->FirstName = $FirstName;
+		$this->LastName = $LastName;
+		$this->Description = $Description;
+
+		$UpdateResult = $this->Collection->FindOneAndUpdate([
+			'_id' => new MongoDB\BSON\ObjectID($UserId)
+			],[
+				'$set' => [
+					'firstName' => $FirstName,
+					'lastName' => $LastName,
+					'description' => $Description
+				]
+			],[
+				'returnOriginal' => false
+			]
+		);
+
+		return $UpdateResult;
 
 	}
 }
