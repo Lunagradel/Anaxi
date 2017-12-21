@@ -26,7 +26,6 @@ class Trip {
 	public function CreateTrip($UserId, $Geolocation, $ExperienceId){
 
 		$this->Geolocation = $Geolocation;
-		$this->Experiences[] = $ExperienceId;
 
 		$InsertResult = $this->Collection->findOneAndUpdate([
 			'_id' => new MongoDB\BSON\ObjectID($UserId)
@@ -35,7 +34,7 @@ class Trip {
 				'trips' => [
 					'_id' => new MongoDB\BSON\ObjectID(),
 					'geolocation' => $this->Geolocation,
-					'experiences' => $this->Experiences,
+					'experiences' => [ new MongoDB\BSON\ObjectID($ExperienceId) ]
 				]
 			]
 		],[
@@ -63,9 +62,7 @@ class Trip {
 		];
 		$Update = [
 			'$push' => [
-			'trips.$.experiences' => [
-				'_id' => new MongoDB\BSON\ObjectID($ExperienceId)
-			]
+			'trips.$.experiences' =>  new MongoDB\BSON\ObjectID($ExperienceId)
 			]
 		];
 
