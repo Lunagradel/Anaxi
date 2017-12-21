@@ -25,10 +25,17 @@
             <desktop-nav userid="{{$_SESSION["user_id"]}}"></desktop-nav>
             <router-view></router-view>
           @else
-              <h2> PLEASE LOGIN </h2>
-              <login></login>
-              <h2> OR SIGN UP</h2>
-              <sign-up></sign-up>
+              <div class="login-container">
+                  <div class="login-intro">
+                      <span class="logo">
+                          <h2> Anaxi </h2>
+                      </span>
+                      <span>Travel stuff and so forth</span>
+                  </div>
+                  <login></login>
+                  <h3><span> OR </span></h3>
+                  <sign-up></sign-up>
+              </div>
           @endif
 
         <!-- every components belonging to a route, will be shown here on the page. -->

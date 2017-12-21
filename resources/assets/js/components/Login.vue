@@ -1,7 +1,6 @@
 <template>
 
-    <div>
-        <h1>Login to Anaxi</h1>
+    <div id="loginContainer">
         <form v-on:submit.prevent="onSubmit">
             <input v-model="email" placeholder="Email" type="email" />
             <input v-model="password" placeholder="Password" type="password" />

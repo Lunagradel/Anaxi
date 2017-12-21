@@ -1,6 +1,5 @@
 <template>
-  <div>
-      <h1>Sign Up for Anaxi</h1>
+  <div id="signupContainer">
       <form v-on:submit.prevent="onSubmit">
           <input v-model="email" placeholder="Email" type="email" />
           <input v-model="firstName" placeholder="First Name" type="text" />
