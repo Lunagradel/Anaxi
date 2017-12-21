@@ -98,6 +98,7 @@
         <EditProfile
         v-if="showEdit"
         @closeEdit="showEdit = false"
+        @updateProfileInfo="updateProfileInfo"
         v-bind:userFirstName="firstName"
         v-bind:userLastName="lastName"
         v-bind:userDescription="description"
@@ -220,6 +221,14 @@ export default {
 
           });
 
+      },
+      updateProfileInfo: function(description, lastName, firstName){
+
+          let self = this;
+
+          self.description = description;
+          self.lastName = lastName;
+          self.firstName = firstName;
       }
   },
   mounted(){
@@ -232,6 +241,7 @@ export default {
         self.experiences = response.data[0].experiences;
         self.firstName = response.data[0].firstName;
         self.lastName = response.data[0].lastName;
+        self.description = response.data[0].description;
         self.mapInit();
 //        this.$set('experiences', JSON.parse(response.data[0].experiences));
       })
