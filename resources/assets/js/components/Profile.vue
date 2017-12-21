@@ -71,18 +71,21 @@
                         <div class="information-mobile">
                             <div class="information-item">
                                 <p>4. Followers</p>
-                                <p>{{followers}}</p>
+                                <p>{{followers.length}}</p>
                             </div>
                             <div class="information-item">
                                 <p>5. Following</p>
-                                <p>{{following}}</p>
+                                <p>{{following.length}}</p>
                             </div>
                         </div>
                         <div class="anaxi-primary-btn" id="profileBtn" v-if="isOwnProfile" v-on:click="showEdit = true">
                             Edit
                         </div>
-                        <div class="anaxi-primary-btn" id="profileFollowBtn" v-else>
+                        <div class="anaxi-primary-btn" id="profileFollowBtn" v-else-if="!isFollowing" v-on:click="followUser">
                             Follow
+                        </div>
+                        <div class="anaxi-primary-btn" id="profileFollowBtn" v-else-if="isFollowing" v-on:click="unFollowUser">
+                            Unfollow
                         </div>
                     </div>
                 </div>
@@ -118,14 +121,15 @@ export default {
   },
   data: function(){
     return {
-        followers: 100,
-        following: 100,
+        followers: [],
+        following: [],
         experiences: [],
         lastName: '',
         firstName: '',
         description: '',
         showEdit: false,
         isOwnProfile: false,
+        isFollowing: false
     }
   },
 
@@ -229,7 +233,50 @@ export default {
           self.description = description;
           self.lastName = lastName;
           self.firstName = firstName;
-      }
+      },
+
+      checkIfFollowing: function(){
+
+          let self = this;
+          let followers = this.followers;
+
+          followers.forEach(function(item){
+             let followerId = item.$oid;
+             let userId = self.$root.store.user.id;
+             if (followerId === userId){
+                 self.isFollowing = true;
+             }
+
+          });
+
+
+      },
+
+      followUser: function(){
+          let followId = this.$route.params.id;
+
+          axios.post('/followuser', {'followId':followId})
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+      },
+
+      unFollowUser: function(){
+          console.log("x");
+          // let followId = this.$route.params.id;
+          //
+          // axios.post('/followuser', {'followId':followId})
+          //   .then(function (response) {
+          //       console.log(response);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+      },
+
   },
   mounted(){
     // Set variables
@@ -243,6 +290,20 @@ export default {
         self.lastName = response.data[0].lastName;
         self.description = response.data[0].description;
         self.mapInit();
+        if (!response.data[0].followers){
+            //do nothing
+        } else {
+            self.followers = response.data[0].followers;
+        }
+        if (!response.data[0].following){
+            //do nothing
+        } else {
+            self.following = response.data[0].following;
+        }
+
+        if (!self.isOwnProfile){
+            self.checkIfFollowing()
+        }
 //        this.$set('experiences', JSON.parse(response.data[0].experiences));
       })
       .catch(function (error) {

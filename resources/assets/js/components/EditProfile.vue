@@ -49,6 +49,7 @@ export default {
               .then(function (response) {
                 console.log(response);
                 self.$emit('updateProfileInfo', self.description, self.lastName, self.firstName);
+                self.$emit('closeEdit');
                 // let newDescription = response.data[0].description;
               })
               .catch(function (error) {
