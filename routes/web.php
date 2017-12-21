@@ -41,6 +41,10 @@ Route::post('/addexperiencetotrip', 'TripController@AddToExistingTrip');
 
 Route::post('/getUserTrips', 'TripController@GetUserTrips');
 
+//Follow endpoints
+
+Route::post('followuser', 'FollowController@FollowUser');
+
 // Vue route catcher
 
 Route::post('/addcomment', 'CommentsController@AddComment');
