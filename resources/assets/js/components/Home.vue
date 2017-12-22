@@ -1,6 +1,6 @@
 <template>
     <div class="flexthis">
-        <trip></trip>
+        <!--<trip></trip>-->
       <!--<experience></experience>-->
     </div>
 </template>

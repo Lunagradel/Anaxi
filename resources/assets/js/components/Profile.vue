@@ -96,7 +96,9 @@
 
         </div>
         <div class="anaxi-profile-feed">
+            <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
             <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>
+            <Trip v-for="(trip, index) in trips" :key="index" v-bind:trip="trip" v-bind:id="index"></Trip>
         </div>
         <EditProfile
         v-if="showEdit"
@@ -119,12 +121,11 @@
         @closeFollow="showFollowing = false"
         ></ShowFollowers>
     </div>
-
-
 </template>
 
 <script>
   import Experience from './Experience.vue';
+  import Trip from './Trip.vue';
   import EditProfile from './EditProfile.vue';
   import ShowFollowers from './ShowFollowers.vue';
 
@@ -132,7 +133,11 @@ export default {
   components: {
     Experience,
     EditProfile,
+<<<<<<< HEAD
     ShowFollowers
+=======
+    Trip
+>>>>>>> develop
   },
   data: function(){
     return {
@@ -140,15 +145,23 @@ export default {
         following: [],
         followersAmount: 0,
         experiences: [],
+<<<<<<< HEAD
         fullName: '',
+=======
+        trips: [],
+>>>>>>> develop
         lastName: '',
         firstName: '',
         description: '',
         showEdit: false,
         isOwnProfile: false,
         isFollowing: false,
+<<<<<<< HEAD
         showFollowers: false,
         showFollowing: false
+=======
+        error: ''
+>>>>>>> develop
     }
   },
 
@@ -337,11 +350,11 @@ export default {
     // Get user data
     axios.post('/getuserexperiences', {'userId':userId})
       .then(function (response) {
-        self.experiences = response.data[0].experiences;
         self.firstName = response.data[0].firstName;
         self.lastName = response.data[0].lastName;
         self.fullName = self.firstName + " " + self.lastName;
         self.description = response.data[0].description;
+<<<<<<< HEAD
 
         if (!self.experiences){
 
@@ -349,6 +362,8 @@ export default {
             self.mapInit();
         }
 
+=======
+>>>>>>> develop
         if (!response.data[0].followers){
             //do nothing
         } else {
@@ -368,6 +383,18 @@ export default {
       })
       .catch(function (error) {
         console.log(error);
+      });
+
+    axios.post('/getprofilefeed', {'userId':userId})
+      .then(function (response) {
+        self.experiences = response.data[1].experiences;
+        self.trips = response.data[0].trips;
+        self.mapInit();
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        self.error = error.response.data.responseMessage;
+        console.log(error.response.data.responseMessage);
       });
 
   },

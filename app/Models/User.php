@@ -40,18 +40,18 @@ class User {
 		$Email = strtolower($Email);
 
 		if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
-			return "Bad email format";
+			return response()->json(['responseMessage'=>'Bad email format. Please try again'], 406);
 		}
 		$this->EmailAddressLookup = $this->GetEmailHash($Email);
 
 		if ( !empty($this->FindUserByEmail($Email)) ){
-			return "This email has already been taken";
+			return response()->json(['responseMessage'=>'This email has already been taken'], 406);
 		}
 		if(!preg_match("/^[a-zA-Z-]+$/",$FirstName)) {
-			return "Bad first name";
+			return response()->json(['responseMessage'=>'Bad first name. No special characters'], 406);
 		}
 		if(!preg_match("/^[a-zA-Z-]+$/",$LastName)) {
-			return "Bad last name";
+			return response()->json(['responseMessage'=>'Bad last name'], 406);
 		}
 		// TODO: Uncomment this one on before deployment
 //		if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,12}$/', $Password)) {
@@ -70,7 +70,8 @@ class User {
 			'password' => $this->Password
 		]);
 
-		return $InsertResult->getInsertedId();
+		$newUserId = $InsertResult->getInsertedId();
+		return response()->json(['responseMessage'=>'User created, thank you', 'newUserId' => $newUserId], 200);
 	}
 
 	private function FindUserByEmail($Email){
@@ -135,6 +136,5 @@ class User {
 		);
 
 		return $UpdateResult;
-
 	}
 }

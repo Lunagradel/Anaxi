@@ -1,13 +1,14 @@
 <template>
-  <div>
-      <h1>Sign Up for Anaxi</h1>
-      <form v-on:submit.prevent="onSubmit">
+  <div id="signupContainer">
+      <div v-bind:class="[signupSuccessful ? 'fadein' : 'hidden']">Thank you! Please login</div>
+      <form v-on:submit.prevent="onSubmit" v-bind:class="{ fadeout : signupSuccessful }">
           <input v-model="email" placeholder="Email" type="email" />
           <input v-model="firstName" placeholder="First Name" type="text" />
           <input v-model="lastName" placeholder="Last Name" type="text" />
           <input v-model="password" placeholder="Password" type="password" />
           <input type="submit" name="submit" value="Sign Up">
       </form>
+      <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
   </div>
 </template>
 
@@ -19,23 +20,24 @@ export default {
           email: '',
           firstName: '',
           lastName: '',
-          password: ''
+          password: '',
+          signupSuccessful: false,
+          error: ''
         }
     },
     methods: {
         onSubmit: function(){
-            //data from inputs -- this.email, this.firstName, this.lastName and this.password
-            console.log(this.firstName + " " +  this.lastName);
+            let self = this;
+            self.error = '';
             axios.post('/createuser', this.$data)
               .then(function (response) {
                 console.log(response);
+                self.signupSuccessful = true
               })
               .catch(function (error) {
-                console.log(error.response.data);
+                self.error = error.response.data.responseMessage
               });
         }
     }
-
-
 }
 </script>

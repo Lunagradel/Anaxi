@@ -35,8 +35,10 @@ new Vue({
       },
     },
     mounted(){
-      let userId = document.head.querySelector("[name=user]").content;
-      this.store.user.id = userId;
+      let letSessionMeta = document.head.querySelector("[name=user]");
+      if ( letSessionMeta ){
+        this.store.user.id = letSessionMeta.content;
+      }
     },
     router
 });

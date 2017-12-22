@@ -13,7 +13,7 @@
                 </div>
                 <div class="anaxi-card-content-destination">
                     <p>went to</p>
-                    <p class="destination-place">Egypt</p>
+                    <p class="destination-place">{{trip.geolocation.name}}</p>
                 </div>
                 <div class="anaxi-card-content-map">
                     <div class="trip-map" ref="tripMap">
@@ -21,46 +21,22 @@
                     </div>
                 </div>
                 <div class="anaxi-card-content-experiences">
-                    <div class="accordion-experience">
-                        <div class="accordion-experience-btn" v-on:click.prevent="toggleExperiences(0)">
+                    <div class="accordion-experience" v-for="(experience, index) in experiences" :key="index">
+                        <div class="accordion-experience-btn" v-on:click.prevent="toggleExperiences(index)">
                             <div class="accordion-btn-circle"></div>
-                            <p class="accordion-btn-title">{{experiences[0].title}}</p>
+                            <p class="accordion-btn-title">{{experience.title}}</p>
                         </div>
                         <div class="accordion-experience-content">
-                            <div v-show="experiences[0].show" class="experience-container">
+                            <div v-show="experiences[index].show" class="experience-container">
                                 <div class="experience-container-content">
                                     <div class="anaxi-card-content-recommendations">
-                                        <p class="recommendations-answer" id="true">Recommends</p>
-                                        <p class="recommendations-place">{{experiences[0].title}}</p>
+                                        <p v-if="experience.recommend" class="recommendations-answer" id="true">Recommends</p>
+                                        <p v-else class="recommendations-answer" id="false">Does not recommend</p>
+                                        <p class="recommendations-place">{{experience.title}}</p>
                                     </div>
                                     <div class="anaxi-card-content-extra">
-                                        <div class="extra-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Need moore nfm.
-                                        </div>
-                                        <div class="extra-image">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-experience">
-                        <div class="accordion-experience-btn" v-on:click.prevent="toggleExperiences(1)">
-                            <div class="accordion-btn-circle"></div>
-                            <p class="accordion-btn-title">{{experiences[1].title}}</p>
-                        </div>
-                        <div class="accordion-experience-content accordion-last-experience">
-                            <div v-show="experiences[1].show" class="experience-container">
-                                <div class="experience-container-content">
-                                    <div class="anaxi-card-content-recommendations">
-                                        <p class="recommendations-answer" id="false">Does not recommend</p>
-                                        <p class="recommendations-place">{{experiences[1].title}}</p>
-                                    </div>
-                                    <div class="anaxi-card-content-extra">
-                                        <div class="extra-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Need moore nfm.
+                                        <div class="extra-text" v-if="experience.description">
+                                            {{experience.description}}
                                         </div>
                                     </div>
                                 </div>
@@ -79,132 +55,141 @@
 </template>
 
 <script>
+
 export default {
+    props: ['trip'],
 
     data: function(){
         return {
-            experiences: [
-                {
-                    title: "Pyramid of Khufu",
-                    show:false,
-                    latitude: 29.983249,
-                    longitude: 31.135060
-                },
-                {
-                    title: "Lake Nasser",
-                    show:false,
-                    latitude: 22.881104,
-                    longitude: 32.201058
-                }
-            ]
-        }
-    },
-
-    methods: {
-        toggleExperiences: function(index){
-            for (var i = 0; i < this.experiences.length; i++){
-
-                if (index === i){
-                    this.experiences[index].show = !this.experiences[index].show;
-                } else {
-                    this.experiences[i].show = false;
-                }
-            }
-
+            experiences: []
         }
     },
 
     mounted: function() {
 
+        const tripExperiences = this.trip.experiences;
         let self = this;
-        const bounds = new google.maps.LatLngBounds();
-        let mapName = this.$refs.tripMap;
-        const mapCenter = this.experiences[0];
-        let marker;
 
-        const options = {
-            center: new google.maps.LatLng(mapCenter.latitude, mapCenter.longitude),
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-            styles: [
-                    {
-                        "featureType": "poi",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#5c9a8d"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "geometry",
-                        "stylers": [
-                            {
-                                "lightness": 100
-                            },
-                            {
-                                "visibility": "simplified"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#D1D1B8"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "geometry",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "color": "#5b7c8d"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "color": "#ffffff"
-                            }
-                        ]
-                    }
-                ]
-        }
+        tripExperiences.forEach(function(item){
+            let newExperienceObj = {
+                title: item.geolocation.locationName,
+                latitude: item.geolocation.lat,
+                longitude: item.geolocation.lng,
+                recommend: item.recommended,
+                description: item.description,
+                show: false
+            }
 
-        let map = new google.maps.Map(mapName, options);
-
-        //adding markers from the experiences array.
-        this.experiences.forEach((item, index)=> {
-            const position = new google.maps.LatLng(item.latitude, item.longitude);
-
-            marker = new google.maps.Marker({
-                position,
-                map
-            });
-
-            //when marker is pressed it calls toggleExperiences and shows the experience belonging to the marker.
-            google.maps.event.addListener(marker, 'click', function(){
-                self.toggleExperiences(index);
-            });
-
-            //makes the zoom so that every marker is visible
-            map.fitBounds(bounds.extend(position));
-
+            self.experiences.push(newExperienceObj);
+            console.log("experiences",self.experiences);
         });
 
+        self.mapInit();
 
-    }
+    },
+    methods: {
+        toggleExperiences: function(index){
+          console.log(index);
+          for (var i = 0; i < this.experiences.length; i++){
+
+            if (index === i){
+              this.experiences[index].show = !this.experiences[index].show;
+            } else {
+              this.experiences[i].show = false;
+            }
+          }
+
+      },
+
+      mapInit: function(){
+          const bounds = new google.maps.LatLngBounds();
+          let mapName = this.$refs.tripMap;
+          const mapCenter = this.experiences[0];
+          let marker;
+          let self = this;
+
+          const options = {
+              center: new google.maps.LatLng(mapCenter.latitude, mapCenter.longitude),
+              mapTypeControl: false,
+              streetViewControl: false,
+              fullscreenControl: false,
+              styles: [
+                      {
+                          "featureType": "poi",
+                          "elementType": "geometry.fill",
+                          "stylers": [
+                              {
+                                  "color": "#5c9a8d"
+                              }
+                          ]
+                      },
+                      {
+                          "featureType": "road",
+                          "elementType": "geometry",
+                          "stylers": [
+                              {
+                                  "lightness": 100
+                              },
+                              {
+                                  "visibility": "simplified"
+                              }
+                          ]
+                      },
+                      {
+                          "featureType": "road",
+                          "elementType": "geometry.fill",
+                          "stylers": [
+                              {
+                                  "color": "#D1D1B8"
+                              }
+                          ]
+                      },
+                      {
+                          "featureType": "water",
+                          "elementType": "geometry",
+                          "stylers": [
+                              {
+                                  "visibility": "on"
+                              },
+                              {
+                                  "color": "#5b7c8d"
+                              }
+                          ]
+                      },
+                      {
+                          "featureType": "water",
+                          "elementType": "labels.text.fill",
+                          "stylers": [
+                              {
+                                  "color": "#ffffff"
+                              }
+                          ]
+                      }
+                  ]
+          }
+
+          let map = new google.maps.Map(mapName, options);
+
+          //adding markers from the experiences array.
+          this.experiences.forEach((item, index)=> {
+              const position = new google.maps.LatLng(item.latitude, item.longitude);
+
+              marker = new google.maps.Marker({
+                  position,
+                  map
+              });
+
+              //when marker is pressed it calls toggleExperiences and shows the experience belonging to the marker.
+              google.maps.event.addListener(marker, 'click', function(){
+                  self.toggleExperiences(index);
+              });
+
+              //makes the zoom so that every marker is visible
+              map.fitBounds(bounds.extend(position));
+
+          });
+      }
+    },
 
 }
 </script>
