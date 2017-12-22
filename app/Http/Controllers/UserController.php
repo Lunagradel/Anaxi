@@ -55,13 +55,20 @@ class UserController extends BaseController
     		return false;
     	}
     	$UserId = $_SESSION["user_id"];
-      $FirstName = $request->input('firstName');
-      $LastName = $request->input('lastName');
-      $Description = $request->input('description');
+        $FirstName = $request->input('firstName');
+        $LastName = $request->input('lastName');
+        $Description = $request->input('description');
+        $Image = $request->input('image');
 
-      $User = new User();
-      $Response = $User->editUser($UserId, $FirstName, $LastName, $Description);
+        if (!$Image) {
+            //lavet fordi der skal være mulighed for ikke at uploade billede.
+        } else {
 
-      return $Response;
+        }
+
+        // $User = new User();
+        // $Response = $User->editUser($UserId, $FirstName, $LastName, $Description);
+
+        return "true";
     }
 }
