@@ -336,7 +336,6 @@ export default {
         self.error = error.response.data.responseMessage;
         console.log(error.response.data.responseMessage);
       });
-
   },
   created: function () {
     const self = this;
@@ -348,7 +347,6 @@ export default {
     }
 
   },
-
   watch: {
       showEdit: function(newValue){
           let className = "modal-open";
@@ -359,8 +357,5 @@ export default {
           }
       }
   }
-
-
-
 }
 </script>
