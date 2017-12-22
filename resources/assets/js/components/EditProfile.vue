@@ -11,7 +11,8 @@
                 <p>Edit your profile</p>
             </div>
             <div class="edit-content-image">
-
+                <img :src="image">
+                <input type="file" v-on:change="fileChange">
             </div>
             <input class="anaxi-search anaxi-edit-input" type="text" v-model="firstName" placeholder="firstname">
             <input class="anaxi-search anaxi-edit-input" type="text" v-model="lastName" placeholder="lastname">
@@ -32,7 +33,8 @@ export default {
         return {
             firstName: this.userFirstName,
             lastName: this.userLastName,
-            description: this.userDescription
+            description: this.userDescription,
+            image: ''
         }
     },
 
@@ -44,7 +46,8 @@ export default {
             axios.post('/edituser', {
                 firstName: this.firstName,
                 lastName: this.lastName,
-                description: this.description
+                description: this.description,
+                image: this.image
             })
               .then(function (response) {
                 console.log(response);
@@ -55,9 +58,33 @@ export default {
               .catch(function (error) {
                 console.log(error);
               });
+        },
+        fileChange: function(e){
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length) {
+                return;
+            } else {
+                this.createImage(files[0]);
+            }
+        },
+        createImage: function(file){
+            let reader = new FileReader();
+            let self = this;
+            reader.onload = (e) => {
+                self.image = e.target.result;
+            }
+            reader.readAsDataURL(file);
         }
     },
 
 
 }
 </script>
+
+<style scoped>
+
+    img {
+        max-height: 80px;
+    }
+
+</style>
