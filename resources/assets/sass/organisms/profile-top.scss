@@ -29,7 +29,12 @@
         width: 120px;
         height: 150px;
         background-color: $blue;
+
+        img {
+            width: 100%;
+        }
     }
+
 
     @include mobile{
         width: 100%;

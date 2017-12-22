@@ -47,7 +47,7 @@
                         <p>PROFILSEITE</p>
                     </div>
                     <div class="graphic-image">
-
+                        <img :src="'/img/' + imageUrl" alt="">
                     </div>
                 </div>
                 <div class="anaxi-profile-passport-information">
@@ -104,8 +104,7 @@
         v-if="showEdit"
         @closeEdit="showEdit = false"
         @updateProfileInfo="updateProfileInfo"
-        v-bind:userFirstName="firstName"
-        v-bind:userLastName="lastName"
+        v-bind:imageInfo="imageUrl"
         v-bind:userDescription="description"
         ></EditProfile>
         <ShowFollowers
@@ -152,7 +151,8 @@ export default {
         isFollowing: false,
         showFollowers: false,
         showFollowing: false,
-        error: ''
+        error: '',
+        imageUrl: 'default.jpg'
     }
   },
 
@@ -249,13 +249,12 @@ export default {
           });
 
       },
-      updateProfileInfo: function(description, lastName, firstName){
+      updateProfileInfo: function(description, image){
 
           let self = this;
 
           self.description = description;
-          self.lastName = lastName;
-          self.firstName = firstName;
+          self.imageUrl = image;
       },
 
       checkIfFollowing: function(){
@@ -345,6 +344,13 @@ export default {
         self.lastName = response.data[0].lastName;
         self.fullName = self.firstName + " " + self.lastName;
         self.description = response.data[0].description;
+
+
+        if (!response.data[0].image){
+
+        } else {
+            self.imageUrl = response.data[0].image;
+        }
 
         if (!response.data[0].followers){
 
