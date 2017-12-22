@@ -133,11 +133,8 @@ export default {
   components: {
     Experience,
     EditProfile,
-<<<<<<< HEAD
-    ShowFollowers
-=======
+    ShowFollowers,
     Trip
->>>>>>> develop
   },
   data: function(){
     return {
@@ -145,23 +142,17 @@ export default {
         following: [],
         followersAmount: 0,
         experiences: [],
-<<<<<<< HEAD
         fullName: '',
-=======
         trips: [],
->>>>>>> develop
         lastName: '',
         firstName: '',
         description: '',
         showEdit: false,
         isOwnProfile: false,
         isFollowing: false,
-<<<<<<< HEAD
         showFollowers: false,
-        showFollowing: false
-=======
+        showFollowing: false,
         error: ''
->>>>>>> develop
     }
   },
 
@@ -354,7 +345,6 @@ export default {
         self.lastName = response.data[0].lastName;
         self.fullName = self.firstName + " " + self.lastName;
         self.description = response.data[0].description;
-<<<<<<< HEAD
 
         if (!self.experiences){
 
@@ -362,8 +352,6 @@ export default {
             self.mapInit();
         }
 
-=======
->>>>>>> develop
         if (!response.data[0].followers){
             //do nothing
         } else {
