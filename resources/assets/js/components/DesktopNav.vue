@@ -34,9 +34,9 @@
                     </div>
                 </router-link>
                 <div class="anaxi-nav-content-btns">
-                    <div class="anaxi-primary-btn" id="postBtn" v-on:click="showCreate = true, modalOpen = true"><p>Post</p></div>
-                    <i class="ion-android-globe"></i>
-                    <router-link :to="{ name: 'profile', params: { id: userid }}">
+                    <div class="anaxi-primary-btn" id="postBtn" v-on:click="showCreate = true, modalOpen = true" v-if="!mobileSize"><p>Post</p></div>
+                    <i class="ion-android-globe" v-if="!mobileSize"></i>
+                    <router-link :to="{ name: 'profile', params: { id: userid }}" v-if="!mobileSize">
                         <div class="profile-btn-content">
                             <p class="profile-name">{{userName}}</p>
                             <div class="profile-avatar"></div>
@@ -49,6 +49,10 @@
                 </div>
             </div>
         </nav>
+        <MobileNav
+        v-if="mobileSize"
+        @showCreate="showCreate = true, modalOpen = true"
+        ></MobileNav>
     </div>
 
 </template>
@@ -59,6 +63,7 @@ import createLocation from './CreateLocation.vue';
 import createRecommend from './CreateRecommend.vue';
 import createExtra from './CreateExtra.vue';
 import createTrip from './CreateTrip.vue';
+import MobileNav from './MobileNav.vue';
 
 export default {
 
@@ -72,6 +77,8 @@ export default {
             isActive: false,
             userName: '',
             modalOpen: false,
+            windowWidth: 0,
+            mobileSize: false
         }
     },
     methods: {
@@ -87,17 +94,19 @@ export default {
           .catch(function (error) {
             console.log(error.response.data);
           })
+      },
+      getWindowWidth: function(e){
+          this.windowWidth = document.documentElement.clientWidth;
       }
     },
-
 
     components: {
         createLocation,
         createRecommend,
         createExtra,
-        createTrip
+        createTrip,
+        MobileNav
     },
-
 
     mounted() {
       let self = this;
@@ -109,6 +118,13 @@ export default {
         .catch(function (error) {
           console.log(error);
         })
+
+
+    this.$nextTick(function(){
+        window.addEventListener('resize', this.getWindowWidth);
+
+        this.getWindowWidth()
+    })
   },
   watch: {
       modalOpen: function(newValue){
@@ -118,7 +134,18 @@ export default {
           } else {
               document.body.classList.remove(className);
           }
+      },
+      windowWidth: function(newWidth){
+          if (newWidth < 736){
+              this.mobileSize = true;
+          }
+          if (newWidth > 736){
+              this.mobileSize = false;
+          }
       }
+  },
+  beforeDestroy() {
+      window.removeEventListener('resize', this.getWindowWidth);
   }
 }
 </script>

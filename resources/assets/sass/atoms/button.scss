@@ -84,3 +84,17 @@
 .extra-back-btn {
     color: $orange;
 }
+
+.mobile-post-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    position: relative;
+    bottom: 10px;
+
+    p {
+        font-size: 35px;
+        position: relative;
+        bottom: 2px;
+    }
+}
