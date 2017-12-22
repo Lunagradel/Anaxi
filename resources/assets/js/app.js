@@ -30,7 +30,8 @@ new Vue({
           longitude: "",
           locationName: "",
           description: "",
-          recommended: false
+          recommended: false,
+          image: ""
         },
       },
     },

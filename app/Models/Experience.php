@@ -29,6 +29,7 @@ class Experience {
 		$this->Rating = $Rating;
 		$this->Geolocation = $Geolocation;
 		$this->Description = $Description;
+		$this->$Image = $Image;
 
 		$experienceID = new MongoDB\BSON\ObjectID();
 
@@ -40,7 +41,7 @@ class Experience {
 					'_id' => $experienceID,
 					'geolocation' => $Geolocation,
 					'description' => $Description,
-					'imageId' => 2,
+					'image' => $Image,
 					'recommended' => $Rating,
 				]
 			]

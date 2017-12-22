@@ -76,7 +76,8 @@ export default {
           lng: experience.longitude,
           locationName: experience.locationName
         },
-        description: experience.description
+        description: experience.description,
+        image: experience.image
       })
         .then(function (response) {
           self.$emit('closeTrip');
@@ -98,7 +99,8 @@ export default {
               lng: experience.longitude,
               locationName: experience.locationName
             },
-            description: experience.description
+            description: experience.description,
+            image: experience.image
         },
         trip: {
           lat: self.latitude,
