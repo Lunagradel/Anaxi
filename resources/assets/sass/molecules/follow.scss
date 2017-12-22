@@ -1,0 +1,56 @@
+.anaxi-follow-contaioner {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    @include flexbox();
+    @include justify-content(center);
+    @include align-items(center);
+}
+
+.anaxi-follow-content {
+    width: 350px;
+    height: 200px;
+    background-color: $white;
+    border-radius: 4px;
+
+    .anaxi-follow-header {
+        font-size: 22px;
+        width: 100%;
+        @include flexbox();
+        @include justify-content(center);
+        border-bottom: solid $red 2px;
+        background-color: $red;
+        padding-bottom: 5px;
+    }
+
+    .anaxi-follow-users {
+        width: 100%;
+        height: 141px;
+        overflow: auto;
+
+        .anaxi-follow-user {
+            width: 100%;
+            padding-left: 10px;
+            height: 40px;
+            @include flexbox();
+            @include align-items(center);
+            border-bottom: solid $red 1px;
+        }
+
+    }
+
+
+
+    .follow-close {
+        @include flexbox();
+        @include justify-content(flex-end);
+        padding: 2px 5px 0px 0px;
+        cursor: pointer;
+        background-color: $red;
+        border-radius: 4px 4px 0px 0px;
+    }
+}

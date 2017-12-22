@@ -71,11 +71,11 @@
                         <div class="information-mobile">
                             <div class="information-item">
                                 <p>4. Followers</p>
-                                <p>{{followersAmount}}</p>
+                                <p v-on:click="showFollow('followers')" class="clickable">{{followersAmount}}</p>
                             </div>
                             <div class="information-item">
                                 <p>5. Following</p>
-                                <p>{{following.length}}</p>
+                                <p v-on:click="showFollow('following')" class="clickable">{{following.length}}</p>
                             </div>
                         </div>
                         <div class="anaxi-primary-btn" id="profileBtn" v-if="isOwnProfile" v-on:click="showEdit = true">
@@ -108,6 +108,18 @@
         v-bind:userLastName="lastName"
         v-bind:userDescription="description"
         ></EditProfile>
+        <ShowFollowers
+        v-if="showFollowers"
+        v-bind:followers="followers"
+        v-bind:following="false"
+        @closeFollow="showFollowers = false"
+        ></ShowFollowers>
+        <ShowFollowers
+        v-if="showFollowing"
+        v-bind:followers="following"
+        v-bind:following="true"
+        @closeFollow="showFollowing = false"
+        ></ShowFollowers>
     </div>
 </template>
 
@@ -115,18 +127,22 @@
   import Experience from './Experience.vue';
   import Trip from './Trip.vue';
   import EditProfile from './EditProfile.vue';
+  import ShowFollowers from './ShowFollowers.vue';
+
 export default {
   components: {
     Experience,
     EditProfile,
+    ShowFollowers,
     Trip
   },
   data: function(){
     return {
         followers: [],
         following: [],
-        followersAmount: '',
+        followersAmount: 0,
         experiences: [],
+        fullName: '',
         trips: [],
         lastName: '',
         firstName: '',
@@ -134,6 +150,8 @@ export default {
         showEdit: false,
         isOwnProfile: false,
         isFollowing: false,
+        showFollowers: false,
+        showFollowing: false,
         error: ''
     }
   },
@@ -246,7 +264,7 @@ export default {
           let followers = this.followers;
 
           followers.forEach(function(item){
-             let followerId = item.$oid;
+             let followerId = item._id.$oid;
              let userId = self.$root.store.user.id;
              if (followerId === userId){
                  self.isFollowing = true;
@@ -259,10 +277,15 @@ export default {
 
       followUser: function(){
           let followId = this.$route.params.id;
+          let usersfullName = this.fullName;
+          let loggedInsfullName = this.$root.store.user.fullName;
           let self = this;
 
-          axios.post('/followuser', {'followId':followId})
-            .then(function (response) {
+          axios.post('/followuser', {
+              'followId':followId,
+              'userFullName': usersfullName,
+              'loggedInFullName': loggedInsfullName
+          }).then(function (response) {
                 console.log(response.data);
                 if (response.data){
                     self.isFollowing = true;
@@ -278,9 +301,14 @@ export default {
 
           let followId = this.$route.params.id;
           let self = this;
+          let usersfullName = this.fullName;
+          let loggedInsfullName = this.$root.store.user.fullName;
 
-          axios.post('/unfollowuser', {'unFollowId':followId})
-            .then(function (response) {
+          axios.post('/unfollowuser', {
+              'unFollowId':followId,
+              'userFullName': usersfullName,
+              'loggedInFullName': loggedInsfullName
+          }).then(function (response) {
                 console.log(response.data);
                 if (response.data){
                     self.isFollowing = false;
@@ -293,6 +321,18 @@ export default {
             });
       },
 
+      showFollow: function(type){
+
+          if (type === "followers" && this.followers.length > 0){
+              this.showFollowers = true;
+          } else if (type === "following" && this.following.length > 0) {
+              this.showFollowing = true;
+          } else {
+              console.log("no show");
+          }
+
+      }
+
   },
   mounted(){
     // Set variables
@@ -303,7 +343,15 @@ export default {
       .then(function (response) {
         self.firstName = response.data[0].firstName;
         self.lastName = response.data[0].lastName;
+        self.fullName = self.firstName + " " + self.lastName;
         self.description = response.data[0].description;
+
+        if (!self.experiences){
+
+        } else {
+            self.mapInit();
+        }
+
         if (!response.data[0].followers){
             //do nothing
         } else {
@@ -349,6 +397,22 @@ export default {
   },
   watch: {
       showEdit: function(newValue){
+          let className = "modal-open";
+          if (newValue) {
+              document.body.classList.add(className);
+          } else {
+              document.body.classList.remove(className);
+          }
+      },
+      showFollowers: function(newValue){
+          let className = "modal-open";
+          if (newValue) {
+              document.body.classList.add(className);
+          } else {
+              document.body.classList.remove(className);
+          }
+      },
+      showFollowing: function(newValue){
           let className = "modal-open";
           if (newValue) {
               document.body.classList.add(className);

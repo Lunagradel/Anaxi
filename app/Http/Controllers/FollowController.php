@@ -30,9 +30,11 @@ class FollowController extends BaseController
 
         $UserId = $_SESSION["user_id"];
         $UserToFollowId = $request->input('followId');
+        $UserToFollowName = $request->input('userFullName');
+        $LoggedInName = $request->input('loggedInFullName');
 
         $Follow = new Follow();
-        $Response = $Follow->FollowUser($UserId, $UserToFollowId);
+        $Response = $Follow->FollowUser($UserId, $UserToFollowId, $UserToFollowName, $LoggedInName);
 
         return $Response;
 
@@ -48,9 +50,11 @@ class FollowController extends BaseController
 
         $UserId = $_SESSION["user_id"];
         $UserToUnfollow = $request->input('unFollowId');
+        $UserToUnfollowName = $request->input('userFullName');
+        $LoggedInName = $request->input('loggedInFullName');
 
         $Follow = new Follow();
-        $Response = $Follow->UnfollowUser($UserId, $UserToUnfollow);
+        $Response = $Follow->UnfollowUser($UserId, $UserToUnfollow, $UserToUnfollowName, $LoggedInName);
 
         return $Response;
 
