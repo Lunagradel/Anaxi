@@ -265,13 +265,12 @@ export default {
           followers.forEach(function(item){
              let followerId = item._id.$oid;
              let userId = self.$root.store.user.id;
+             console.log("Checking ="+followerId+" against ="+userId);
              if (followerId === userId){
                  self.isFollowing = true;
              }
 
           });
-
-
       },
 
       followUser: function(){
@@ -351,9 +350,11 @@ export default {
         } else {
             self.imageUrl = response.data[0].image;
         }
-
+        if (self.experiences.length > 0){
+          self.mapInit();
+        }
         if (!response.data[0].followers){
-
+            //do nothing
         } else {
             self.followers = response.data[0].followers;
             self.followersAmount = response.data[0].followers.length;
@@ -363,11 +364,9 @@ export default {
         } else {
             self.following = response.data[0].following;
         }
-
         if (!self.isOwnProfile){
             self.checkIfFollowing()
         }
-//        this.$set('experiences', JSON.parse(response.data[0].experiences));
       })
       .catch(function (error) {
         console.log(error);
@@ -375,21 +374,29 @@ export default {
 
     axios.post('/getprofilefeed', {'userId':userId})
       .then(function (response) {
-        self.experiences = response.data[1].experiences;
-        self.trips = response.data[0].trips;
-
-        if (!self.experiences || !self.trips) {
-            //do nothing
-        } else {
+        if (response.data.feed){
+            self.experiences = response.data.feed[1].experiences;
+            self.trips = response.data.feed[0].trips;
+        }
+        if (self.experiences.length > 0 || self.trips.length > 0 ){
             self.mapInit();
         }
-        console.log(response.data);
       })
       .catch(function (error) {
-        self.error = error.response.data.responseMessage;
-        console.log(error.response.data.responseMessage);
+        if (error.response) {
+          // The request was made, but the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          console.log(error.response.data.responseMessage);
+          self.error = error.response.data.responseMessage;
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
       });
-
   },
   created: function () {
     const self = this;
@@ -401,7 +408,6 @@ export default {
     }
 
   },
-
   watch: {
       showEdit: function(newValue){
           let className = "modal-open";
@@ -428,8 +434,5 @@ export default {
           }
       }
   }
-
-
-
 }
 </script>

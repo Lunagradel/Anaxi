@@ -26,11 +26,7 @@ export default {
           //data from inputs -- this.email and this.password
            axios.post('/login', this.$data)
             .then(function (response) {
-              console.log(response);
               location.reload();
-              if (response.data.status < 400){
-
-              }
             })
             .catch(function (error) {
               self.error = error.response.data.responseMessage

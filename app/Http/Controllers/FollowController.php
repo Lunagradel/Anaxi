@@ -44,9 +44,9 @@ class FollowController extends BaseController
     {
 
         $UserIsLoggedIn = $this->LoginController->validateLoginState();
-	    if (!$UserIsLoggedIn){
-		    return false;
-	    }
+		    if (!$UserIsLoggedIn){
+			    return false;
+		    }
 
         $UserId = $_SESSION["user_id"];
         $UserToUnfollow = $request->input('unFollowId');
@@ -57,6 +57,5 @@ class FollowController extends BaseController
         $Response = $Follow->UnfollowUser($UserId, $UserToUnfollow, $UserToUnfollowName, $LoggedInName);
 
         return $Response;
-
     }
 }
