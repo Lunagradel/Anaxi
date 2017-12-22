@@ -29,13 +29,6 @@ class Experience {
 		$this->Rating = $Rating;
 		$this->Geolocation = $Geolocation;
 		$this->Description = $Description;
-		if (!empty($Description)){
-			// Do something here..
-
-		}
-		// Date stuff
-//		$dt = new DateTime(date('Y-m-d'), new DateTimeZone('UTC'));
-//		$ts = $dt->getTimestamp();
 
 		$experienceID = new MongoDB\BSON\ObjectID();
 

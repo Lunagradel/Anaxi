@@ -35,7 +35,7 @@ class ProfileController {
 		$ExperienceModel = new Experience();
 		$User = $ExperienceModel->GetExperiencesByUser($UserId);
 		if (empty($User[0]->experiences)){
-			return response()->json(['responseMessage' => 'This user has not created any experiences yet.'], 400);
+			return response()->json(['responseMessage' => 'This user has not created any experiences yet.'], 200);
 		}
 		$UserExperiences = $User[0]->experiences;
 		// Get users trip
@@ -45,6 +45,12 @@ class ProfileController {
 		// Turn experience BSON into array so it can be filtered.
 		$this->UserExperiences = iterator_to_array($UserExperiences);
 
+		// Check if user has trips
+		if (empty($UserTrips[0]->trips )){
+			$Feed [] = ['trips' => [] ];
+			$Feed [] = ['experiences' => $this->UserExperiences];
+			return response()->json(['responseMessage' => 'Here comes the experiences, no trips tho.', 'feed' => $Feed], 200);
+		}
 		// For each trip,
 		foreach ($UserTrips[0]->trips as $trip) {
 			// Extract experience Ids and turn BSON into array.
@@ -57,7 +63,7 @@ class ProfileController {
 		$Feed [] = ['trips' => $this->UserTrips ];
 		$Feed [] = ['experiences' => $this->UserExperiences];
 
-		return response()->json(['responseMessage' => 'This user has not created any experiences yet.', 'data' => $Feed], 200);
+		return response()->json(['responseMessage' => 'Here comes everything.', 'feed' => $Feed], 200);
 //		Return $Feed;
     }
 

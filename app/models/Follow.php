@@ -22,9 +22,9 @@ class Follow {
     public function FollowUser($LoggedInUser, $UserToFollow, $UserToFollowName, $LoggedInName)
     {
         $this->UserToFollow = $UserToFollow;
-        $this->$LoggedInUser = $LoggedInUser;
-        $this->$UserToFollowName = $UserToFollowName;
-        $this->$LoggedInName = $LoggedInName;
+        $this->LoggedInUser = $LoggedInUser;
+        $this->UserToFollowName = $UserToFollowName;
+        $this->LoggedInName = $LoggedInName;
 
         $this->Collection->findOneAndUpdate([
 			'_id' => new MongoDB\BSON\ObjectID($LoggedInUser)
@@ -56,10 +56,36 @@ class Follow {
 
     public function UnfollowUser($LoggedInUser, $UserToUnfollow, $UserToUnfollowName, $LoggedInName)
     {
-        $this->$UserToUnfollow = $UserToUnfollow;
-        $this->$LoggedInUser = $LoggedInUser;
-		$this->$UserToUnfollowName = $UserToUnfollowName;
-		$this->$LoggedInName = $LoggedInName;
+        $this->UserToUnfollow = $UserToUnfollow;
+        $this->LoggedInUser = $LoggedInUser;
+				$this->UserToUnfollowName = $UserToUnfollowName;
+				$this->LoggedInName = $LoggedInName;
+
+				$operatingUser = new MongoDB\BSON\ObjectID($LoggedInUser);
+				$followedId = new MongoDB\BSON\ObjectID($UserToUnfollow);
+				// Using BulkWrite in so multiple writes are on atomic operation.
+
+	      $filter2 = "";
+	      $Operations = [
+		      [ 'updateOne'  => [
+		      	['_id' => $operatingUser],
+			      ['$pull' => [
+				      'following' => [
+					      '_id' => $UserToUnfollow
+				      ]
+			      ]]
+		      ] ],
+		      [ 'updateOne'  => [
+			      ['_id' => $followedId],
+			      ['$pull' => [
+				      'followers' => [
+					      '_id' => $operatingUser
+				      ]
+			      ]]
+		      ]],
+	      ];
+	      $Options = [];
+	      $bulk = $this->Collection->bulkWrite( $Operations, $Options );
 
         // $this->Collection->findOneAndUpdate([
 		// 	'_id' => new MongoDB\BSON\ObjectID($LoggedInUser)
@@ -82,8 +108,9 @@ class Follow {
 		// 	]
 		// ]
 		// );
+	    dd($bulk);
 
-        return "true";
+        return $bulk;
     }
 
 
