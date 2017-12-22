@@ -26,8 +26,6 @@
                 {{charactersLeft}}
             </div>
             <div class="content-add-image">
-                <p>+</p>
-                <i class="ion-ios-camera-outline"></i>
                 <p>Add image</p>
                 <input type="file" v-on:change="fileChange">
             </div>

@@ -55,16 +55,24 @@
 }
 
 .content-add-image {
-    width: 130px;
     color: $blue;
     @include flexbox();
-    @include align-items(center);
-    @include justify-content(space-between);
-    cursor: pointer;
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(space-between);
     margin-top: 60px;
 
     p:nth-of-type(1){
         font-size: 30px;
+        margin-bottom: 10px;
+    }
+}
+
+.content-image-thumbnail {
+    width: 150px;
+    margin-top: 15px;
+    img {
+        width: 100%;
     }
 }
 
