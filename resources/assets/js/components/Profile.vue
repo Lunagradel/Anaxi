@@ -346,14 +346,8 @@ export default {
         self.fullName = self.firstName + " " + self.lastName;
         self.description = response.data[0].description;
 
-        if (!self.experiences){
-
-        } else {
-            self.mapInit();
-        }
-
         if (!response.data[0].followers){
-            //do nothing
+
         } else {
             self.followers = response.data[0].followers;
             self.followersAmount = response.data[0].followers.length;
@@ -377,7 +371,12 @@ export default {
       .then(function (response) {
         self.experiences = response.data[1].experiences;
         self.trips = response.data[0].trips;
-        self.mapInit();
+
+        if (!self.experiences || !self.trips) {
+            //do nothing
+        } else {
+            self.mapInit();
+        }
         console.log(response.data);
       })
       .catch(function (error) {
