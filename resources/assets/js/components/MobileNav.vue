@@ -2,9 +2,11 @@
 
     <div class="anaxi-mobile-nav">
         <div class="anaxi-mobile-nav-btns">
-            <div class="anaxi-mobile-nav-btn mobile-home-btn">
-                <i class="ion-ios-home-outline"></i>
-            </div>
+            <router-link to="/" exact>
+                <div class="anaxi-mobile-nav-btn mobile-home-btn">
+                    <i class="ion-ios-home-outline"></i>
+                </div>
+            </router-link>
             <div class="anaxi-mobile-nav-btn mobile-search-btn">
                 <i class="ion-ios-search"></i>
             </div>
