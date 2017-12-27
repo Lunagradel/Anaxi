@@ -28,6 +28,10 @@
     };
 }
 
+.anaxi-nav-content-search {
+    @include flexbox();
+}
+
 .anaxi-mobile-nav {
     background-color: $white;
     width: 100%;

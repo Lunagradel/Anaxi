@@ -45,7 +45,7 @@
 }
 
 .profile-btn-content {
-    width: 80px;
+    width: 70px;
     @include flexbox();
     @include justify-content(space-between);
     @include align-items(center);
@@ -105,4 +105,10 @@
         position: relative;
         bottom: 2px;
     }
+}
+
+.search-btn {
+    border-radius: 0px 5px 5px 0px;
+    width: 50px;
+    font-size: 18px;
 }
