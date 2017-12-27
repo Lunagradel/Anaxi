@@ -33,6 +33,12 @@
                         </p>
                     </div>
                 </router-link>
+                <div class="anaxi-nav-content-search">
+                    <input type="text" v-model="searchInput" placeholder="Search">
+                    <div class="" v-on:click="searchForValue">
+                        search
+                    </div>
+                </div>
                 <div class="anaxi-nav-content-btns">
                     <div class="anaxi-primary-btn" id="postBtn" v-on:click="showCreate = true, modalOpen = true" v-if="!mobileSize"><p>Post</p></div>
                     <i class="ion-android-globe" v-if="!mobileSize"></i>
@@ -81,7 +87,8 @@ export default {
             modalOpen: false,
             windowWidth: 0,
             mobileSize: false,
-            imageUrl: 'default.jpg'
+            imageUrl: 'default.jpg',
+            searchInput: ''
         }
     },
     methods: {
@@ -100,6 +107,17 @@ export default {
       },
       getWindowWidth: function(e){
           this.windowWidth = document.documentElement.clientWidth;
+      },
+      searchForValue: function(){
+          // console.log(this.searchInput);
+          let self = this;
+          axios.post('/searchforvalue', {'searchValue':self.searchInput})
+            .then(function (response) {
+                console.log("response from search", response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
       }
     },
 
@@ -115,7 +133,6 @@ export default {
       let self = this;
       axios.post('/getuserbyid', {'userID':self.userid})
         .then(function (response) {
-            console.log(response.data[0].image);
           self.userName = response.data[0].firstName;
           self.$root.store.user.fullName = response.data[0].firstName + " " + response.data[0].lastName;
 

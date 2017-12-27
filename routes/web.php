@@ -47,6 +47,10 @@ Route::post('followuser', 'FollowController@FollowUser');
 
 Route::post('unfollowuser', 'FollowController@UnfollowUser');
 
+//Search endpoints
+
+Route::post('searchforvalue', 'SearchController@getSearchResult');
+
 // Vue route catcher
 
 Route::post('/addcomment', 'CommentsController@AddComment');
