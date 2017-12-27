@@ -34,9 +34,9 @@
                     </div>
                 </router-link>
                 <div class="anaxi-nav-content-search">
-                    <input type="text" v-model="searchInput" placeholder="Search">
-                    <div class="" v-on:click="searchForValue">
-                        search
+                    <input type="text" v-model="searchInput" placeholder="Search" class="anaxi-search desktop-search">
+                    <div class="anaxi-primary-btn search-btn" v-on:click="searchForValue">
+                        <i class="ion-ios-search-strong"></i>
                     </div>
                 </div>
                 <div class="anaxi-nav-content-btns">
