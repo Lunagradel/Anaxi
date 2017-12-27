@@ -52,10 +52,18 @@
     color: $pink;
 
     .profile-avatar {
-        width: 25px;
-        height: 25px;
-        background-color: $orange;
+        width: 30px;
+        height: 30px;
+        background-color: $white;
         border-radius: 50%;
+        overflow: hidden;
+        @include flexbox();
+        @include justify-content(center);
+        @include align-items(center);
+
+        img {
+            width: 100%;
+        }
     }
 }
 

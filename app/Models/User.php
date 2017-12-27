@@ -30,7 +30,7 @@ class User {
 		];
 		$Options =  [
 			'limit' => 1,
-			'projection' => ['firstName' => 1, 'lastName' => 1]
+			'projection' => ['firstName' => 1, 'lastName' => 1, 'image' => 1]
 		];
 		$result = $this->Collection->find($Query,$Options)->toArray();
 		return $result;

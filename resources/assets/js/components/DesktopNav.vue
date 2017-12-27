@@ -39,7 +39,9 @@
                     <router-link :to="{ name: 'profile', params: { id: userid }}" v-if="!mobileSize">
                         <div class="profile-btn-content">
                             <p class="profile-name">{{userName}}</p>
-                            <div class="profile-avatar"></div>
+                            <div class="profile-avatar">
+                                <img :src="'/img/' + imageUrl" alt="">
+                            </div>
                         </div>
                     </router-link>
                     <div class="profile-arrow" v-on:click="toggleDropdown"></div>
@@ -78,7 +80,8 @@ export default {
             userName: '',
             modalOpen: false,
             windowWidth: 0,
-            mobileSize: false
+            mobileSize: false,
+            imageUrl: 'default.jpg'
         }
     },
     methods: {
@@ -112,8 +115,13 @@ export default {
       let self = this;
       axios.post('/getuserbyid', {'userID':self.userid})
         .then(function (response) {
+            console.log(response.data[0].image);
           self.userName = response.data[0].firstName;
           self.$root.store.user.fullName = response.data[0].firstName + " " + response.data[0].lastName;
+
+          if (response.data[0].image) {
+              self.imageUrl = response.data[0].image;
+          }
         })
         .catch(function (error) {
           console.log(error);
