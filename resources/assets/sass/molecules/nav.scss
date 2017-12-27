@@ -32,6 +32,32 @@
     @include flexbox();
 }
 
+.anaxi-nav-content-result {
+    min-height: 40px;
+    width: 300px;
+    border-radius: 0px 0px 5px 5px;
+    border: solid $pink 1px;
+    border-top: none;
+    background-color: $white;
+    position: absolute;
+    top: 34px;
+    z-index: 1;
+
+    p {
+        padding-left: 5px;
+        height: 36px;
+        @include flexbox();
+        @include align-items(center);
+        color: $pink;
+        font-size: 15px;
+    }
+}
+
+.result-items:hover {
+    background-color: $body-background-color;
+    border-radius: 5px;
+}
+
 .anaxi-mobile-nav {
     background-color: $white;
     width: 100%;

@@ -33,10 +33,22 @@
                         </p>
                     </div>
                 </router-link>
-                <div class="anaxi-nav-content-search">
-                    <input type="text" v-model="searchInput" placeholder="Search" class="anaxi-search desktop-search">
-                    <div class="anaxi-primary-btn search-btn" v-on:click="searchForValue">
-                        <i class="ion-ios-search-strong"></i>
+                <div class="anaxi-nav-content-search-container">
+                    <div class="anaxi-nav-content-search">
+                        <input type="text" v-model="searchInput" placeholder="Search" class="anaxi-search desktop-search">
+                        <div class="anaxi-primary-btn search-btn" v-on:click="searchForValue">
+                            <i class="ion-ios-search-strong"></i>
+                        </div>
+                    </div>
+                    <div class="anaxi-nav-content-result" v-show="showSearchDropdown">
+
+                        <p v-if="!searchResult">Sorry, nothing was found.</p>
+                        <div class="result-items" v-for="(item, index) in searchResultData" :key="index" v-else>
+                            <router-link :to="{ name: 'profile', params: { id: item._id.$oid}}" v-on:click.native="searchLinkClicked">
+                                <p>{{item.firstName}} {{item.lastName}}</p>
+                            </router-link>
+                        </div>
+
                     </div>
                 </div>
                 <div class="anaxi-nav-content-btns">
@@ -88,7 +100,10 @@ export default {
             windowWidth: 0,
             mobileSize: false,
             imageUrl: 'default.jpg',
-            searchInput: ''
+            searchInput: '',
+            searchResult: false,
+            searchResultData: [],
+            showSearchDropdown: false
         }
     },
     methods: {
@@ -109,15 +124,33 @@ export default {
           this.windowWidth = document.documentElement.clientWidth;
       },
       searchForValue: function(){
-          // console.log(this.searchInput);
-          let self = this;
-          axios.post('/searchforvalue', {'searchValue':self.searchInput})
-            .then(function (response) {
-                console.log("response from search", response);
-            })
-            .catch(function (error) {
-              console.log(error);
-            })
+          if (this.searchInput === '') {
+              //nothing to search for
+          } else {
+              let self = this;
+              axios.post('/searchforvalue', {'searchValue':self.searchInput})
+                .then(function (response) {
+                    console.log("response from search", response.data);
+                    if (response.data.length > 0){
+                        self.searchResult = true;
+                        self.searchResultData = response.data;
+                        self.showSearchDropdown = true;
+                    } else {
+                        self.searchResult = false;
+                        self.searchResultData = [];
+                        self.showSearchDropdown = true;
+                    }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                })
+          }
+      },
+      searchLinkClicked: function(){
+          this.searchResult = false;
+          this.searchResultData = [];
+          this.showSearchDropdown = false;
+          this.searchInput = '';
       }
     },
 
@@ -166,6 +199,13 @@ export default {
           }
           if (newWidth > 736){
               this.mobileSize = false;
+          }
+      },
+      searchInput:function(newValue){
+          if (newValue === ""){
+              this.searchResult = false;
+              this.searchResultData = [];
+              this.showSearchDropdown = false;
           }
       }
   },
