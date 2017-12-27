@@ -23,7 +23,7 @@
 
           @if ($loggedIn)
             <desktop-nav userid="{{$_SESSION["user_id"]}}"></desktop-nav>
-            <router-view></router-view>
+            <router-view :key="$route.fullPath"></router-view>
           @else
               <div class="login-container">
                   <div class="login-intro">
