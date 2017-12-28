@@ -98,3 +98,25 @@
     @include align-items(center);
 
 }
+
+.anaxi-mobile-content-result {
+    width: 300px;
+
+
+    p {
+        padding-left: 5px;
+        height: 36px;
+        @include flexbox();
+        @include align-items(center);
+        color: #000000;
+        font-size: 15px;
+        border-bottom: solid $pink 1px;
+        border-radius: 0px 0px 5px 5px;
+    }
+
+    .result-items:nth-of-type(2n){
+        background-color: $white;
+        border-radius: 5px;
+    }
+
+}

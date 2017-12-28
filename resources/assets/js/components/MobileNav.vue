@@ -7,9 +7,11 @@
                     <i class="ion-ios-home-outline"></i>
                 </div>
             </router-link>
-            <div class="anaxi-mobile-nav-btn mobile-search-btn">
-                <i class="ion-ios-search"></i>
-            </div>
+            <router-link to="/search">
+                <div class="anaxi-mobile-nav-btn mobile-search-btn">
+                    <i class="ion-ios-search"></i>
+                </div>
+            </router-link>
             <div class="anaxi-mobile-nav-btn anaxi-primary-btn mobile-post-btn" v-on:click="$emit('showCreate')">
                 <p>+</p>
             </div>
