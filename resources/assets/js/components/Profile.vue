@@ -95,10 +95,11 @@
         <div class="anaxi-profile-map" ref="profileMap">
 
         </div>
-        <div class="anaxi-profile-feed">
+        <div class="anaxi-profile-feed" v-if="posts.length">
             <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
-            <Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>
-            <Trip v-for="(trip, index) in trips" :key="index" v-bind:trip="trip" v-bind:id="index"></Trip>
+            <Post v-for="(post, index) in posts" :key="index" v-bind:post="post" v-bind:index="index"></Post>
+            <!--<Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>-->
+            <!--<Trip v-for="(trip, index) in trips" :key="index" v-bind:trip="trip" v-bind:id="index"></Trip>-->
         </div>
         <EditProfile
         v-if="showEdit"
@@ -126,6 +127,7 @@
 <script>
   import Experience from './Experience.vue';
   import Trip from './Trip.vue';
+  import Post from './Post.vue';
   import EditProfile from './EditProfile.vue';
   import ShowFollowers from './ShowFollowers.vue';
 
@@ -134,16 +136,16 @@ export default {
     Experience,
     EditProfile,
     ShowFollowers,
-    Trip
+    Trip,
+    Post
   },
   data: function(){
     return {
         followers: [],
         following: [],
         followersAmount: 0,
-        experiences: [],
         fullName: '',
-        trips: [],
+        posts: [],
         lastName: '',
         firstName: '',
         description: '',
@@ -363,14 +365,14 @@ export default {
         }
       })
       .catch(function (error) {
-        console.log(error);
+//        console.log(error);
       });
 
     axios.post('/getprofilefeed', {'userId':userId})
       .then(function (response) {
+        console.log(response);
         if (response.data.feed){
-            self.experiences = response.data.feed[1].experiences;
-            self.trips = response.data.feed[0].trips;
+          self.posts = response.data.feed;
         }
         if (self.experiences.length > 0 || self.trips.length > 0 ){
             self.mapInit();
@@ -387,9 +389,9 @@ export default {
           self.error = error.response.data.responseMessage;
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
+//          console.log('Error', error.message);
         }
-        console.log(error.config);
+//        console.log(error.config);
       });
   },
   created: function () {

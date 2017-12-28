@@ -55,17 +55,26 @@ class ProfileController {
 		foreach ($UserTrips[0]->trips as $trip) {
 			// Extract experience Ids and turn BSON into array.
 			$tripExperiences = iterator_to_array($trip->experiences);
-			// Pass the experiences
+			// Get the latests added experience and extract timestamp from Obj Id.
+			$lastUpdated = end($tripExperiences)->getTimestamp();
+			// Pass the experiences to the map function. Swaps real experiences with experience IDs in experience array
 			$filtered = array_map(array($this, "SwapExperience"), $tripExperiences);
+			// Add swapped experiences to said trip
 			$trip->experiences = $filtered;
-			$this->UserTrips [] = $trip;
+			// Add finished trip to array of trips along with timestamp of latest addition to trip.
+			$Feed [] = ['type' => 'trip', 'content' => $trip, 'timeStamp' => $lastUpdated];
 		}
-		$Feed [] = ['trips' => $this->UserTrips ];
-		$Feed [] = ['experiences' => $this->UserExperiences];
 
+		foreach ($this->UserExperiences as $Experience){
+			$timeStamp = $Experience->_id->getTimestamp();
+			$Feed[] = [ 'type' => 'experience', 'content' => $Experience, 'timeStamp' => $timeStamp];
+		}
+		usort($Feed, [$this, 'SortByTimeStamp']);
+		// Define the custom sort function
+//		var_dump($Feed);
+//		dd();
 		return response()->json(['responseMessage' => 'Here comes everything.', 'feed' => $Feed], 200);
-//		Return $Feed;
-    }
+	}
 
 	public function SwapExperience($tripExperience){
 		foreach ($this->UserExperiences as $key => $experience){
@@ -76,6 +85,10 @@ class ProfileController {
 			}
 		}
 		return ($tripExperience);
+	}
+
+	public function SortByTimeStamp($a,$b) {
+		return $a['timeStamp']>$b['timeStamp'];
 	}
 
 }

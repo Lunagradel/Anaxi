@@ -77,7 +77,7 @@ export default {
             // console.log(commentsFromDB);
 
             if (!commentsFromDB){
-                console.log("no comments");
+//                console.log("no comments");
             } else {
                 commentsFromDB.forEach(function(item){
 
@@ -97,7 +97,7 @@ export default {
     mounted: function(){
 
         this.getComments();
-        console.log(this.comments);
+//        console.log(this.comments);
 
 
     }

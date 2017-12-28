@@ -3,6 +3,10 @@
     <div class="anaxi-card">
         <div class="anaxi-card-post">
             <div class="anaxi-card-content">
+                <div class="anaxi-card-top">
+                    {{date}}
+                    <!--<p>Experience added top <span class="top-trip-btn">Egypt</span> trip.</p>-->
+                </div>
                 <div class="anaxi-card-content-user">
                     <div class="user-avatar">
 
@@ -57,7 +61,7 @@
 <script>
 
 export default {
-    props: ['trip'],
+    props: ['trip', 'date'],
 
     data: function(){
         return {
@@ -81,7 +85,7 @@ export default {
             }
 
             self.experiences.push(newExperienceObj);
-            console.log("experiences",self.experiences);
+//            console.log("experiences",self.experiences);
         });
 
         self.mapInit();
@@ -98,7 +102,6 @@ export default {
               this.experiences[i].show = false;
             }
           }
-
       },
 
       mapInit: function(){
