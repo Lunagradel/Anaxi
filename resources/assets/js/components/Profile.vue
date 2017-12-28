@@ -164,7 +164,7 @@ export default {
           //Google map
           const bounds = new google.maps.LatLngBounds();
           let mapName = this.$refs.profileMap;
-          const mapCenter = this.experiences[0].geolocation;
+          const mapCenter = this.posts[0].content.geolocation;
           let marker;
 
           const options = {
@@ -231,8 +231,8 @@ export default {
           let map = new google.maps.Map(mapName, options);
 
           //adding markers from the experiences array.
-          this.experiences.forEach((item, index)=> {
-              const position = new google.maps.LatLng(item.geolocation.lat, item.geolocation.lng);
+          this.posts.forEach((item, index)=> {
+              const position = new google.maps.LatLng(item.content.geolocation.lat, item.content.geolocation.lng);
 
               marker = new google.maps.Marker({
                   position,
@@ -352,9 +352,6 @@ export default {
         } else {
             self.imageUrl = response.data[0].image;
         }
-        if (self.experiences.length > 0){
-          self.mapInit();
-        }
         if (!response.data[0].followers){
             //do nothing
         } else {
@@ -380,8 +377,8 @@ export default {
         if (response.data.feed){
           self.posts = response.data.feed;
         }
-        if (self.experiences.length > 0 || self.trips.length > 0 ){
-            self.mapInit();
+        if (self.posts.length > 0 ){
+          self.mapInit();
         }
       })
       .catch(function (error) {
