@@ -33,7 +33,7 @@
                         </p>
                     </div>
                 </router-link>
-                <div class="anaxi-nav-content-search-container">
+                <div class="anaxi-nav-content-search-container" v-if="!mobileSize">
                     <div class="anaxi-nav-content-search">
                         <input type="text" v-model="searchInput" placeholder="Search" class="anaxi-search desktop-search">
                         <div class="anaxi-primary-btn search-btn" v-on:click="searchForValue">
