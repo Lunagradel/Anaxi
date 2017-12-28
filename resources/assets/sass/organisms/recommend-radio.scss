@@ -1,0 +1,28 @@
+.recommend-switch {
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    // margin: -30px 0 0 -75px;
+    @include flexbox();
+    @include align-items(center);
+
+    label {
+        cursor: pointer;
+        color: rgba(0,0,0,0.2);
+        font-size: 30px;
+        width: 60px;
+        transition: all 0.2s ease;
+    }
+}
+
+#recommendYes:checked ~ .recommend-switch label[for=recommendYes] {
+    color: $green;
+}
+
+#recommendNo:checked ~ .recommend-switch label[for=recommendNo] {
+    color: $red;
+}
+
+input[type=radio] {
+    display: none;
+}
