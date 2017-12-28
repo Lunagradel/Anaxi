@@ -26,9 +26,11 @@
                 {{charactersLeft}}
             </div>
             <div class="content-add-image">
-                <p>+</p>
-                <i class="ion-ios-camera-outline"></i>
                 <p>Add image</p>
+                <input type="file" v-on:change="fileChange">
+            </div>
+            <div class="content-image-thumbnail">
+                <img :src="image" alt="">
             </div>
         </div>
         <div class="anaxi-create-bottom anaxi-create-extra-bottom">
@@ -53,7 +55,8 @@ export default {
 
     data: function(){
         return {
-            description: ''
+            description: '',
+            image: ''
         }
     },
     computed: {
@@ -70,9 +73,26 @@ export default {
             this.$emit("showRecommend");
         },
         makePost: function(){
-            this.$root.store.experienceToStore.description = this.description
+            this.$root.store.experienceToStore.description = this.description;
+            this.$root.store.experienceToStore.image = this.image;
             this.$emit('closeExtra');
             this.$emit('showTrip');
+        },
+        fileChange: function(e){
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length) {
+                return;
+            } else {
+                this.createImage(files[0]);
+            }
+        },
+        createImage: function(file){
+            let reader = new FileReader();
+            let self = this;
+            reader.onload = (e) => {
+                self.image = e.target.result;
+            }
+            reader.readAsDataURL(file);
         }
     }
 

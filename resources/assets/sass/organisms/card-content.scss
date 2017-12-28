@@ -64,8 +64,10 @@
     }
 
     .extra-image {
-        height: 200px;
-        border: solid 1px $card-line-color;
+
+        img {
+            width: 100%;
+        }
     }
 
 }

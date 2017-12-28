@@ -39,6 +39,13 @@
             @include flexbox();
             @include align-items(center);
             border-bottom: solid $red 1px;
+
+            p {
+                color: $dark-red;
+            }
+            p:hover {
+                text-decoration: underline;
+            }
         }
 
     }

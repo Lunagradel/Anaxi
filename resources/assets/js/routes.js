@@ -9,6 +9,10 @@ let routes = [
         name: 'profile',
         path: '/profile/:id',
         component: require('./components/Profile')
+    },
+    {
+        path: '/search',
+        component: require('./components/MobileSearch')
     }
 
 

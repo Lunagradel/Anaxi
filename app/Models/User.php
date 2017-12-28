@@ -10,6 +10,7 @@ class User {
 	public $Email;
 	public $EmailAddressLookup;
 	public $Password;
+	public $ProfileImage;
 	public $Experiences = array();
 	public $Travels = array();
 	public $Following = array();
@@ -29,7 +30,7 @@ class User {
 		];
 		$Options =  [
 			'limit' => 1,
-			'projection' => ['firstName' => 1, 'lastName' => 1]
+			'projection' => ['firstName' => 1, 'lastName' => 1, 'image' => 1]
 		];
 		$result = $this->Collection->find($Query,$Options)->toArray();
 		return $result;
@@ -115,20 +116,17 @@ class User {
 
 	}
 
-	public function editUser($UserId, $FirstName, $LastName, $Description)
+	public function editUser($UserId, $Description, $ProfileImage)
 	{
-
-		$this->FirstName = $FirstName;
-		$this->LastName = $LastName;
 		$this->Description = $Description;
+		$this->ProfileImage = $ProfileImage;
 
 		$UpdateResult = $this->Collection->FindOneAndUpdate([
 			'_id' => new MongoDB\BSON\ObjectID($UserId)
 			],[
 				'$set' => [
-					'firstName' => $FirstName,
-					'lastName' => $LastName,
-					'description' => $Description
+					'description' => $Description,
+					'image' => $ProfileImage
 				]
 			],[
 				'returnOriginal' => false

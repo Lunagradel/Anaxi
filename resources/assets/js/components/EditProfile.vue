@@ -11,11 +11,10 @@
                 <p>Edit your profile</p>
             </div>
             <div class="edit-content-image">
-                <img :src="image">
+                <img :src="image" v-if="newImage">
+                <img :src="'/img/'+image" v-else>
                 <input type="file" v-on:change="fileChange">
             </div>
-            <input class="anaxi-search anaxi-edit-input" type="text" v-model="firstName" placeholder="firstname">
-            <input class="anaxi-search anaxi-edit-input" type="text" v-model="lastName" placeholder="lastname">
             <textarea class="anaxi-search anaxi-edit-textarea" type="text" maxLength="70" rows="2" placeholder="description" v-model="description"></textarea>
             <div class="anaxi-primary-btn" id="EditBtn" v-on:click="updateUser">
                 Save
@@ -27,33 +26,37 @@
 
 <script>
 export default {
-    props: ["userFirstName", "userLastName", "userDescription"],
+    props: ["userDescription", "imageInfo"],
 
     data: function(){
         return {
-            firstName: this.userFirstName,
-            lastName: this.userLastName,
             description: this.userDescription,
-            image: ''
+            image: this.imageInfo,
+            oldImage: this.imageInfo,
+            sameImage: true,
+            newImage: false
         }
     },
 
     methods: {
         updateUser: function(){
 
+            if (this.image === this.oldImage){
+                console.log("no image change");
+            } else {
+                this.sameImage = false;
+            }
             let self = this;
 
             axios.post('/edituser', {
-                firstName: this.firstName,
-                lastName: this.lastName,
                 description: this.description,
-                image: this.image
+                image: this.image,
+                sameImage: this.sameImage
             })
               .then(function (response) {
                 console.log(response);
-                self.$emit('updateProfileInfo', self.description, self.lastName, self.firstName);
+                self.$emit('updateProfileInfo', self.description, response.data);
                 self.$emit('closeEdit');
-                // let newDescription = response.data[0].description;
               })
               .catch(function (error) {
                 console.log(error);
@@ -72,6 +75,7 @@ export default {
             let self = this;
             reader.onload = (e) => {
                 self.image = e.target.result;
+                self.newImage = true;
             }
             reader.readAsDataURL(file);
         }

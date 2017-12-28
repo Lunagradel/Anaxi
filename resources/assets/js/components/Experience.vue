@@ -24,8 +24,8 @@
                     <div class="extra-text" v-if="experience.description">
                         {{experience.description}}
                     </div>
-                    <div class="extra-image" v-if="image">
-
+                    <div class="extra-image" v-if="experience.image">
+                        <img :src="'/img/'+experience.image">
                     </div>
                 </div>
             </div>

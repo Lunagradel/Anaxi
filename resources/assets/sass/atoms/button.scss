@@ -45,17 +45,25 @@
 }
 
 .profile-btn-content {
-    width: 80px;
+    width: 70px;
     @include flexbox();
     @include justify-content(space-between);
     @include align-items(center);
     color: $pink;
 
     .profile-avatar {
-        width: 25px;
-        height: 25px;
-        background-color: $orange;
+        width: 30px;
+        height: 30px;
+        background-color: $white;
         border-radius: 50%;
+        overflow: hidden;
+        @include flexbox();
+        @include justify-content(center);
+        @include align-items(center);
+
+        img {
+            width: 100%;
+        }
     }
 }
 
@@ -83,4 +91,25 @@
 
 .extra-back-btn {
     color: $orange;
+}
+
+.mobile-post-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    position: relative;
+    bottom: 10px;
+
+    p {
+        font-size: 35px;
+        position: relative;
+        bottom: 2px;
+    }
+}
+
+.search-btn {
+    border-radius: 0px 5px 5px 0px;
+    width: 50px;
+    font-size: 18px;
+    z-index: 5;
 }
