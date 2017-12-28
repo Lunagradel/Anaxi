@@ -4,7 +4,7 @@
         <form v-on:submit.prevent="onSubmit">
             <input v-model="email" placeholder="Email" type="email" />
             <input v-model="password" placeholder="Password" type="password" />
-            <input type="submit" name="submit" value="Log in">
+            <input type="submit" name="submit" value="Log in" class="anaxi-primary-btn" id="logSignBtn">
         </form>
         <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
     </div>
