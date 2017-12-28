@@ -2,13 +2,17 @@
   text-align: center;
   width: 220px;
   form{
-    display: flex;
-    flex-direction: column;
+      @include flexbox();
+      @include flex-direction(column);
+      @include align-items(center);
     input{
       margin: 2px 0;
       padding: 2px;
+      width: 100%;
       border: solid $pink 1px;
       color: $dark-red;
+      border-radius: 5px;
+      height: 25px;
       &::placeholder{
         color: $pink;
       }
@@ -17,5 +21,11 @@
     input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
     input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
     input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+  }
+
+  #logSignBtn {
+      width: 80px;
+      border-radius: 50px;
+      color: $white;
   }
 }

@@ -17,10 +17,12 @@
                 </div>
                 <div class="recommend-content-answer">
                     <input type="radio" class="answer-btn" v-model="recommended" :value=true id="recommendYes">
-                    <label for="recommendYes">Yes</label>
-                    <p>/</p>
                     <input type="radio" class="answer-btn" v-model="recommended" :value=false id="recommendNo">
-                    <label for="recommendNo">No</label>
+                    <div class="recommend-switch">
+                        <label for="recommendYes">Yes</label>
+                        <p>/</p>
+                        <label for="recommendNo">No</label>
+                    </div>
                 </div>
             </div>
             <div class="anaxi-create-bottom anaxi-create-recommend-bottom">

@@ -3,19 +3,24 @@
     <div class="anaxi-edit-profile">
         <div class="anaxi-edit-profile-content">
             <div class="edit-content-top">
-                <div class="top-close" v-on:click="$emit('closeEdit')">
+                <div class="top-close edit-close" v-on:click="$emit('closeEdit')">
                     &#10005
                 </div>
-            </div>
-            <div class="edit-content-header">
-                <p>Edit your profile</p>
+                <div class="edit-content-header">
+                    <p>Edit your profile</p>
+                </div>
             </div>
             <div class="edit-content-image">
                 <img :src="image" v-if="newImage">
                 <img :src="'/img/'+image" v-else>
+                <p>Change profile picture</p>
                 <input type="file" v-on:change="fileChange">
             </div>
-            <textarea class="anaxi-search anaxi-edit-textarea" type="text" maxLength="70" rows="2" placeholder="description" v-model="description"></textarea>
+            <div class="edit-content-description">
+                <p>Edit your description</p>
+                <textarea class="anaxi-search anaxi-edit-textarea" type="text" maxLength="70" rows="2" placeholder="description" v-model="description"></textarea>
+            </div>
+
             <div class="anaxi-primary-btn" id="EditBtn" v-on:click="updateUser">
                 Save
             </div>
@@ -84,11 +89,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-
-    img {
-        max-height: 80px;
-    }
-
-</style>

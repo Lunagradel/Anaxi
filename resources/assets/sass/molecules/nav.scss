@@ -16,6 +16,18 @@
     @include align-items(center);
 }
 
+.anaxi-nav-content-logo {
+    width: 116px;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(space-between);
+
+    img {
+        height: 30px;
+        margin-top: 4px;
+    }
+}
+
 .anaxi-nav-content-btns {
     width: 240px;
     height: 40px;
