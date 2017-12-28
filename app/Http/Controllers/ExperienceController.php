@@ -36,12 +36,12 @@ class ExperienceController extends BaseController
 		    $Rating = $request->input('experience.recommended');
 		    $Geolocation = $request->input('experience.geolocation');
 		    $Description = $request->input('experience.description');
-		    $Image = $request->input('experience.image');
+		    $Image = $request->input('experience.image', '');
 	    }else{
 		    $Rating = $request->input('recommended');
 		    $Geolocation = $request->input('geolocation');
 		    $Description = $request->input('description');
-		    $Image = $request->input('image');
+		    $Image = $request->input('image', '');
 	    }
 
 //	    $Image = $request->input('password');
@@ -49,7 +49,7 @@ class ExperienceController extends BaseController
 
         //Image validation
         if(!$Image){
-            $Experience = new Experience();
+          $Experience = new Experience();
     	    $Response = $Experience->createExperience($UserId, $Rating, $Geolocation, $Description);
         } else {
             $validator = Validator::make($request->all(), [
