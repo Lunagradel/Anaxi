@@ -26,13 +26,17 @@
         ></createTrip>
         <nav class="anaxi-nav">
             <div class="anaxi-nav-content">
-                <router-link to="/" exact>
-                    <div class="logo">
-                        <p>
-                            Anaxi
-                        </p>
-                    </div>
-                </router-link>
+                <div class="anaxi-nav-content-logo">
+                    <router-link to="/" exact>
+                        <div class="logo">
+                            <p>
+                                Anaxi
+                            </p>
+                        </div>
+
+                    </router-link>
+                    <img src="/img/logo/anaxi_logomarker.png" alt="">
+                </div>
                 <div class="anaxi-nav-content-search-container" v-if="!mobileSize">
                     <div class="anaxi-nav-content-search">
                         <input type="text" v-model="searchInput" placeholder="Search" class="anaxi-search desktop-search">
