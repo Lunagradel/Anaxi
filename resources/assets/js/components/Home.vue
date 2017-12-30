@@ -1,25 +1,28 @@
 <template>
     <div class="flexthis">
-        <h2>I AM HOME HONEY</h2>
+        <div class="anaxi-home-feed" v-if="posts.length">
+            <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
+            <Post v-for="(post, index) in posts" :key="index" v-bind:post="post" v-bind:index="index"></Post>
+        </div>
     </div>
 </template>
 
 <script>
 
-    import Experience from './Experience.vue';
-    import Trip from './Trip.vue';
+    import Post from './Post.vue';
 
     export default {
         components: {
-            Experience,
-            Trip
+          Post,
         },
         mounted: function () {
 
         },
       data: function () {
         return {
-          following: []
+          following: [],
+          posts: [],
+          error: '',
         }
       },
       computed: {
@@ -43,6 +46,7 @@
           axios.post('/getfollowingfeed', {'following':self.following})
             .then(function (response) {
               console.log(response);
+              self.posts = response.data.feed;
             })
         }
       }

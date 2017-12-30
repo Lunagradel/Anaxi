@@ -17,16 +17,15 @@ class ProfileController {
 
 	public $LoginController;
 	public $UserExperiences = [];
+	public $UserTripExperiences = [];
 	public $UserTrips = [];
+	public $Trip = [];
 	public $Feed = [];
+	public $User = [];
 
 	public function __construct() {
 		$this->LoginController = new LoginController();
-		// Validate login
-		$UserIsLoggedIn = $this->LoginController->validateLoginState();
-		if (!$UserIsLoggedIn){
-			return response()->json(['responseMessage'=>'You\'re not logged in'], 400);
-		}
+
 	}
 
 	public function getFeed() {
@@ -35,33 +34,32 @@ class ProfileController {
 
 	public function GetProfileFeed(Request $request){
 		$UserId = $request->input('userId');
+		// Validate login
+		$UserIsLoggedIn = $this->LoginController->validateLoginState();
+		if (!$UserIsLoggedIn){
+			return response()->json(['responseMessage'=>'You\'re not logged in'], 400);
+		}
 
 		// Get user experience
 		$ExperienceModel = new Experience();
-		$StoredExperiences = $ExperienceModel->GetExperiencesByUser($UserId);
+		$this->UserExperiences = $ExperienceModel->GetExperiencesByUserFormatted($UserId);
 		// Check if result
-		if (isset($StoredExperiences) && array_key_exists('experiences', $StoredExperiences[0]))
+		if (!$this->UserExperiences)
 		{
-			// Turn experience BSON into array so it can be filtered.
-			$StoredExperiences = iterator_to_array($StoredExperiences[0]->experiences);
-			$this->UserExperiences = $StoredExperiences;
-		} else {
-			// If user has nothing.
 			return response()->json(['responseMessage' => 'This user has not created any experiences yet.'], 200);
 		}
 
 		// Get users trip
 		$TripModel = new Trip();
-		$StoredTrips = $TripModel->GetTripsByUserId($UserId);
-		if (isset($StoredTrips) && array_key_exists('trips', $StoredTrips[0]))
+		$this->UserTrips = $TripModel->GetTripsByUserFormatted($UserId);
+		// If none found
+		if (!$this->UserTrips)
 		{
-			$StoredTrips = $StoredTrips[0]->trips;
-		} else {
 			$this->CreateFeed();
-			return response()->json(['responseMessage' => 'Here comes the experiences, no trips tho.', 'feed' => $this->Feed], 200);
+			return response()->json(['responseMessage' => 'Experiences, no trips found.', 'feed' => $this->Feed], 200);
 		}
 		// For each trip,
-		foreach ($StoredTrips as $trip) {
+		foreach ($this->UserTrips as $trip) {
 			// Extract experience Ids and turn BSON into array.
 			$TripExperiences = iterator_to_array($trip->experiences);
 			// Get the latests added experience and extract timestamp from Obj Id.
@@ -103,10 +101,58 @@ class ProfileController {
 	}
 
 	public function GetFollowingFeed(Request $request){
-		$Following = $request->input('following');
+		$UsersFollowing = $request->input('following');
 		// Remove possible duplicates (Response to unknown error that inputs duplicate following=
-		$Following = array_unique($Following);
-		print_r($Following);
+		$UsersFollowing = array_unique($UsersFollowing);
+		$TripModel = New Trip();
+		$UsersFollowing = $TripModel->GetFollowingFeed($UsersFollowing);
+		foreach ($UsersFollowing as $User){
+			$this->User = ["firstName" => $User->firstName, "lastName" => $User->lastName, "id" => $User->_id];
+			$UserFeed = $this->FilterUserToFeed($User);
+		}
+
+		usort($this->Feed, [$this, 'SortByTimeStamp']);
+		return response()->json(['responseMessage' => 'Here comes everything.', 'feed' => $this->Feed], 200);
+	}
+
+	public function FilterUserToFeed($User){
+		// Check if experiences exist
+		if (array_key_exists ( 'experiences', $User )){
+			$this->UserExperiences = $User->experiences;
+		}else{
+			$this->UserExperiences = [];
+		}
+		// Check if trips exist
+		// Then Filter them
+		if (array_key_exists ( 'trips', $User )){
+			$this->UserTrips = $User->trips;
+			foreach ($this->UserTrips as $Trip){
+				$this->Trip = $Trip;
+				$TripExperiences = iterator_to_array($Trip->experiences);
+				$TripExperiences = array_map([$this, "CreateTripExperiences" ], $TripExperiences);
+			}
+		}else{
+			$this->UserTrips = [];
+		}
+
+		foreach ($this->UserExperiences as $Experience){
+			$timeStamp = $Experience->_id->getTimestamp();
+			$this->Feed [] = [ 'type' => 'experience', 'content' => $Experience, 'timeStamp' => $timeStamp, 'owner' => $this->User];
+		}
+		// Sort by date
+	}
+
+	public function CreateTripExperiences($TripExperience) {
+		foreach ($this->UserExperiences as $key => $Experience){
+			if ($TripExperience == $Experience->_id){
+				$timeStamp = $Experience->_id->getTimestamp();
+				$Experience ['parentTrip'] = ['tripId' => $this->Trip->_id, 'tripName' => $this->Trip->geolocation->name];
+				$this->Feed [] = [ 'type' => 'tripExperience', 'content' => $Experience, 'timeStamp' => $timeStamp, 'owner' => $this->User];
+				unset($this->UserExperiences[$key]);
+				break;
+			}
+		}
+		return ($TripExperience);
 	}
 
 }

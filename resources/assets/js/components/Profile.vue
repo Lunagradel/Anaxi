@@ -98,8 +98,6 @@
         <div class="anaxi-profile-feed" v-if="posts.length">
             <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
             <Post v-for="(post, index) in posts" :key="index" v-bind:post="post" v-bind:index="index"></Post>
-            <!--<Experience v-for="(experience, index) in experiences" :key="index" v-bind:experience="experience" v-bind:id="index"></Experience>-->
-            <!--<Trip v-for="(trip, index) in trips" :key="index" v-bind:trip="trip" v-bind:id="index"></Trip>-->
         </div>
         <EditProfile
         v-if="showEdit"
@@ -132,9 +130,9 @@
 
 export default {
   components: {
-    Experience,
     EditProfile,
     ShowFollowers,
+    Experience,
     Trip,
     Post
   },

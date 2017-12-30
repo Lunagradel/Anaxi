@@ -3,6 +3,9 @@
     <div class="anaxi-card">
         <div class="anaxi-card-post">
             <div class="anaxi-card-top">
+                <p>Experience added to <span class="top-trip-btn">{{experience.parentTrip.tripName}}</span> trip.</p>
+            </div>
+            <div class="anaxi-card-top">
                 {{date}}
             </div>
             <div class="anaxi-card-content">
@@ -11,7 +14,7 @@
 
                     </div>
                     <div class="user-name">
-                        {{userName}}
+                        {{owner.firstName}}
                     </div>
                 </div>
                 <div class="anaxi-card-content-recommendations">
@@ -40,14 +43,14 @@
 
 <script>
 
-import Comments from './Comments.vue';
+  import Comments from './Comments.vue';
 
-export default {
-    props: ['experience', 'date'],
+  export default {
+    props: ['experience', 'date', 'owner'],
     mounted: function() {
     },
     components: {
-        Comments
+      Comments
     },
     computed: {
       userName: function () {
@@ -55,5 +58,5 @@ export default {
       }
     }
 
-}
+  }
 </script>
