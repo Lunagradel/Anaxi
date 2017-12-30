@@ -1,5 +1,6 @@
 <template>
     <div class="flexthis">
+        <Loader v-if="loading"></Loader>
         <div class="anaxi-home-feed" v-if="posts.length">
             <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
             <Post v-for="(post, index) in posts" :key="index" v-bind:post="post" v-bind:index="index"></Post>
@@ -10,10 +11,11 @@
 <script>
 
     import Post from './Post.vue';
-
+    import Loader from './Loader.vue'
     export default {
         components: {
           Post,
+          Loader
         },
         mounted: function () {
 
@@ -23,6 +25,7 @@
           following: [],
           posts: [],
           error: '',
+          loading: true,
         }
       },
       computed: {
@@ -47,6 +50,7 @@
             .then(function (response) {
               console.log(response);
               self.posts = response.data.feed;
+              self.loading = false;
             })
         }
       }
