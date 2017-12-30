@@ -9,6 +9,10 @@
     cursor: pointer;
 }
 
+.anaxi-primary-btn:hover {
+    @include top-right-gradient($pink, $orange);
+}
+
 #postBtn {
     width: 90px;
     height: 30px;
@@ -30,13 +34,27 @@
     height: 25px;
 }
 
-#tripDoneBtn, #experienceDoneBtn {
-    width: 100px;
+#tripDoneBtn, #experienceDoneBtn, #existingExperienceDoneBtn {
+    width: 120px;
     height: 35px;
     border-radius: 18px;
 }
-#experienceDoneBtn{
+#experienceDoneBtn {
     width: 140px;
+}
+
+#tripAddBtn {
+    width: 85px;
+    height: 27px;
+    border-radius: 15px;
+    border: solid $dark-red 2px;
+    background-color: $light-orange;
+    color: $dark-red;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(center);
+    cursor: pointer;
+    margin-top: 70px;
 }
 
 #EditBtn {

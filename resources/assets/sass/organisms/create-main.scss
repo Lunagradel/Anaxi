@@ -110,7 +110,7 @@
 
 .existing-trip {
     height: 20px;
-    width: 90px;
+    min-width: 90px;
     border-radius: 10px;
     color: #000000;
     font-size: 14px;
@@ -119,6 +119,11 @@
     @include justify-content(center);
     cursor: pointer;
     margin-right: 10px;
+    padding: 0px 15px 0px 15px;
+}
+
+.activeTrip {
+    background-color: $green;
 }
 
 .trip-content-search {

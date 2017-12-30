@@ -13,20 +13,21 @@
                     <p>Add your Experience </p>
                     <p>to a Trip?</p>
                 </div>
-                <div class="trip-content-existing">
+                <div class="trip-content-existing" v-bind:class="{ hidden: latitude }">
                     <p>Choose existing</p>
                     <div class="existing-trips">
-                        <div class="existing-trip" v-on:click="addToExistingTrip" v-for="trip in existingTrips" :data-trip-id="trip._id.$oid">
+                        <div class="existing-trip" v-on:click="addToExistingTrip(index)" v-for="(trip, index) in existingTrips" v-bind:class="{ activeTrip: trip.active }" :data-trip-id="trip._id.$oid">
                             {{trip.geolocation.name}}
                         </div>
                     </div>
                 </div>
-                <div class="trip-content-search">
+                <div class="trip-content-search" v-bind:class="{ hidden: existingTripChosen }">
                     <p>Make New</p>
-                    <input class="anaxi-search" ref="createTripSearch" id="createTripSearch" type="text" name="search" placeholder="Search"  v-bind:class="{ hidden: existingTripChosen }">
-                    <div class="anaxi-primary-btn" v-on:click="clearTripLocal" id="tripAddBtn">
-                        Clear
-                    </div>
+                    <input class="anaxi-search" ref="createTripSearch" id="createTripSearch" type="text" name="search" placeholder="Search">
+
+                </div>
+                <div v-on:click="clearTripLocal" id="tripAddBtn" v-if="showClearBtn">
+                     Clear
                 </div>
             </div>
             <span class="form-message"> {{message}} </span>
@@ -59,6 +60,7 @@ export default {
             message: '',
             existingTrips: [],
             existingTripChosen: false,
+            showClearBtn: false
         }
     },
     mounted: function(){
@@ -124,7 +126,11 @@ export default {
       self.longitude = '';
       self.tripName = '';
       self.existingTripChosen = false;
+      self.showClearBtn = false;
       this.initGoogleMapAutocompleter();
+      self.existingTrips.forEach(function(item){
+          item.active = false;
+      });
     },
     getUserTrips: function () {
       let self = this;
@@ -132,15 +138,26 @@ export default {
       axios.post('/getUserTrips', {'userId':sessionId})
         .then(function (response) {
           console.log(response.data);
-          self.existingTrips = response.data[0].trips;
+          let existingTripsFromDB = response.data[0].trips;
+          existingTripsFromDB.forEach(function(item){
+              item.active = false;
+          });
+          self.existingTrips = existingTripsFromDB;
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    addToExistingTrip: function (event) {
+    addToExistingTrip: function (index) {
       let self = this;
-      self.existingTripChosen = event.target.getAttribute("data-trip-id");
+      // console.log(self.existingTrips[index]._id.$oid);
+      // self.existingTripChosen = event.target.getAttribute("data-trip-id");
+      self.existingTripChosen = self.existingTrips[index]._id.$oid;
+      self.existingTrips.forEach(function(item){
+         item.active = false;
+      });
+      self.existingTrips[index].active = !self.existingTrips[index].active;
+      self.showClearBtn = true;
     },
     submitToExistingTrip: function () {
       let self = this;
@@ -193,6 +210,7 @@ export default {
         self.latitude = lat;
         self.longitude = lng;
         self.tripName = name;
+        self.showClearBtn = true;
       })
 
 

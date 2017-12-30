@@ -18,7 +18,7 @@ body.modal-open {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .error-msg{
