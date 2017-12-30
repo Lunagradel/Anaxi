@@ -14,6 +14,8 @@
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/styles.css') }}">
         <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Lobster|Montserrat:600" rel="stylesheet">
+        <link rel="manifest" href="/manifest.json">
+
 
     </head>
     <body>
@@ -37,9 +39,15 @@
                   <sign-up></sign-up>
               </div>
           @endif
-
-        <!-- every components belonging to a route, will be shown here on the page. -->
       </div>
       <script src="/js/app.js"></script>
+      <script>
+
+      if('serviceWorker' in navigator) {
+          navigator.serviceWorker
+          .register('/sw.js')
+          .then(function() { console.log("Service Worker Registered"); });
+      }
+      </script>
     </body>
 </html>
