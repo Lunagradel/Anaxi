@@ -1,6 +1,7 @@
 <template>
     <div class="anaxi-profile-page">
-        <div class="anaxi-profile">
+        <Loader v-if="loading"></Loader>
+        <div class="anaxi-profile" v-else>
             <div class="anaxi-profile-background anaxi-profile-inner">
                 <div class="circle circle-15">
                     <div class="circle circle-14">
@@ -99,25 +100,31 @@
             <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
             <Post v-for="(post, index) in posts" :key="index" v-bind:post="post" v-bind:index="index"></Post>
         </div>
-        <EditProfile
-        v-if="showEdit"
-        @closeEdit="showEdit = false"
-        @updateProfileInfo="updateProfileInfo"
-        v-bind:imageInfo="imageUrl"
-        v-bind:userDescription="description"
-        ></EditProfile>
-        <ShowFollowers
-        v-if="showFollowers"
-        v-bind:followers="followers"
-        v-bind:following="false"
-        @closeFollow="showFollowers = false"
-        ></ShowFollowers>
-        <ShowFollowers
-        v-if="showFollowing"
-        v-bind:followers="following"
-        v-bind:following="true"
-        @closeFollow="showFollowing = false"
-        ></ShowFollowers>
+        <transition name="fade">
+            <EditProfile
+            v-if="showEdit"
+            @closeEdit="showEdit = false"
+            @updateProfileInfo="updateProfileInfo"
+            v-bind:imageInfo="imageUrl"
+            v-bind:userDescription="description"
+            ></EditProfile>
+        </transition>
+        <transition name="fade">
+            <ShowFollowers
+            v-if="showFollowers"
+            v-bind:followers="followers"
+            v-bind:following="false"
+            @closeFollow="showFollowers = false"
+            ></ShowFollowers>
+        </transition>
+        <transition name="fade">
+            <ShowFollowers
+            v-if="showFollowing"
+            v-bind:followers="following"
+            v-bind:following="true"
+            @closeFollow="showFollowing = false"
+            ></ShowFollowers>
+        </transition>
     </div>
 </template>
 
@@ -127,6 +134,7 @@
   import Post from './Post.vue';
   import EditProfile from './EditProfile.vue';
   import ShowFollowers from './ShowFollowers.vue';
+  import Loader from './Loader.vue'
 
 export default {
   components: {
@@ -134,7 +142,8 @@ export default {
     ShowFollowers,
     Experience,
     Trip,
-    Post
+    Post,
+    Loader
   },
   data: function(){
     return {
@@ -152,7 +161,8 @@ export default {
         showFollowers: false,
         showFollowing: false,
         error: '',
-        imageUrl: 'default.jpg'
+        imageUrl: 'default.jpg',
+        loading: true
     }
   },
 
@@ -247,7 +257,7 @@ export default {
               map.fitBounds(bounds.extend(position));
 
           });
-
+          google.maps.event.addListenerOnce(map, 'tilesloaded', this.stopLoading)
       },
       updateProfileInfo: function(description, image){
 
@@ -329,6 +339,10 @@ export default {
               console.log("no show");
           }
 
+      },
+      stopLoading: function(){
+          // console.log("stop");
+          this.loading = false;
       }
 
   },
@@ -377,7 +391,9 @@ export default {
         }
         if (self.posts.length > 0 ){
           self.mapInit();
-        }
+      } else {
+          self.loading = false;
+      }
       })
       .catch(function (error) {
         if (error.response) {
@@ -430,6 +446,9 @@ export default {
               document.body.classList.remove(className);
           }
       }
+  },
+  updated: function(){
+      document.body.classList.remove("modal-open");
   }
 }
 </script>
