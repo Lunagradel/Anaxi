@@ -74,10 +74,30 @@ class Experience {
 		$Experience = $this->Collection->findOne($Query);
 		return $Experience->toArray();
 	}
-	public function GetExperiencesByMultipleUsers(Array $UserIds){}
 
-	// Get experiences based on One user
+	public function GetExperiencesByMultipleUsers(Array $UserIds){}
 	// Get Experiences based on several users
-	// Get Experience based on experience ID
+	public function GetExperiencesByUserFormatted($UserId){
+		$Query = [
+			'_id' => new MongoDB\BSON\ObjectID($UserId)
+		];
+		$Projection = [
+			'projection' => ['password' => 0]
+		];
+
+		$StoredExperiences = $this->Collection->find($Query, $Projection);
+		$StoredExperiences  = $StoredExperiences->toArray();
+		// Check if result
+		if (isset($StoredExperiences) && array_key_exists('experiences', $StoredExperiences[0]))
+		{
+			// Turn experience BSON into array so it can be filtered.
+			$StoredExperiences = iterator_to_array($StoredExperiences[0]->experiences);
+			return $StoredExperiences;
+		} else {
+			// If user has nothing.
+			return false;
+		}
+
+	}
 
 }

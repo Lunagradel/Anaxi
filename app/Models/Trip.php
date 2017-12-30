@@ -71,4 +71,48 @@ class Trip {
 
 	}
 
+	public function GetTripsByUserFormatted($UserId){
+		$Query = [
+			'_id' => new MongoDB\BSON\ObjectID($UserId)
+		];
+		$Projection = [
+			'projection' => ['trips' => 1]
+		];
+		$QueryResult = $this->Collection->find($Query, $Projection);
+		$QueryResult = $QueryResult->toArray();
+		if (isset($QueryResult) && array_key_exists('trips', $QueryResult[0])){
+			return $QueryResult[0]->trips;
+		}
+		return false;
+	}
+
+	public function GetFollowingFeed(Array $UserIds){
+		if (empty($UserIds)) { return false; }
+
+		$Following = [];
+		foreach ($UserIds as $id){
+			$Following [] = new MongoDB\BSON\ObjectID($id);
+		}
+
+		$Query = [
+			'_id' => ['$in' => $Following]
+		];
+		$Projection = [
+			'projection' => [
+				'trips' => 1,
+				'experiences' => 1,
+				'firstName' => 1,
+				'lastName' => 1,
+				'_id' => 1,
+			]
+		];
+
+		$QueryResult = $this->Collection->find($Query, $Projection);
+		$QueryResult = $QueryResult->toArray();
+		if (isset($QueryResult)){
+			return $QueryResult;
+		}
+		return false;
+	}
+
 }
