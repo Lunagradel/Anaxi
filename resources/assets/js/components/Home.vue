@@ -1,7 +1,6 @@
 <template>
     <div class="flexthis">
-        <!--<trip></trip>-->
-      <!--<experience></experience>-->
+        <h2>I AM HOME HONEY</h2>
     </div>
 </template>
 
@@ -14,7 +13,39 @@
         components: {
             Experience,
             Trip
+        },
+        mounted: function () {
+
+        },
+      data: function () {
+        return {
+          following: []
         }
+      },
+      computed: {
+        userId() {
+          let self = this;
+          return self.$root.store.user.id;
+        }
+      },
+      watch: {
+          userId: function () {
+            let self = this;
+            axios.post('/getuserexperiences', {'userId':self.userId})
+              .then(function (response) {
+                response.data[0].following.forEach(function (followed) {
+                  self.following.push(followed._id);
+                });
+              })
+          },
+        following: function () {
+          let self = this;
+          axios.post('/getfollowingfeed', {'following':self.following})
+            .then(function (response) {
+              console.log(response);
+            })
+        }
+      }
     }
 </script>
 

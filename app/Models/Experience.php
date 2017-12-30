@@ -76,8 +76,21 @@ class Experience {
 	}
 	public function GetExperiencesByMultipleUsers(Array $UserIds){}
 
-	// Get experiences based on One user
+
 	// Get Experiences based on several users
-	// Get Experience based on experience ID
+
+	public function GetExperiencesByUserFormatted($UserId){
+		$Query = [
+			'_id' => new MongoDB\BSON\ObjectID($UserId)
+		];
+		$Projection = [
+			'projection' => ['password' => 0]
+		];
+
+		$Experiences = $this->Collection->find($Query, $Projection);
+
+		$Experiences  = $Experiences->toArray();
+
+	}
 
 }
