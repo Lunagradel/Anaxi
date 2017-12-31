@@ -26,7 +26,8 @@
 }
 
 .anaxi-create-trip {
-    background-color: $blue;
+    // background-color: $blue;
+    @include top-right-gradient($green, $blue);
 }
 
 .anaxi-create-main {
@@ -48,4 +49,52 @@
 .anaxi-create-location-background {
     left: -400px;
     top: calc(100% - 400px);
+}
+
+.slide-in-enter-active {
+  transition: all .3s ease;
+}
+.slide-in-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-in-enter
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-100%);
+  // opacity: 0;
+}
+.slide-in-leave-to {
+    transform: translateX(-100%);
+    // opacity: 0;
+}
+
+.slide-right-enter-active {
+  transition: all .3s ease;
+}
+.slide-right-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-right-enter
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(100%);
+  // opacity: 0;
+}
+.slide-right-leave-to {
+    transform: translateX(-100%);
+    // opacity: 0;
+}
+
+.slide-up-enter-active {
+  transition: all .3s ease;
+}
+.slide-up-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-up-enter
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(100%);
+  // opacity: 0;
+}
+.slide-up-leave-to {
+    transform: translateY(100%);
+    // opacity: 0;
 }
