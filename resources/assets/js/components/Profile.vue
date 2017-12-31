@@ -348,6 +348,7 @@ export default {
   },
   mounted(){
     // Set variables
+    document.body.classList.remove("modal-open");
     const self = this;
     let userId = self.$route.params.id;
     // Get user data
@@ -446,9 +447,6 @@ export default {
               document.body.classList.remove(className);
           }
       }
-  },
-  updated: function(){
-      document.body.classList.remove("modal-open");
   }
 }
 </script>

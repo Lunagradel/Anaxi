@@ -123,7 +123,13 @@
 }
 
 .activeTrip {
-    background-color: $green;
+    background-color: $green !important;
+    color: #000000 !important;
+}
+
+.notChosen {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.2);
 }
 
 .trip-content-search {
