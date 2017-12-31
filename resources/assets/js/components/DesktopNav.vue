@@ -1,29 +1,38 @@
 <template>
-    <div class="">
-        <createLocation
-        v-if="showCreate"
-        @showRecommend="showRecommend = true"
-        @closeLocation="showCreate = false"
-        @closeModal="showCreate = false, modalOpen = false"
-        ></createLocation>
-        <createRecommend
-        v-if="showRecommend"
-        @closeRecommend="showRecommend = false"
-        @showLocation="showCreate = true"
-        @showExtra="showExtra = true"
-        @closeModal="showRecommend = false, modalOpen = false"
-        ></createRecommend>
-        <createExtra
-        v-if="showExtra"
-        @showRecommend="showRecommend = true"
-        @showTrip="showTrip = true"
-        @closeExtra="showExtra = false"
-        @closeModal="showExtra = false, modalOpen = false"
-        ></createExtra>
-        <createTrip
-        v-if="showTrip"
-        @closeTrip="showTrip = false, modalOpen = false"
-        ></createTrip>
+    <div class="anaxi-navigation">
+        <transition name="slide-in" mode="in-out">
+            <createLocation
+            v-if="showCreate"
+            @showRecommend="showRecommend = true"
+            @closeLocation="showCreate = false"
+            @closeModal="showCreate = false, modalOpen = false"
+            :key="0"
+            ></createLocation>
+        </transition>
+        <transition-group name="slide-right" mode="in-out">
+            <createRecommend
+            v-if="showRecommend"
+            @closeRecommend="showRecommend = false"
+            @showLocation="showCreate = true"
+            @showExtra="showExtra = true"
+            @closeModal="showRecommend = false, modalOpen = false"
+            :key="1"
+            ></createRecommend>
+            <createExtra
+            v-if="showExtra"
+            @showRecommend="showRecommend = true"
+            @showTrip="showTrip = true"
+            @closeExtra="showExtra = false"
+            @closeModal="showExtra = false, modalOpen = false"
+            :key="2"
+            ></createExtra>
+        </transition-group>
+        <transition name="slide-up" mode="in-out">
+            <createTrip
+            v-if="showTrip"
+            @closeTrip="showTrip = false, modalOpen = false"
+            ></createTrip>
+        </transition>
         <nav class="anaxi-nav">
             <div class="anaxi-nav-content">
                 <div class="anaxi-nav-content-logo">

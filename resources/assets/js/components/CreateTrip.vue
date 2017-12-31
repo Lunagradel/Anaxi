@@ -16,7 +16,7 @@
                 <div class="trip-content-existing" v-bind:class="{ hidden: latitude }">
                     <p>Choose existing</p>
                     <div class="existing-trips">
-                        <div class="existing-trip" v-on:click="addToExistingTrip(index)" v-for="(trip, index) in existingTrips" v-bind:class="{ activeTrip: trip.active }" :data-trip-id="trip._id.$oid">
+                        <div class="existing-trip" v-on:click="addToExistingTrip(index)" v-for="(trip, index) in existingTrips" v-bind:class="{ activeTrip: trip.active, notChosen: existingTripChosen }" :data-trip-id="trip._id.$oid">
                             {{trip.geolocation.name}}
                         </div>
                     </div>
