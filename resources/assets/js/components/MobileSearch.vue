@@ -11,7 +11,7 @@
 
             <p v-if="!searchResult">Sorry, nothing was found.</p>
             <div class="result-items" v-for="(item, index) in searchResultData" :key="index" v-else>
-                <router-link :to="{ name: 'profile', params: { id: item._id.$oid}}" v-on:click.native="searchLinkClicked">
+                <router-link :to="{ name: 'profile', params: { id: item._id.$oid}}">
                     <p>{{item.firstName}} {{item.lastName}}</p>
                 </router-link>
             </div>
