@@ -17,9 +17,19 @@
           Post,
           Loader
         },
-        mounted: function () {
-
-        },
+      created () {
+        // fetch the data when the view is created and the data is
+        // already being observed
+        let self = this;
+        if(this.userId){
+          axios.post('/getuserexperiences', {'userId':self.userId})
+            .then(function (response) {
+              response.data[0].following.forEach(function (followed) {
+                self.following.push(followed._id);
+              });
+            })
+        }
+      },
       data: function () {
         return {
           following: [],
