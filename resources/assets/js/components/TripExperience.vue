@@ -3,18 +3,27 @@
     <div class="anaxi-card">
         <div class="anaxi-card-post">
             <div class="anaxi-card-top">
-                <p>Experience added to <span class="top-trip-btn">{{experience.parentTrip.tripName}}</span> trip.</p>
+                <p>
+                    Experience added to <span class="top-trip-btn">{{experience.parentTrip.tripName}}</span> trip.
+                </p>
             </div>
             <div class="anaxi-card-top">
                 {{date}}
             </div>
             <div class="anaxi-card-content">
                 <div class="anaxi-card-content-user">
-                    <div class="user-avatar">
-
+                    <div class="profile-btn-content">
+                        <div class="profile-avatar">
+                            <router-link :to="{ name: 'profile', params: { id: owner.id.$oid }}">
+                            <img :src="'/img/' + owner.image" alt="">
+                            </router-link>
+                        </div>
                     </div>
                     <div class="user-name">
-                        {{owner.firstName}}
+                        <router-link :to="{ name: 'profile', params: { id: owner.id.$oid }}">
+                            {{owner.firstName}}
+                            {{owner.lastName}}
+                        </router-link>
                     </div>
                 </div>
                 <div class="anaxi-card-content-recommendations">

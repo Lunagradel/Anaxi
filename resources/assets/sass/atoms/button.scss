@@ -84,7 +84,18 @@
         }
     }
 }
-
+.anaxi-card{
+    .profile-btn-content{
+        width: auto;
+        margin-right: 7px;
+        cursor: pointer;
+    }
+    .profile-avatar {
+        width: 40px;
+        height: 40px;
+        background-color: $orange;
+    }
+}
 .next-back-btns {
     font-size: 20px;
     cursor: pointer;

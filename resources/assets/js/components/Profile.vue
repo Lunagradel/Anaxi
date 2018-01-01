@@ -98,7 +98,7 @@
         </div>
         <div class="anaxi-profile-feed" v-if="posts.length">
             <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
-            <Post v-for="(post, index) in posts" :key="index" v-bind:post="post" v-bind:index="index"></Post>
+            <Post v-for="(post, index) in posts" :key="index" v-bind:fullName="fullName" v-bind:post="post" v-bind:index="index"></Post>
         </div>
         <transition name="fade">
             <EditProfile
@@ -340,6 +340,7 @@ export default {
           }
 
       },
+
       stopLoading: function(){
           // console.log("stop");
           this.loading = false;

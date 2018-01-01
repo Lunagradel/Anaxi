@@ -104,6 +104,7 @@ class Trip {
 				'firstName' => 1,
 				'lastName' => 1,
 				'_id' => 1,
+				'image' => 1
 			]
 		];
 

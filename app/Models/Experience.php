@@ -51,7 +51,6 @@ class Experience {
 			);
 
 		return $experienceID;
-		//					"created" => new MongoDB\BSON\UTCDateTime()
 	}
 
 	public function GetExperiencesByUser($UserId){
@@ -75,7 +74,6 @@ class Experience {
 		return $Experience->toArray();
 	}
 
-	public function GetExperiencesByMultipleUsers(Array $UserIds){}
 	// Get Experiences based on several users
 	public function GetExperiencesByUserFormatted($UserId){
 		$Query = [
@@ -85,14 +83,17 @@ class Experience {
 			'projection' => ['password' => 0]
 		];
 
-		$StoredExperiences = $this->Collection->find($Query, $Projection);
-		$StoredExperiences  = $StoredExperiences->toArray();
+		$Result = $this->Collection->find($Query, $Projection);
+		$Result  = $Result->toArray();
 		// Check if result
-		if (isset($StoredExperiences) && array_key_exists('experiences', $StoredExperiences[0]))
+		if (isset($Result) && array_key_exists('experiences', $Result[0]))
 		{
 			// Turn experience BSON into array so it can be filtered.
-			$StoredExperiences = iterator_to_array($StoredExperiences[0]->experiences);
-			return $StoredExperiences;
+			$Experiences = iterator_to_array($Result[0]->experiences);
+			$Image = array_key_exists('image', $Result[0]) ? $Result[0]->image : 'default.jpg';
+			$Owner = ["firstName" => $Result[0]->firstName, "lastName" => $Result[0]->lastName, "id" => $Result[0]->_id, "image" => $Image];
+			$Response = ['owner' => $Owner, 'experiences' => $Experiences];
+			return $Response;
 		} else {
 			// If user has nothing.
 			return false;

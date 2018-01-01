@@ -8,11 +8,18 @@
                     <!--<p>Experience added top <span class="top-trip-btn">Egypt</span> trip.</p>-->
                 </div>
                 <div class="anaxi-card-content-user">
-                    <div class="user-avatar">
-
+                    <div class="profile-btn-content">
+                        <div class="profile-avatar">
+                            <router-link :to="{ name: 'profile', params: { id: owner.id.$oid }}">
+                                <img :src="'/img/' + owner.image" alt="">
+                            </router-link>
+                        </div>
                     </div>
                     <div class="user-name">
-                        John Doe
+                        <router-link :to="{ name: 'profile', params: { id: owner.id.$oid }}">
+                            {{owner.firstName}}
+                            {{owner.lastName}}
+                        </router-link>
                     </div>
                 </div>
                 <div class="anaxi-card-content-destination">
@@ -61,7 +68,7 @@
 <script>
 
 export default {
-    props: ['trip', 'date'],
+    props: ['trip', 'date', 'owner'],
 
     data: function(){
         return {

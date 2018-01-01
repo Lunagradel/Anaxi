@@ -25,11 +25,6 @@ class ProfileController {
 
 	public function __construct() {
 		$this->LoginController = new LoginController();
-
-	}
-
-	public function getFeed() {
-		return $this->Feed;
 	}
 
 	public function GetProfileFeed(Request $request){
@@ -42,7 +37,10 @@ class ProfileController {
 
 		// Get user experience
 		$ExperienceModel = new Experience();
-		$this->UserExperiences = $ExperienceModel->GetExperiencesByUserFormatted($UserId);
+		$Result = $ExperienceModel->GetExperiencesByUserFormatted($UserId);
+
+		$this->UserExperiences = $Result['experiences'];
+		$this->User = $Result['owner'];
 		// Check if result
 		if (!$this->UserExperiences)
 		{
@@ -69,7 +67,7 @@ class ProfileController {
 			// Add swapped experiences to said trip
 			$trip->experiences = $filtered;
 			// Add finished trip to array of trips along with timestamp of latest addition to trip.
-			$this->Feed [] = ['type' => 'trip', 'content' => $trip, 'timeStamp' => $lastUpdated];
+			$this->Feed [] = ['type' => 'trip', 'content' => $trip, 'timeStamp' => $lastUpdated, 'owner' => $this->User];
 		}
 		$this->CreateFeed();
 		return response()->json(['responseMessage' => 'Here comes everything.', 'feed' => $this->Feed], 200);
@@ -79,7 +77,7 @@ class ProfileController {
 		// Assign timestamps
 		foreach ($this->UserExperiences as $Experience){
 			$timeStamp = $Experience->_id->getTimestamp();
-			$this->Feed [] = [ 'type' => 'experience', 'content' => $Experience, 'timeStamp' => $timeStamp];
+			$this->Feed [] = [ 'type' => 'experience', 'content' => $Experience, 'timeStamp' => $timeStamp, 'owner' => $this->User];
 		}
 		// Sort by date
 		usort($this->Feed, [$this, 'SortByTimeStamp']);
@@ -107,8 +105,9 @@ class ProfileController {
 		$TripModel = New Trip();
 		$UsersFollowing = $TripModel->GetFollowingFeed($UsersFollowing);
 		foreach ($UsersFollowing as $User){
-			$this->User = ["firstName" => $User->firstName, "lastName" => $User->lastName, "id" => $User->_id];
-			$UserFeed = $this->FilterUserToFeed($User);
+			$Image = array_key_exists('image', $User) ? $User->image : 'default.jpg';
+			$this->User = ["firstName" => $User->firstName, "lastName" => $User->lastName, "id" => $User->_id, 'image' => $Image];
+			$this->FilterUserToFeed($User);
 		}
 
 		usort($this->Feed, [$this, 'SortByTimeStamp']);

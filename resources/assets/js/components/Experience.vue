@@ -7,11 +7,18 @@
             </div>
             <div class="anaxi-card-content">
                 <div class="anaxi-card-content-user">
-                    <div class="user-avatar">
-
+                    <div class="profile-btn-content">
+                        <div class="profile-avatar">
+                            <router-link :to="{ name: 'profile', params: { id: owner.id.$oid }}">
+                            <img :src="'/img/' + owner.image" alt="">
+                            </router-link>
+                        </div>
                     </div>
                     <div class="user-name">
-                        {{userName}}
+                        <router-link :to="{ name: 'profile', params: { id: owner.id.$oid }}">
+                            {{owner.firstName}}
+                            {{owner.lastName}}
+                        </router-link>
                     </div>
                 </div>
                 <div class="anaxi-card-content-recommendations">
@@ -43,7 +50,7 @@
 import Comments from './Comments.vue';
 
 export default {
-    props: ['experience', 'date'],
+    props: ['experience', 'date', 'owner'],
     mounted: function() {
     },
     components: {

@@ -1,8 +1,26 @@
 <!--This component is used for filtering post types. In order for the posts to be outputted in chronological order, these are sorted in the backend and filtered here-->
 <template>
-    <Trip v-bind:trip="post.content" v-bind:id="index" v-bind:date="computedDate" v-if="post.type === 'trip'"></Trip>
-    <TripExperience v-bind:experience="post.content" v-bind:owner="post.owner" v-bind:id="index" v-bind:date="computedDate" v-else-if="post.type === 'tripExperience'"></TripExperience>
-    <Experience v-bind:experience="post.content" v-bind:id="index" v-bind:date="computedDate" v-else></Experience>
+    <Trip
+            v-if="post.type === 'trip'"
+            v-bind:owner="post.owner"
+            v-bind:trip="post.content"
+            v-bind:id="index"
+            v-bind:date="computedDate">
+    </Trip>
+    <TripExperience
+            v-else-if="post.type === 'tripExperience'"
+            v-bind:owner="post.owner"
+            v-bind:experience="post.content"
+            v-bind:id="index"
+            v-bind:date="computedDate">
+    </TripExperience>
+    <Experience
+            v-else
+            v-bind:owner="post.owner"
+            v-bind:experience="post.content"
+            v-bind:id="index"
+            v-bind:date="computedDate">
+    </Experience>
 </template>
 
 <script>
@@ -10,7 +28,7 @@
   import TripExperience from './TripExperience.vue';
   import Trip from './Trip.vue';
   export default {
-    props: ['post', 'index'],
+    props: ['post', 'index', 'fullName'],
     data: function(){
       return {
       }
