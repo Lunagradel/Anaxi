@@ -61,9 +61,9 @@
             </div>
         </div>
 
-        <div class="anaxi-card-bottom">
+        <!-- <div class="anaxi-card-bottom">
             Comments should be here. need to find out if it should be a component.
-        </div>
+        </div> -->
     </div>
 
 </template>
