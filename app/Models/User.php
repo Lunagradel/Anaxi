@@ -24,7 +24,6 @@ class User {
 
 	public function GetUserById($ID){
 		$this->ID = $ID;
-
 		$Query = [
 			'_id' => new MongoDB\BSON\ObjectID($this->ID)
 		];
@@ -86,8 +85,6 @@ class User {
 			]
 		)->toArray();
 
-//		dd($LookupResult, $Email);
-
 		if (empty($LookupResult)){
 			return false;
 		}
@@ -96,8 +93,8 @@ class User {
 
 	private function GetEmailHash($Email){
 		//TODO Store keys and hashes
-		//$EmailAddressLookupKey = self::$config["keys"]["email_address_lookup_key"];
-		$EmailAddressLookupKey = "EmailKey";
+		$EmailAddressLookupKey = $_ENV['EMAIL_LOOK_UP_KEY'];;
+//		$EmailAddressLookupKey = "EmailKey";
 		return $EmailAddressLookup = hash_hmac("sha256", $Email, $EmailAddressLookupKey);
 	}
 

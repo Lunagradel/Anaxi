@@ -47,17 +47,16 @@ Route::post('followuser', 'FollowController@FollowUser');
 
 Route::post('unfollowuser', 'FollowController@UnfollowUser');
 
-
 //Search endpoints
 
 Route::post('searchforvalue', 'SearchController@getSearchResult');
-
-// Vue route catcher
 
 Route::post('/addcomment', 'CommentsController@AddComment');
 
 Route::post('/getprofilefeed', 'ProfileController@GetProfileFeed');
 
 Route::post('getfollowingfeed', 'ProfileController@GetFollowingFeed');
+
+// Vue route catcher
 
 Route::get('/{vue_capture?}', 'Controller@GetFrontpage')->where('vue_capture', '[\/\w\.-]*');

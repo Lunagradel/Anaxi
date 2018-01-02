@@ -9,14 +9,11 @@
         <meta name="user" content="{{ $_SESSION["user_id"] }}">
         @endif
         <title>Anaxi</title>
-
         <!-- Fonts -->
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/styles.css') }}">
         <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Lobster|Montserrat:600" rel="stylesheet">
         <link rel="manifest" href="/manifest.json">
-
-
     </head>
     <body>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMF-q0qyWsEhxaZQAQLMuPcJbjVXn0Exg&libraries=places"></script>
