@@ -29,6 +29,9 @@ class TripController {
 
 		$ExperienceController = new ExperienceController();
 		$NewExperienceId = $ExperienceController->CreateExperience($request);
+		if(!$NewExperienceId){
+			return false;
+		}
 		// Create experience returns the whole update document from MongoDB.
 		// Below variable takes the last item in the experiences array and returns the ID
 
@@ -61,6 +64,9 @@ class TripController {
 
 		$ExperienceController = new ExperienceController();
 		$NewExperienceId = $ExperienceController->CreateExperience($request);
+		if(!$NewExperienceId){
+			return false;
+		}
 
 		$TripId = $request->input('trip.id');
 		$Trip = new Trip();

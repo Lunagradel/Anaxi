@@ -24,9 +24,11 @@
         if(this.userId){
           axios.post('/getuserexperiences', {'userId':self.userId})
             .then(function (response) {
-              response.data[0].following.forEach(function (followed) {
-                self.following.push(followed._id);
-              });
+              if(response.data[0].following){
+                  response.data[0].following.forEach(function (followed) {
+                    self.following.push(followed._id);
+                  });
+              }
             })
         }
       },
@@ -49,9 +51,11 @@
             let self = this;
             axios.post('/getuserexperiences', {'userId':self.userId})
               .then(function (response) {
-                response.data[0].following.forEach(function (followed) {
-                  self.following.push(followed._id);
-                });
+                if(response.data[0].following){
+                  response.data[0].following.forEach(function (followed) {
+                    self.following.push(followed._id);
+                  });
+                }
               })
           },
         following: function () {

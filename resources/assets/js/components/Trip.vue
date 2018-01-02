@@ -49,6 +49,9 @@
                                         <div class="extra-text" v-if="experience.description">
                                             {{experience.description}}
                                         </div>
+                                        <div class="extra-image" v-if="experience.image">
+                                            <img :src="'/img/'+experience.image">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -82,12 +85,14 @@ export default {
         let self = this;
 
         tripExperiences.forEach(function(item){
+            let image = item.image ? item.image : false;
             let newExperienceObj = {
                 title: item.geolocation.locationName,
                 latitude: item.geolocation.lat,
                 longitude: item.geolocation.lng,
                 recommend: item.recommended,
                 description: item.description,
+                image: image,
                 show: false
             }
 

@@ -6,7 +6,7 @@
           <input v-model="firstName" placeholder="First Name" type="text" />
           <input v-model="lastName" placeholder="Last Name" type="text" />
           <input v-model="password" placeholder="Password" type="password" />
-          <input type="submit" name="submit" value="Sign Up" class="anaxi-primary-btn logSignBtn">
+          <input type="submit" name="submit" value="Sign Up" class="anaxi-primary-btn logSignBtn" v-bind:class="{ disabled: buttonDisabled }">
       </form>
       <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
   </div>
@@ -22,19 +22,24 @@ export default {
           lastName: '',
           password: '',
           signupSuccessful: false,
-          error: ''
+          error: '',
+          buttonDisabled: false
         }
     },
     methods: {
         onSubmit: function(){
             let self = this;
+            if (self.buttonDisabled){ console.log("Disabled"); return false;}
+            self.buttonDisabled = true;
             self.error = '';
             axios.post('/createuser', this.$data)
               .then(function (response) {
                 console.log(response);
-                self.signupSuccessful = true
+                self.signupSuccessful = true;
+                self.buttonDisabled = false;
               })
               .catch(function (error) {
+                self.buttonDisabled = false;
                 self.error = error.response.data.responseMessage
               });
         }

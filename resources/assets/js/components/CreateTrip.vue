@@ -32,13 +32,13 @@
             </div>
             <span class="form-message"> {{message}} </span>
             <div class="anaxi-create-bottom">
-                <div class="anaxi-primary-btn" v-on:click="submitTrip" id="tripDoneBtn" v-if="latitude">
+                <div class="anaxi-primary-btn" v-on:click="submitTrip" id="tripDoneBtn" v-if="latitude" v-bind:class="{ disabled: buttonDisabled }">
                     Add new trip
                 </div>
-                <div class="anaxi-primary-btn" v-on:click="submitToExistingTrip" id="existingExperienceDoneBtn" v-else-if="existingTripChosen">
+                <div class="anaxi-primary-btn" v-on:click="submitToExistingTrip" id="existingExperienceDoneBtn" v-else-if="existingTripChosen" v-bind:class="{ disabled: buttonDisabled }">
                     Add to trip
                 </div>
-                <div class="anaxi-primary-btn" v-on:click="submitPost" id="experienceDoneBtn" v-else>
+                <div class="anaxi-primary-btn" v-on:click="submitPost" id="experienceDoneBtn" v-else v-bind:class="{ disabled: buttonDisabled }">
                     Add experience
                 </div>
             </div>
@@ -60,7 +60,8 @@ export default {
             message: '',
             existingTrips: [],
             existingTripChosen: false,
-            showClearBtn: false
+            showClearBtn: false,
+            buttonDisabled: false
         }
     },
     mounted: function(){
@@ -71,6 +72,8 @@ export default {
     submitPost: function(){
       let self = this;
       let experience = self.$root.store.experienceToStore
+      if (self.buttonDisabled){ console.log("Disabled"); return false;}
+      self.buttonDisabled = true;
       axios.post('/createexperience', {
         recommended: experience.recommended,
         geolocation: {
@@ -83,15 +86,19 @@ export default {
       })
         .then(function (response) {
           self.$emit('closeTrip');
+          self.buttonDisabled = false;
           console.log(response);
         })
         .catch(function (error) {
+          self.buttonDisabled = false;
           console.log(error);
         });
     },
     submitTrip: function () {
       console.log("Submitting a trip");
       let self = this;
+      if (self.buttonDisabled){ console.log("Disabled"); return false;}
+      self.buttonDisabled = true;
       let experience = self.$root.store.experienceToStore
       axios.post('/createtrip', {
         experience: {
@@ -111,10 +118,12 @@ export default {
         }
       })
         .then(function (response) {
+          self.buttonDisabled = false;
           console.log(response);
           self.$emit('closeTrip');
         })
         .catch(function (error) {
+          self.buttonDisabled = false;
           console.log(error.response.data);
         });
     },
@@ -139,9 +148,11 @@ export default {
         .then(function (response) {
           console.log(response.data);
           let existingTripsFromDB = response.data[0].trips;
-          existingTripsFromDB.forEach(function(item){
-              item.active = false;
-          });
+          if(existingTripsFromDB){
+              existingTripsFromDB.forEach(function(item){
+                  item.active = false;
+              });
+          }
           self.existingTrips = existingTripsFromDB;
         })
         .catch(function (error) {
@@ -161,6 +172,8 @@ export default {
     },
     submitToExistingTrip: function () {
       let self = this;
+      if (self.buttonDisabled){ console.log("Disabled"); return false;}
+      self.buttonDisabled = true;
       let experience = self.$root.store.experienceToStore;
       let tripId = self.existingTripChosen;
       axios.post('/addexperiencetotrip', {
@@ -171,17 +184,20 @@ export default {
             lng: experience.longitude,
             locationName: experience.locationName
           },
-          description: experience.description
+          description: experience.description,
+          image: experience.image
         },
         trip: {
           id: tripId
         }
       })
         .then(function (response) {
+          self.buttonDisabled = false;
           self.$emit('closeTrip');
           console.log(response.data);
         })
         .catch(function (error) {
+          self.buttonDisabled = false;
           console.log(error.response.data);
         });
     },

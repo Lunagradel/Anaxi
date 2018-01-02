@@ -12,6 +12,9 @@
 .anaxi-primary-btn:hover {
     @include top-right-gradient($pink, $orange);
 }
+.anaxi-primary-btn.disabled {
+    @include top-right-gradient($red, $dark-red);
+}
 
 #postBtn {
     width: 90px;

@@ -96,9 +96,9 @@
         <div class="anaxi-profile-map" ref="profileMap">
 
         </div>
-        <div class="anaxi-profile-feed" v-if="posts.length">
+        <div class="anaxi-profile-feed" >
             <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
-            <Post v-for="(post, index) in posts" :key="index" v-bind:fullName="fullName" v-bind:post="post" v-bind:index="index"></Post>
+            <Post v-if="posts.length" v-for="(post, index) in posts" :key="index" v-bind:fullName="fullName" v-bind:post="post" v-bind:index="index"></Post>
         </div>
         <transition name="fade">
             <EditProfile
@@ -390,6 +390,8 @@ export default {
         console.log(response);
         if (response.data.feed){
           self.posts = response.data.feed;
+        }else {
+          self.error = response.data.responseMessage;
         }
         if (self.posts.length > 0 ){
           self.mapInit();

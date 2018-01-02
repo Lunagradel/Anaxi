@@ -37,11 +37,13 @@ class ExperienceController extends BaseController
 		    $Geolocation = $request->input('experience.geolocation');
 		    $Description = $request->input('experience.description');
 		    $Image = $request->input('experience.image', '');
+		    $ValidatorTerms = ['experience.image' => 'required|image64:jpeg,jpg,png'];
 	    }else{
 		    $Rating = $request->input('recommended');
 		    $Geolocation = $request->input('geolocation');
 		    $Description = $request->input('description');
 		    $Image = $request->input('image', '');
+		    $ValidatorTerms = ['image' => 'required|image64:jpeg,jpg,png'];
 	    }
 
 //	    $Image = $request->input('password');
@@ -52,11 +54,10 @@ class ExperienceController extends BaseController
           $Experience = new Experience();
     	    $Response = $Experience->createExperience($UserId, $Rating, $Geolocation, $Description);
         } else {
-            $validator = Validator::make($request->all(), [
-                'image' => 'required|image64:jpeg,jpg,png'
-            ]);
+            $validator = Validator::make($request->all(), $ValidatorTerms );
             if ($validator->fails()) {
-                return response()->json(['errors'=>$validator->errors()]);
+            	$Response = ['errors'=>$validator->errors()];
+            	return false;
             } else {
                 $fileName = md5($UserId . time());
                 $extension = explode('/', explode(':', substr($Image, 0, strpos($Image, ';')))[1])[1];
@@ -72,7 +73,6 @@ class ExperienceController extends BaseController
         	    $Response = $Experience->createExperience($UserId, $Rating, $Geolocation, $Description, $fullFileName);
             }
         }
-
 	    return $Response;
 
     }

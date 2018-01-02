@@ -26,8 +26,11 @@ body.modal-open {
 	font-size: bold;
 	color: $red;
 	border-radius: 4px;
+	margin-top: 5px;
 	&.active{
 		display: block;
+		width: 220px;
+		position: absolute;
 		background-color: transparent;
 		animation-name: error-msg;
 		animation-duration: 1s;
@@ -41,6 +44,7 @@ body.modal-open {
 .fadeout, .fadein{
 	animation-duration: 1s;
 	animation-fill-mode: forwards;
+	color: $green;
 }
 .fadeout{
 	animation-name: fade-out;
