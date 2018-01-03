@@ -15,7 +15,7 @@ class DatabaseConnection {
 	static $DatabasePassword;
 
 	public function __construct() {
-		self::$DatabasePassword = $_ENV['DB_PASSWORD'];
+		self::$DatabasePassword = $_ENV['MONGO_PASSWORD'];
 	}
 
 	static function GetMongoInstance()
