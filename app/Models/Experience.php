@@ -86,7 +86,7 @@ class Experience {
 		$Result = $this->Collection->find($Query, $Projection);
 		$Result  = $Result->toArray();
 		// Check if result
-		if (isset($Result) && array_key_exists('experiences', $Result[0]))
+		if (isset($Result[0]) && array_key_exists('experiences', $Result[0]))
 		{
 			// Turn experience BSON into array so it can be filtered.
 			$Experiences = iterator_to_array($Result[0]->experiences);

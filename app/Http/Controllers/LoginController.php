@@ -11,7 +11,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use AnaxiUser;
 
-class LoginController extends controller{
+class LoginController extends Controller{
 
 	public function LoginUser( Request $request ) {
 
