@@ -16412,6 +16412,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           response.data[0].following.forEach(function (followed) {
             self.following.push(followed._id);
           });
+          self.following.push(self.userId);
         } else {
           self.loading = false;
           self.noFeed = true;
@@ -16438,6 +16439,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   watch: {
     userId: function userId() {
       var self = this;
+      self.following.push(self.userId);
       axios.post('/getuserexperiences', { 'userId': self.userId }).then(function (response) {
         if (response.data[0].following.length) {
           response.data[0].following.forEach(function (followed) {
