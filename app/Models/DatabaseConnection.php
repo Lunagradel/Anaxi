@@ -13,11 +13,9 @@ use MongoDB\Client as MongoClient;
 class DatabaseConnection {
 	static $DatabaseConnection = NULL;
 	static $DatabasePassword;
-
 	public function __construct() {
 		self::$DatabasePassword = $_ENV['MONGO_PASSWORD'];
 	}
-
 	static function GetMongoInstance()
 	{
 		if (self::$DatabaseConnection === null)

@@ -45,7 +45,7 @@ class FollowController extends BaseController
 
         $UserIsLoggedIn = $this->LoginController->validateLoginState();
 		    if (!$UserIsLoggedIn){
-			    return false;
+			    return response()->json(['responseMessage'=>'You\'re not logged in'], 400);
 		    }
 
         $UserId = $_SESSION["user_id"];

@@ -275,7 +275,7 @@ export default {
           followers.forEach(function(item){
              let followerId = item._id.$oid;
              let userId = self.$root.store.user.id;
-             console.log("Checking ="+followerId+" against ="+userId);
+//             console.log("Checking ="+followerId+" against ="+userId);
              if (followerId === userId){
                  self.isFollowing = true;
              }
@@ -294,14 +294,14 @@ export default {
               'userFullName': usersfullName,
               'loggedInFullName': loggedInsfullName
           }).then(function (response) {
-                console.log(response.data);
+//                console.log(response.data);
                 if (response.data){
                     self.isFollowing = true;
                     self.followersAmount++;
                 }
             })
             .catch(function (error) {
-              console.log(error);
+//              console.log(error);
             });
       },
 
@@ -317,7 +317,7 @@ export default {
               'userFullName': usersfullName,
               'loggedInFullName': loggedInsfullName
           }).then(function (response) {
-                console.log(response.data);
+//                console.log(response.data);
                 if (response.data){
                     self.isFollowing = false;
                     self.followersAmount--;
@@ -325,7 +325,7 @@ export default {
 
             })
             .catch(function (error) {
-              console.log(error);
+//              console.log(error);
             });
       },
 
@@ -336,7 +336,7 @@ export default {
           } else if (type === "following" && this.following.length > 0) {
               this.showFollowing = true;
           } else {
-              console.log("no show");
+//              console.log("no show");
           }
 
       },
@@ -387,7 +387,7 @@ export default {
 
     axios.post('/getprofilefeed', {'userId':userId})
       .then(function (response) {
-        console.log(response);
+//        console.log(response);
         if (response.data.feed){
           self.posts = response.data.feed;
         }else {
@@ -403,10 +403,10 @@ export default {
         if (error.response) {
           // The request was made, but the server responded with a status code
           // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-          console.log(error.response.data.responseMessage);
+//          console.log(error.response.data);
+//          console.log(error.response.status);
+//          console.log(error.response.headers);
+//          console.log(error.response.data.responseMessage);
           self.error = error.response.data.responseMessage;
         } else {
           // Something happened in setting up the request that triggered an Error

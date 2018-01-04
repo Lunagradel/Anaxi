@@ -38,7 +38,6 @@
                       <span class="logo">
                           <h2> Anaxi </h2>
                       </span>
-                      <span>Travel stuff and so forth</span>
                   </div>
                   <login></login>
                   <h3><span> OR </span></h3>

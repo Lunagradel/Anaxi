@@ -13,7 +13,7 @@
 
 Route::get('/', 'Controller@GetFrontpage');
 
-//Route::get('/mongo', 'UserController@GetUsers');
+Route::get('/mongo', 'UserController@GetUsers');
 
 // Users endpoints
 

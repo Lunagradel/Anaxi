@@ -26,10 +26,10 @@ export default {
           self = this;
           if (self.buttonDisabled){ console.log("Disabled"); return false;}
           self.buttonDisabled = true;
-          //data from inputs -- this.email and this.password
            axios.post('/login', this.$data)
             .then(function (response) {
               location.reload();
+              self.$router.push({ path: '/' });
               self.buttonDisabled = false;
             })
             .catch(function (error) {

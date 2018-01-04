@@ -1,6 +1,7 @@
 <template>
     <div class="flexthis">
         <Loader v-if="loading"></Loader>
+        <span v-if="noFeed" class="Feed message"> Seem like you're not following anyone yet? Try searching for a friend! </span>
         <div class="anaxi-home-feed" v-if="posts.length">
             <span class="error-msg" v-bind:class="{ active: error }">{{error}}</span>
             <Post v-for="(post, index) in posts" :key="index" v-bind:post="post" v-bind:index="index"></Post>
@@ -21,13 +22,17 @@
         // fetch the data when the view is created and the data is
         // already being observed
         let self = this;
+        self.noFeed = false;
         if(this.userId){
           axios.post('/getuserexperiences', {'userId':self.userId})
             .then(function (response) {
-              if(response.data[0].following){
+              if(response.data[0].following.length){
                   response.data[0].following.forEach(function (followed) {
                     self.following.push(followed._id);
                   });
+              }else {
+                self.loading = false;
+                self.noFeed = true;
               }
             })
         }
@@ -38,6 +43,7 @@
           posts: [],
           error: '',
           loading: true,
+          noFeed: false,
         }
       },
       computed: {
@@ -51,10 +57,13 @@
             let self = this;
             axios.post('/getuserexperiences', {'userId':self.userId})
               .then(function (response) {
-                if(response.data[0].following){
+                if(response.data[0].following.length){
                   response.data[0].following.forEach(function (followed) {
                     self.following.push(followed._id);
                   });
+                }else {
+                  self.loading = false;
+                  self.noFeed = true;
                 }
               })
           },
@@ -62,7 +71,6 @@
           let self = this;
           axios.post('/getfollowingfeed', {'following':self.following})
             .then(function (response) {
-              console.log(response);
               self.posts = response.data.feed;
               self.loading = false;
             })
