@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Lobster|Montserrat:600" rel="stylesheet">
         <link rel="manifest" href="/manifest.json">
-        // IOS WPA
+        {{--IOS WPA--}}
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="{{ URL::asset('/img/icons/icon-72x72.png') }}">
