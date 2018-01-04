@@ -59,7 +59,7 @@ export default {
     methods: {
         showNextModal: function(){
           if ( !this.latitude ){
-            this.message = "You need to fill in this form buddy"
+            this.message = "Please fill out the location form"
           }else {
             let store = this.$root.store.experienceToStore
             store.locationName = this.locationName

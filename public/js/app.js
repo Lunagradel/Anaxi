@@ -19612,7 +19612,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         showNextModal: function showNextModal() {
             if (!this.latitude) {
-                this.message = "You need to fill in this form buddy";
+                this.message = "Please fill out the location form";
             } else {
                 var store = this.$root.store.experienceToStore;
                 store.locationName = this.locationName;
