@@ -15,7 +15,7 @@
         <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Lobster|Montserrat:600" rel="stylesheet">
         <link rel="manifest" href="/manifest.json">
         {{--IOS WPA--}}
-        <link rel="apple-touch-startup-image" href="{{ URL::asset('/img/icons/icon-512x512.png') }}">
+        <link rel="apple-touch-startup-image" href="{{ URL::asset('/img/icons/default.png') }}">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="{{ URL::asset('/img/icons/icon-72x72.png') }}">
