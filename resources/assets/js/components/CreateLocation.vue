@@ -24,11 +24,10 @@
           <div class="anaxi-create-main">
                 <div class="anaxi-create-location-content">
                     <div class="create-header location-content-header">
-                        <p>Share </p>
-                        <p>your location.</p>
+                        <p>Where were you?</p>
                     </div>
                     <div class="location-content-search">
-                        <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder="Search">
+                        <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder='E.g. "New York" or "Café Casual"'>
                         <span class="form-message"> {{message}} </span>
                     </div>
                 </div>

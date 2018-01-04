@@ -16439,12 +16439,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   watch: {
     userId: function userId() {
       var self = this;
-      self.following.push(self.userId);
       axios.post('/getuserexperiences', { 'userId': self.userId }).then(function (response) {
         if (response.data[0].following.length) {
           response.data[0].following.forEach(function (followed) {
             self.following.push(followed._id);
           });
+          self.following.push(self.userId);
         } else {
           self.loading = false;
           self.noFeed = true;
@@ -19595,7 +19595,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -19695,7 +19694,7 @@ var render = function() {
                 id: "locationSearch",
                 type: "text",
                 name: "search",
-                placeholder: "Search"
+                placeholder: 'E.g. "New York" or "Café Casual"'
               }
             }),
             _vm._v(" "),
@@ -19743,9 +19742,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "create-header location-content-header" }, [
-      _c("p", [_vm._v("Share ")]),
-      _vm._v(" "),
-      _c("p", [_vm._v("your location.")])
+      _c("p", [_vm._v("Where were you?")])
     ])
   }
 ]
