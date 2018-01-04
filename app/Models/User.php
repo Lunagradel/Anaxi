@@ -51,12 +51,13 @@ class User {
 			return response()->json(['responseMessage'=>'Bad first name. No special characters'], 406);
 		}
 		if(!preg_match("/^[a-zA-Z-]+$/",$LastName)) {
-			return response()->json(['responseMessage'=>'Bad last name'], 406);
+
 		}
 		// TODO: Uncomment this one on before deployment
-//		if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,12}$/', $Password)) {
-//			return "Bad password";
-//		}
+		if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,12}$/', $Password)) {
+			return response()->json(['responseMessage'=>'Bad password'], 406);
+		}
+
 		$this->Email = $Email;
 		$this->FirstName = $FirstName;
 		$this->LastName = $LastName;
@@ -94,7 +95,6 @@ class User {
 	private function GetEmailHash($Email){
 		//TODO Store keys and hashes
 		$EmailAddressLookupKey = $_ENV['EMAIL_LOOK_UP_KEY'];;
-//		$EmailAddressLookupKey = "EmailKey";
 		return $EmailAddressLookup = hash_hmac("sha256", $Email, $EmailAddressLookupKey);
 	}
 
