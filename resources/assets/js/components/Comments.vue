@@ -73,6 +73,7 @@ export default {
 
             let commentsArr = this.comments;
 
+            //comments coming through props
             let commentsFromDB = this.experience.comments;
             // console.log(commentsFromDB);
 
