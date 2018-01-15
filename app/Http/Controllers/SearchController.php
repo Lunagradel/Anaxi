@@ -12,7 +12,7 @@ use Illuminate\Routing\Controller as BaseController;
 // use App\Http\Controllers\LoginController as LoginController;
 use Search\Search as Search;
 
-class SearchController extends BaseController
+class SearchController
 {
     // public $LoginController;
     //

@@ -8,8 +8,8 @@ class Follow {
 	public $UserToFollow;
 	public $UserToFollowName;
 	public $LoggedInName;
-    public $UserToUnfollow;
-    public $UserToUnfollowName;
+  public $UserToUnfollow;
+  public $UserToUnfollowName;
 	public $LoggedInUser;
 	// DB
 	public $Collection;
@@ -87,30 +87,10 @@ class Follow {
 	      $Options = [];
 	      $bulk = $this->Collection->bulkWrite( $Operations, $Options );
 
-        // $this->Collection->findOneAndUpdate([
-		// 	'_id' => new MongoDB\BSON\ObjectID($LoggedInUser)
-		// ],[
-		// 	'$pull' => [
-		// 		'following' => [
-		// 			'_id' => $UserToUnFollow
-		// 		]
-		// 	]
-		// ]
-		// );
-        //
-        // $this->Collection->findOneAndUpdate([
-		// 	'_id' => new MongoDB\BSON\ObjectID($UserToUnfollow)
-		// ],[
-		// 	'$pull' => [
-		// 		'followers' => [
-		// 			'_id' => $LoggedInUser
-		// 			]
-		// 	]
-		// ]
-		// );
-	    dd($bulk);
-
-        return $bulk;
+	    if($bulk->isAcknowledged()){
+		    return response()->json(['responseMessage'=>'User unfollowed'], 200);
+	    }
+	    return response()->json(['responseMessage'=>'User not found'], 400);
     }
 
 

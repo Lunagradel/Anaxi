@@ -60,7 +60,7 @@ class ProfileController {
 		foreach ($this->UserTrips as $trip) {
 			// Extract experience Ids and turn BSON into array.
 			$TripExperiences = iterator_to_array($trip->experiences);
-			// Get the latests added experience and extract timestamp from Obj Id.
+			// Get the latest added experience and extract timestamp from Obj Id.
 			$lastUpdated = end($TripExperiences)->getTimestamp();
 			// Pass the experiences to the map function. Swaps real experiences with experience IDs in experience array
 			$filtered = array_map([$this, "ExtractExperience" ], $TripExperiences);

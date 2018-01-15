@@ -4341,7 +4341,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 var token = document.head.querySelector('meta[name="csrf-token"]');
-
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
@@ -16392,6 +16391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -16405,12 +16405,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     // fetch the data when the view is created and the data is
     // already being observed
     var self = this;
+    self.noFeed = false;
     if (this.userId) {
       axios.post('/getuserexperiences', { 'userId': self.userId }).then(function (response) {
-        if (response.data[0].following) {
+        if (response.data[0].following.length) {
           response.data[0].following.forEach(function (followed) {
             self.following.push(followed._id);
           });
+          self.following.push(self.userId);
+        } else {
+          self.loading = false;
+          self.noFeed = true;
         }
       });
     }
@@ -16421,7 +16426,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       following: [],
       posts: [],
       error: '',
-      loading: true
+      loading: true,
+      noFeed: false
     };
   },
   computed: {
@@ -16434,17 +16440,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     userId: function userId() {
       var self = this;
       axios.post('/getuserexperiences', { 'userId': self.userId }).then(function (response) {
-        if (response.data[0].following) {
+        if (response.data[0].following.length) {
           response.data[0].following.forEach(function (followed) {
             self.following.push(followed._id);
           });
+          self.following.push(self.userId);
+        } else {
+          self.loading = false;
+          self.noFeed = true;
         }
       });
     },
     following: function following() {
       var self = this;
       axios.post('/getfollowingfeed', { 'following': self.following }).then(function (response) {
-        console.log(response);
         self.posts = response.data.feed;
         self.loading = false;
       });
@@ -17713,6 +17722,14 @@ var render = function() {
     [
       _vm.loading ? _c("Loader") : _vm._e(),
       _vm._v(" "),
+      _vm.noFeed
+        ? _c("span", { staticClass: "Feed message" }, [
+            _vm._v(
+              " Seem like you're not following anyone yet? Try searching for a friend! "
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _vm.posts.length
         ? _c(
             "div",
@@ -18072,7 +18089,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             followers.forEach(function (item) {
                 var followerId = item._id.$oid;
                 var userId = self.$root.store.user.id;
-                console.log("Checking =" + followerId + " against =" + userId);
+                //             console.log("Checking ="+followerId+" against ="+userId);
                 if (followerId === userId) {
                     self.isFollowing = true;
                 }
@@ -18090,13 +18107,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'userFullName': usersfullName,
                 'loggedInFullName': loggedInsfullName
             }).then(function (response) {
-                console.log(response.data);
+                //                console.log(response.data);
                 if (response.data) {
                     self.isFollowing = true;
                     self.followersAmount++;
                 }
             }).catch(function (error) {
-                console.log(error);
+                //              console.log(error);
             });
         },
 
@@ -18112,13 +18129,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'userFullName': usersfullName,
                 'loggedInFullName': loggedInsfullName
             }).then(function (response) {
-                console.log(response.data);
+                //                console.log(response.data);
                 if (response.data) {
                     self.isFollowing = false;
                     self.followersAmount--;
                 }
             }).catch(function (error) {
-                console.log(error);
+                //              console.log(error);
             });
         },
 
@@ -18129,7 +18146,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else if (type === "following" && this.following.length > 0) {
                 this.showFollowing = true;
             } else {
-                console.log("no show");
+                //              console.log("no show");
             }
         },
 
@@ -18173,7 +18190,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
 
         axios.post('/getprofilefeed', { 'userId': userId }).then(function (response) {
-            console.log(response);
+            //        console.log(response);
             if (response.data.feed) {
                 self.posts = response.data.feed;
             } else {
@@ -18188,10 +18205,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (error.response) {
                 // The request was made, but the server responded with a status code
                 // that falls out of the range of 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-                console.log(error.response.data.responseMessage);
+                //          console.log(error.response.data);
+                //          console.log(error.response.status);
+                //          console.log(error.response.headers);
+                //          console.log(error.response.data.responseMessage);
                 self.error = error.response.data.responseMessage;
             } else {}
             // Something happened in setting up the request that triggered an Error
@@ -19578,7 +19595,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -19595,7 +19611,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         showNextModal: function showNextModal() {
             if (!this.latitude) {
-                this.message = "You need to fill in this form buddy";
+                this.message = "Please fill out the location form";
             } else {
                 var store = this.$root.store.experienceToStore;
                 store.locationName = this.locationName;
@@ -19678,7 +19694,7 @@ var render = function() {
                 id: "locationSearch",
                 type: "text",
                 name: "search",
-                placeholder: "Search"
+                placeholder: 'E.g. "New York" or "Café Casual"'
               }
             }),
             _vm._v(" "),
@@ -19726,9 +19742,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "create-header location-content-header" }, [
-      _c("p", [_vm._v("Share ")]),
-      _vm._v(" "),
-      _c("p", [_vm._v("your location.")])
+      _c("p", [_vm._v("Where were you?")])
     ])
   }
 ]
@@ -21615,9 +21629,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log("Disabled");return false;
             }
             self.buttonDisabled = true;
-            //data from inputs -- this.email and this.password
             axios.post('/login', this.$data).then(function (response) {
                 location.reload();
+                self.$router.push({ path: '/' });
                 self.buttonDisabled = false;
             }).catch(function (error) {
                 self.error = error.response.data.responseMessage;

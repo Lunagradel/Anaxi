@@ -24,11 +24,10 @@
           <div class="anaxi-create-main">
                 <div class="anaxi-create-location-content">
                     <div class="create-header location-content-header">
-                        <p>Share </p>
-                        <p>your location.</p>
+                        <p>Where were you?</p>
                     </div>
                     <div class="location-content-search">
-                        <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder="Search">
+                        <input class="anaxi-search" ref="locationSearch" id="locationSearch" type="text" name="search" placeholder='E.g. "New York" or "Café Casual"'>
                         <span class="form-message"> {{message}} </span>
                     </div>
                 </div>
@@ -59,7 +58,7 @@ export default {
     methods: {
         showNextModal: function(){
           if ( !this.latitude ){
-            this.message = "You need to fill in this form buddy"
+            this.message = "Please fill out the location form"
           }else {
             let store = this.$root.store.experienceToStore
             store.locationName = this.locationName
